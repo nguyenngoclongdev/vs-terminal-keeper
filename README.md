@@ -92,7 +92,7 @@ Usually, the color and icon are chosen randomly based on the terminal name or gr
     keepExistingTerminals: boolean,
 
     // A Boolean variable indicating whether to execute the clear command during initialization. If the value is true, the clear command will not be executed upon initialization. If the value is false, the clear command will be executed.
-    noClear: boolean;
+    noClear: boolean,
 
     // The theme can either automatically select colors/icons or manually.
     theme: string,
