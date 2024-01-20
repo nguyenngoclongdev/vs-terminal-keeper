@@ -70,6 +70,10 @@ Usually, the color and icon are chosen randomly based on the terminal name or gr
 
 ![Choose which terminal session to activate](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/active-session.gif)
 
+### Active terminal session in your workspace directory
+
+![Active terminal session in your workspace directory](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/active-session-here.gif)
+
 ### Remove unwanted terminal sessions
 
 ![Remove unwanted terminal sessions](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/remove-session.gif)
@@ -152,6 +156,9 @@ name: string,
 // The command list.
 commands: Array<string>,
 
+// The operators to join multiple commands. e.g. semicolon (;), logical OR (||), logical AND (&&) and more
+joinOperator?: string,
+
 // Automatically execute the specified commands.
 autoExecuteCommands?: boolean,
 
@@ -183,7 +190,10 @@ shellArgs?: Array<string>,
 shellPath?: string,
 
 // Whether the terminal process environment should be exactly as provided in TerminalOptions.env. When this is false (default), the environment will be based on the window's environment and also apply configured platform settings like terminal.integrated.env.windows on top. When this is true, the complete environment must be provided as nothing will be inherited from the process or any configuration.
-strictEnv?: boolean
+strictEnv?: boolean,
+
+// UNDER DEVELOPMENT: Focused the terminal on startup.
+focus?: boolean
 ```
 
 ## Troubleshoot
