@@ -72,7 +72,7 @@ Usually, the color and icon are chosen randomly based on the terminal name or gr
 
 ![Choose which terminal session to activate](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/active-session.gif)
 
-### Active terminal session in your workspace directory
+### ✨ Active terminal session in your workspace directory
 
 ![Active terminal session in your workspace directory](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/active-session-here.gif)
 
@@ -97,7 +97,7 @@ Usually, the color and icon are chosen randomly based on the terminal name or gr
     // Keep existing terminals open when a session is executed.
     keepExistingTerminals: boolean,
 
-    // A Boolean variable indicating whether to execute the clear command during initialization. If the value is true, the clear command will not be executed upon initialization. If the value is false, the clear command will be executed.
+    // ✨ A Boolean variable indicating whether to execute the clear command during initialization. If the value is true, the clear command will not be executed upon initialization. If the value is false, the clear command will be executed.
     noClear: boolean,
 
     // The theme can either automatically select colors/icons or manually.
@@ -158,7 +158,7 @@ name: string,
 // The command list.
 commands: Array<string>,
 
-// The operators to join multiple commands. e.g. semicolon (;), logical OR (||), logical AND (&&) and more
+// ✨ The operators to join multiple commands. e.g. semicolon (;), logical OR (||), logical AND (&&) and more
 joinOperator?: string,
 
 // Automatically execute the specified commands.
