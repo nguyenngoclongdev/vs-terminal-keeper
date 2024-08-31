@@ -27,9 +27,7 @@ If you find this extension useful for your projects, please consider supporting 
 
 ## Our Sponsors ❤️
 
-<p align="center">
 <a href="https://github.com/webia1"><img src="https://github.com/webia1.png" width="50px" alt="webia1" /></a>
-</p>
 
 # Installation
 
