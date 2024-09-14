@@ -59,6 +59,10 @@ Get it from [Visual Studio Marketplace](https://marketplace.visualstudio.com/ite
 
 Usually, the color and icon are chosen randomly based on the terminal name or group. However, if you don't want that, you can use the `Dice` theme to have a random color and icon each time you activate a terminal session.
 
+### Terminal Keeper Activity ✨
+
+![Terminal Keeper Activity](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/terminal-keeper-activity.gif)
+
 ### Generate configuration templates
 
 ![Generate configuration templates](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/generate-configuration.gif)
