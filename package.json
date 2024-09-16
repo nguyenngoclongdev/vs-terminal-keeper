@@ -1,0 +1,303 @@
+{
+    "name": "terminal-keeper",
+    "displayName": "Terminal Keeper",
+    "description": "Easily save and recall previous terminal sessions, create new sessions, and edit or delete existing ones.",
+    "icon": "assets/logo.png",
+    "version": "1.1.29",
+    "main": "./dist/extension.js",
+    "browser": "./dist/web/extension.js",
+    "preview": false,
+    "qna": "marketplace",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nguyenngoclongdev/vs-terminal-keeper"
+    },
+    "bugs": {
+        "url": "https://github.com/nguyenngoclongdev/vs-terminal-keeper/issues"
+    },
+    "sponsor": {
+        "url": "https://github.com/sponsors/nguyenngoclongdev"
+    },
+    "homepage": "https://nguyenngoclongdev.github.io",
+    "galleryBanner": {
+        "color": "#11131C",
+        "theme": "dark"
+    },
+    "badges": [
+        {
+            "url": "https://img.shields.io/badge/Support%20this%20project-%F0%9F%92%96-green.svg?style=flat-square",
+            "href": "https://github.com/sponsors/nguyenngoclongdev",
+            "description": "Support us!"
+        }
+    ],
+    "categories": [
+        "Programming Languages",
+        "Debuggers",
+        "Testing",
+        "Other"
+    ],
+    "keywords": [
+        "terminal",
+        "session",
+        "startup",
+        "restore",
+        "save",
+        "remove",
+        "internal",
+        "manager",
+        "switch",
+        "bash",
+        "cmd",
+        "command",
+        "run",
+        "powershell",
+        "pwsh",
+        "script",
+        "theme",
+        "zsh",
+        "shell",
+        "presets",
+        "console",
+        "wsl",
+        "history",
+        "quick",
+        "setup",
+        "execute",
+        "macro",
+        "workspace",
+        "csh",
+        "dash",
+        "ksh",
+        "sh",
+        "tcsh"
+    ],
+    "contributes": {
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "terminalKeeperActivitybar",
+                    "title": "Terminal Keeper",
+                    "icon": "assets/explorer.svg"
+                }
+            ]
+        },
+        "viewsWelcome": [
+            {
+                "view": "terminalKeeperOverviewView",
+                "contents": "Welcome to Terminal Keeper.\nLet's start by generating the configuration.\n[Generate Configuration](command:terminal-keeper.generate)\nTo learn more about how to manage the terminal session [read our docs!](https://github.com/nguyenngoclongdev/vs-terminal-keeper/)"
+            },
+            {
+                "view": "terminalKeeperSessionView",
+                "contents": "No sessions created yet."
+            }
+        ],
+        "views": {
+            "terminalKeeperActivitybar": [
+                {
+                    "id": "terminalKeeperOverviewView",
+                    "name": "Overview"
+                },
+                {
+                    "id": "terminalKeeperSessionView",
+                    "name": "Sessions"
+                }
+            ]
+        },
+        "commands": [
+            {
+                "command": "terminal-keeper.generate",
+                "category": "Terminal Keeper",
+                "title": "Generate Configuration File"
+            },
+            {
+                "command": "terminal-keeper.kill-all",
+                "category": "Terminal Keeper",
+                "title": "Kill All Terminals"
+            },
+            {
+                "command": "terminal-keeper.active",
+                "category": "Terminal Keeper",
+                "title": "Active Terminal Session",
+                "icon": "$(run-all)"
+            },
+            {
+                "command": "terminal-keeper.open",
+                "category": "Terminal Keeper",
+                "title": "Open Configuration",
+                "icon": "$(gear)"
+            },
+            {
+                "command": "terminal-keeper.save",
+                "category": "Terminal Keeper",
+                "title": "Save Terminal Session",
+                "enablement": "false"
+            },
+            {
+                "command": "terminal-keeper.remove",
+                "category": "Terminal Keeper",
+                "title": "Remove Terminal Session"
+            },
+            {
+                "command": "terminal-keeper.refresh",
+                "title": "Refresh",
+                "icon": "$(refresh)"
+            },
+            {
+                "command": "terminal-keeper.refresh-command-activity",
+                "title": "Refresh Command"
+            },
+            {
+                "command": "terminal-keeper.active-session-activity",
+                "title": "Active Session",
+                "icon": "$(run)"
+            },
+            {
+                "command": "terminal-keeper.active-terminal-activity",
+                "title": "Active Terminal",
+                "icon": "$(run)"
+            }
+        ],
+        "menus": {
+            "view/title": [
+                {
+                    "command": "terminal-keeper.active",
+                    "when": "view == terminalKeeperOverviewView",
+                    "group": "navigation@1"
+                },
+                {
+                    "command": "terminal-keeper.open",
+                    "when": "view == terminalKeeperOverviewView",
+                    "group": "navigation@2"
+                },
+                {
+                    "command": "terminal-keeper.refresh",
+                    "when": "view == terminalKeeperOverviewView",
+                    "group": "navigation@3"
+                },
+                {
+                    "command": "terminal-keeper.kill-all",
+                    "when": "view == terminalKeeperOverviewView"
+                }
+            ],
+            "view/item/context": [
+                {
+                    "command": "terminal-keeper.active-session-activity",
+                    "when": "view == terminalKeeperSessionView && viewItem == session-context",
+                    "group": "inline@1"
+                },
+                {
+                    "command": "terminal-keeper.active-terminal-activity",
+                    "when": "view == terminalKeeperSessionView && (viewItem == terminal-context || viewItem == terminal-array-context)",
+                    "group": "inline@1"
+                }
+            ],
+            "explorer/context": [
+                {
+                    "when": "explorerResourceIsFolder",
+                    "command": "terminal-keeper.active"
+                }
+            ]
+        },
+        "configuration": {
+            "title": "Terminal Keeper",
+            "properties": {
+                "terminal-keeper.activateOnStartup": {
+                    "type": "boolean",
+                    "default": null,
+                    "description": "Activated the session when Visual Studio Code starts up."
+                },
+                "terminal-keeper.active": {
+                    "type": "string",
+                    "default": null,
+                    "description": "Used to determine which session to use."
+                },
+                "terminal-keeper.keepExistingTerminals": {
+                    "type": "boolean",
+                    "default": null,
+                    "description": "Keep existing terminals open when a session is executed."
+                },
+                "terminal-keeper.noClear": {
+                    "type": "boolean",
+                    "default": null,
+                    "description": "A Boolean variable indicating whether to execute the clear command during initialization. If the value is true, the clear command will not be executed upon initialization. If the value is false, the clear command will be executed."
+                },
+                "terminal-keeper.theme": {
+                    "type": "string",
+                    "default": null,
+                    "enum": [
+                        "default",
+                        "inkwell",
+                        "chaos",
+                        "tribe",
+                        "iconic",
+                        "neon",
+                        "solarized",
+                        "dice"
+                    ],
+                    "description": "The theme can either automatically select colors/icons or manually."
+                },
+                "terminal-keeper.killProcess": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "(Experimental) Kill the active process when the terminal is closed."
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run vscode-desktop:publish && npm run vscode-web:publish",
+        "vscode-desktop:publish": "npm run build -- --minify",
+        "vscode-web:publish": "npm run build:webext -- --mode production --devtool false",
+        "lint": "eslint src --ext ts",
+        "cs": "changeset",
+        "test": "node ./dist/__test__/runTest.js",
+        "clean": "rm -rf dist node_modules web/build web/node_modules *.vsix",
+        "build": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
+        "build:webext": "webpack",
+        "watch": "tsc -watch -p ./",
+        "watch:webext": "webpack --watch"
+    },
+    "engines": {
+        "vscode": "^1.64.0"
+    },
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "devDependencies": {
+        "@changesets/cli": "^2.26.1",
+        "@types/glob": "^8.1.0",
+        "@types/mocha": "^10.0.1",
+        "@types/node": "^20.2.5",
+        "@types/vscode": "^1.64.0",
+        "@types/webpack-env": "^1.18.1",
+        "@typescript-eslint/eslint-plugin": "^5.59.8",
+        "@typescript-eslint/parser": "^5.59.8",
+        "@vscode/test-electron": "^2.3.2",
+        "assert": "^2.0.0",
+        "buffer": "^6.0.3",
+        "constants-browserify": "^1.0.0",
+        "crypto-browserify": "^3.12.0",
+        "esbuild": "^0.17.19",
+        "eslint": "^8.41.0",
+        "glob": "^10.2.6",
+        "mocha": "^10.2.0",
+        "os-browserify": "^0.3.0",
+        "path-browserify": "^1.0.1",
+        "process": "^0.11.10",
+        "stream-browserify": "^3.0.0",
+        "ts-loader": "^9.4.3",
+        "typescript": "^5.0.4",
+        "webpack": "^5.84.1",
+        "webpack-cli": "^5.1.1"
+    },
+    "dependencies": {
+        "@vscode-utility/fs-browserify": "^1.0.8",
+        "@vscode-utility/terminal-browserify": "^1.0.2"
+    },
+    "author": {
+        "name": "Nguyen Ngoc Long",
+        "url": "https://nguyenngoclongdev.github.io"
+    },
+    "publisher": "nguyenngoclong",
+    "license": "MIT"
+}

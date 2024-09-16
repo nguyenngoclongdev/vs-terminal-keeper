@@ -1,0 +1,55 @@
+name: ci
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write # to create release (changesets/action)
+            pull-requests: write # to create pull request (changesets/action)
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
+                  fetch-depth: 0
+
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 16.x
+                  cache: 'npm'
+                  always-auth: true
+                  registry-url: https://npm.pkg.github.com/
+                  scope: '@vscode-utility'
+
+            - name: Install dependency
+              run: npm ci
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+            - name: Create Release Pull Request or publish package
+              id: changesets
+              uses: changesets/action@v1
+              with:
+                  commit: 'chore: update versions'
+                  title: 'chore: update versions'
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Publish to Visual Studio Marketplace
+              if: steps.changesets.outputs.hasChangesets == 'true'
+              uses: HaaLeo/publish-vscode-extension@v1
+              with:
+                  pat: ${{ secrets.VSCE_PAT }}
+                  preRelease: false
+                  registryUrl: https://marketplace.visualstudio.com
+
+            - name: Publish to Open VSX Registry
+              if: steps.changesets.outputs.hasChangesets == 'true'
+              uses: HaaLeo/publish-vscode-extension@v1
+              with:
+                  pat: ${{ secrets.OPEN_VSX_TOKEN }}
+                  preRelease: false

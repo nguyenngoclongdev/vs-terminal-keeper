@@ -1,1 +1,12 @@
-.DS_Store
+dist
+node_modules
+.vscode-test/
+*.vsix
+**/.DS_Store
+.npmrc
+temp.*
+**/.DS_Store
+src/__test__/fixtures/*.ts
+pnpm-lock.yaml
+yarn-lock.json
+web/build/**

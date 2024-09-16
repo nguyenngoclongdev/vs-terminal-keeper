@@ -1,0 +1,37 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Extension",
+            "type": "extensionHost",
+            "request": "launch",
+            "runtimeExecutable": "${execPath}",
+            "args": ["--extensionDevelopmentPath=${workspaceFolder}", "--disable-extensions"],
+            "sourceMaps": true,
+            "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+            "preLaunchTask": "npm: watch"
+        },
+        {
+            "name": "Run Web Extension in VS Code",
+            "type": "extensionHost",
+            "debugWebWorkerHost": true,
+            "request": "launch",
+            "args": ["--extensionDevelopmentPath=${workspaceFolder}", "--extensionDevelopmentKind=web", "--disable-extensions"],
+            "outFiles": ["${workspaceFolder}/dist/web/**/*.js"],
+            "preLaunchTask": "npm: watch-web"
+        },
+        {
+            "name": "Extension Tests",
+            "type": "extensionHost",
+            "request": "launch",
+            "args": [
+                "--extensionDevelopmentPath=${workspaceFolder}",
+                "--extensionTestsPath=${workspaceFolder}/dist/__test__/suite/index",
+                "--launchArgs=${workspaceFolder}/src/__test__/fixtures/",
+                "--disable-extensions"
+            ],
+            "outFiles": ["${workspaceFolder}/dist/__test__/**/*.js"],
+            "preLaunchTask": "${defaultBuildTask}"
+        }
+    ]
+}

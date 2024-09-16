@@ -1,0 +1,39 @@
+# Ignore Misc
+**/*.map
+**/*.ts
+**/*.vsix
+**/.npmrc
+**/.gitignore
+**/.vscodeignore
+**/tsconfig.json
+**/vite.config.ts
+**/.eslintrc.json
+**/package-lock.json
+**/webpack.config.json
+
+# Ignore extension configs
+.vscode/**
+.changeset/**
+.github/**
+
+# Ignore test files
+.vscode-test/**
+out/test/**
+
+# Ignore source code
+src/**
+dist/__test__/**
+node_modules/**
+
+# Ignore all webview-ui files except the build directory
+web/src/**
+web/public/**
+web/scripts/**
+web/index.html
+web/README.md
+web/package.json
+web/package-lock.json
+web/node_modules/**
+
+# Other
+**/CONTRIBUTING.md
