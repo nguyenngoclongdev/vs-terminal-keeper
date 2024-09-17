@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.31
+
+### Patch Changes
+
+- 1aaea6e: fix: active terminal array from activity
+
 ## 1.1.30
 
 ### Patch Changes
