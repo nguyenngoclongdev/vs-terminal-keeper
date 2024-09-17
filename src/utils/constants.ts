@@ -29,6 +29,7 @@ export const constants = {
     selectSessionActiveTitle: 'Select a session to activate',
     selectSessionActivePlaceHolder: 'Select session...',
     activeSessionFailed: 'Failed to activate the session.',
+    activeTerminalFailed: 'Failed to activate the terminal.',
     killTerminalFailed: 'Failed to kill the terminals.',
     workingDirNotExist: 'The terminal "{terminal}" cannot find the current working directory "{cwd}".',
 
