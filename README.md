@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" width="120" height="120" />
+  <img src="https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/logo.png" width="120" height="120" />
 </p>
 
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/nguyenngoclong.terminal-keeper)](https://marketplace.visualstudio.com/items?itemName=nguyenngoclong.terminal-keeper)
