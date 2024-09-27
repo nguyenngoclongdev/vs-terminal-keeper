@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.32
+
+### Patch Changes
+
+- 0d3601d: fix: render terminal icon on tree view
+
 ## 1.1.31
 
 ### Patch Changes
