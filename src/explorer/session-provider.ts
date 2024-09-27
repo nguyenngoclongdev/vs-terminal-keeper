@@ -124,7 +124,7 @@ export class SessionProvider implements TreeDataProvider<SessionTreeItem> {
         terminalArrayIndex?: number
     ): SessionTreeItem => {
         const { sessionId } = parent;
-        const { name: terminalName, commands, joinOperator } = terminal;
+        const { name: terminalName, commands, icon, joinOperator } = terminal;
         const terminalCommands = commands?.join(TerminalApi.instance().getJoinOperator(joinOperator));
         const tooltip = new MarkdownString(`### **${terminalName}**`).appendCodeblock(`${terminalCommands}`, 'sh');
         return {
@@ -132,7 +132,7 @@ export class SessionProvider implements TreeDataProvider<SessionTreeItem> {
             description: terminalCommands,
             tooltip,
             contextValue: 'terminal-context',
-            iconPath: new ThemeIcon('terminal'),
+            iconPath: new ThemeIcon(icon || 'terminal'),
             sessionId,
             terminalArrayIndex,
             // command: {
