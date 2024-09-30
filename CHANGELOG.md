@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.33
+
+### Patch Changes
+
+- 05e2741: fix: warn if the folder is not opened before using Terminal Keeper.
+
 ## 1.1.32
 
 ### Patch Changes
