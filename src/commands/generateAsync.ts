@@ -1,11 +1,30 @@
-import { window } from 'vscode';
+import { commands, window } from 'vscode';
 import { Configuration } from '../configuration/configuration';
 import { configurationTemplate } from '../configuration/template';
-import { constants } from '../utils/constants';
-import { showErrorMessageWithDetail, showTextDocument } from '../utils/utils';
+import { constants, sysCommands } from '../utils/constants';
+import { isWorkspaceOpened, showErrorMessageWithDetail, showTextDocument } from '../utils/utils';
 
 export const generateAsync = async (): Promise<void> => {
     try {
+        // Check workspace is opened
+        if (!isWorkspaceOpened()) {
+            window
+                .showInformationMessage(
+                    constants.openWorkspace,
+                    constants.openFolderButton,
+                    constants.openWorkspaceButton
+                )
+                .then(async (selection) => {
+                    if (selection === constants.openFolderButton) {
+                        await commands.executeCommand(sysCommands.openFolder);
+                    }
+                    if (selection === constants.openWorkspaceButton) {
+                        await commands.executeCommand(sysCommands.openWorkspace);
+                    }
+                });
+            return;
+        }
+
         // Write configuration file
         const configInstance = Configuration.instance();
         const isDefinedSessionFile = await configInstance.isDefinedSessionFile();

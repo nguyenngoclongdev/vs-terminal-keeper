@@ -12,12 +12,18 @@ export const extCommands = {
     activeTerminalActivity: 'terminal-keeper.active-terminal-activity'
 };
 
+export const sysCommands = {
+    openFolder: 'workbench.action.files.openFolder',
+    openWorkspace: 'workbench.action.openWorkspace'
+};
+
 export const constants = {
     // Common
     defaultSession: 'default',
 
     // Open the configuration file
     openConfigurationFailed: 'Failed to open the configuration file!',
+    openWorkspace: 'Please make sure to open a workspace folder before using Terminal Keeper!',
 
     // Generate the configuration file
     generateConfigurationTitle: 'Would you like to generate the configuration?',
@@ -66,5 +72,7 @@ export const constants = {
     noButton: 'No',
     newSession: 'Create a new session...',
     viewConfigurationButton: 'View Configuration',
+    openWorkspaceButton: 'Open Workspace',
+    openFolderButton: 'Open Folder',
     viewError: 'View Error'
 };

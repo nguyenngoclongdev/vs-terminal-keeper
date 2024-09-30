@@ -113,3 +113,8 @@ export const showGenerateConfiguration = async (): Promise<void> => {
         await commands.executeCommand(extCommands.generate);
     }
 };
+
+export const isWorkspaceOpened = (): boolean => {
+    // The name of the workspace. undefined when no workspace has been opened.
+    return workspace.name !== undefined;
+};
