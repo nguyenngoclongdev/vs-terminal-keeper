@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.34
+
+### Patch Changes
+
+- 85b106b: support wsl mode
+
 ## 1.1.33
 
 ### Patch Changes
