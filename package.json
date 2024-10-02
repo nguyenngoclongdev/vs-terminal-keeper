@@ -240,6 +240,11 @@
                     "type": "boolean",
                     "default": false,
                     "description": "(Experimental) Kill the active process when the terminal is closed."
+                },
+                "terminal-keeper.wslSupport": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "(Experimental) When enable, will convert wsl path to windows path when connect to WSL."
                 }
             }
         }

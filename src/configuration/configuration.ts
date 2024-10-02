@@ -1,6 +1,7 @@
 import { fs } from '@vscode-utility/fs-browserify';
 import { posix } from 'path';
 import { workspace, WorkspaceConfiguration } from 'vscode';
+import { getWorkspaceRootPath } from '../utils/get-workspace';
 import { getTabWidth } from '../utils/utils';
 import { SessionConfiguration } from './interface';
 
@@ -12,8 +13,8 @@ export class Configuration {
 
     constructor() {
         this.workSpaceConfigurationSpace = 'terminal-keeper';
-        this.vscodeDirPath = this.getVscodeDirPath();
-        this.sessionFilePath = this.getSessionFilePath();
+        this.vscodeDirPath = '';
+        this.sessionFilePath = '';
     }
 
     private static _instance: Configuration;
@@ -24,8 +25,25 @@ export class Configuration {
         return this._instance;
     }
 
-    async isDefinedSessionFile(): Promise<boolean> {
-        return await fs.existAsync(this.sessionFilePath);
+    async init(): Promise<boolean> {
+        try {
+            // Get workspace directory path
+            let workspaceDirPath = workspace.workspaceFolders?.[0].uri.fsPath;
+            const isWSLSupport = this.getExperimentalConfig<boolean>('wslSupport');
+            if (isWSLSupport) {
+                workspaceDirPath = await getWorkspaceRootPath();
+            }
+            if (!workspaceDirPath) {
+                throw Error('Can not resolve workspace directory.');
+            }
+
+            // Set global path
+            this.vscodeDirPath = this.getVscodeDirPath(workspaceDirPath);
+            this.sessionFilePath = this.getSessionFilePath(workspaceDirPath);
+            return true;
+        } catch (error) {
+            return false;
+        }
     }
 
     async load(): Promise<SessionConfiguration> {
@@ -69,6 +87,10 @@ export class Configuration {
                 onConfigChange();
             }
         });
+    }
+
+    async isDefinedSessionFile(): Promise<boolean> {
+        return await fs.existAsync(this.sessionFilePath);
     }
 
     private isSetOnValue(value: any) {
@@ -153,13 +175,12 @@ export class Configuration {
         }
     }
 
-    private getVscodeDirPath(): string {
-        const workspaceDirPath = workspace.workspaceFolders?.[0].uri.fsPath || '';
+    private getVscodeDirPath(workspaceDirPath: string): string {
         return posix.join(workspaceDirPath, '.vscode');
     }
 
-    private getSessionFilePath(): string {
-        const vscodeDirPath = this.getVscodeDirPath();
+    private getSessionFilePath(workspaceDirPath: string): string {
+        const vscodeDirPath = this.getVscodeDirPath(workspaceDirPath);
         return posix.join(vscodeDirPath, 'sessions.json');
     }
 }

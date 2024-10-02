@@ -34,6 +34,7 @@
         "posttest",
         "pree",
         "vscommands",
-        "vsix"
+        "vsix",
+        "wslpath"
     ]
 }

@@ -10,11 +10,9 @@ import { removeAsync } from './commands/removeAsync';
 import { saveAsync } from './commands/saveAsync';
 import { Configuration } from './configuration/configuration';
 import { configFileVersions } from './configuration/interface';
-import { CommandProvider } from './explorer/command-provider';
 import { OverviewProvider } from './explorer/overview-provider';
 import { SessionProvider, SessionTreeItem } from './explorer/session-provider';
 import { extCommands } from './utils/constants';
-import { getWorkspacePath } from './utils/get-workspace';
 
 export async function activate(context: ExtensionContext) {
     context.subscriptions.push(
@@ -29,8 +27,8 @@ export async function activate(context: ExtensionContext) {
         // Active terminal session
         commands.registerCommand(extCommands.active, async (...args: any[]) => {
             const uri = args?.[0] as Uri;
-            const workspacePath = getWorkspacePath(uri);
-            await activeAsync(workspacePath);
+            const cwd = uri?.fsPath;
+            await activeAsync(cwd);
         }),
         // Save terminal session
         commands.registerCommand(extCommands.save, async (...args: any[]) => {
@@ -88,6 +86,7 @@ export async function activate(context: ExtensionContext) {
 
     // Run on startup
     const configInstance = Configuration.instance();
+    await configInstance.init();
     const { $schema = '', activateOnStartup = false, active } = await configInstance.load();
     if ($schema && !$schema.includes(configFileVersions.latest)) {
         await commands.executeCommand(extCommands.migrate);

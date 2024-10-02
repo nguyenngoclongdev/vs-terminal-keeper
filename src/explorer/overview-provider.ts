@@ -42,6 +42,7 @@ export class OverviewProvider implements TreeDataProvider<OverviewTreeItem> {
 
         // Get experimental config
         const killProcess = configInstance.getExperimentalConfig<boolean>('killProcess');
+        const isWSLSupport = configInstance.getExperimentalConfig<boolean>('wslSupport');
 
         // Generate tree item.
         return Object.entries({
@@ -50,7 +51,8 @@ export class OverviewProvider implements TreeDataProvider<OverviewTreeItem> {
             keepExistingTerminals: [false, keepExistingTerminals],
             noClear: [false, noClear],
             theme: ['default', theme],
-            killProcess: [false, killProcess]
+            killProcess: [false, killProcess],
+            wslSupport: [false, isWSLSupport]
         }).map(([label, value]) => this.renderTreeItem(configInstance.userConfigKeys, label, value[1], value[0]));
     }
 
