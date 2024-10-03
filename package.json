@@ -135,6 +135,10 @@
                 "icon": "$(refresh)"
             },
             {
+                "command": "terminal-keeper.collapse-all-activity",
+                "title": "Collapse All"
+            },
+            {
                 "command": "terminal-keeper.active-session-activity",
                 "title": "Active Session",
                 "icon": "$(run)"
@@ -174,6 +178,10 @@
                 },
                 {
                     "command": "terminal-keeper.kill-all",
+                    "when": "view == terminalKeeperActivityView"
+                },
+                {
+                    "command": "terminal-keeper.collapse-all-activity",
                     "when": "view == terminalKeeperActivityView"
                 }
             ],

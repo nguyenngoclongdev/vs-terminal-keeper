@@ -52,13 +52,17 @@ export async function activate(context: ExtensionContext) {
     );
 
     // Init tree data provider
+    const activityId = 'terminalKeeperActivityView';
     const treeProvider = new TreeProvider();
-    window.registerTreeDataProvider('terminalKeeperActivityView', treeProvider);
+    window.registerTreeDataProvider(activityId, treeProvider);
     context.subscriptions.push(
         commands.registerCommand(extCommands.refresh, async () => treeProvider.refresh()),
         commands.registerCommand(extCommands.activeSessionActivity, async (sessionTreeItem: TKTreeItem) => {
             const { sessionId } = sessionTreeItem;
             await activeBySessionAsync(sessionId, true);
+        }),
+        commands.registerCommand(extCommands.collapseAllActivity, async () => {
+            await commands.executeCommand(`workbench.actions.treeView.${activityId}.collapseAll`);
         }),
         commands.registerCommand(extCommands.activeTerminalActivity, async (sessionTreeItem: TKTreeItem) => {
             const { sessionId, terminalArrayIndex, label, contextValue } = sessionTreeItem;

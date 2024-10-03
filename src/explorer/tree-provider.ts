@@ -74,69 +74,53 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
         // Generate tree item.
         const themeService = new ThemeService(theme);
         return [
-            this.renderParentItem({
+            this.renderGroupItem({
                 label: 'Global Configs',
-                value: '',
-                defaultValue: '',
                 icon: { id: 'wrench' },
-                userConfigs: Configuration.userConfigKeys,
                 collapsibleState: TreeItemCollapsibleState.Collapsed,
                 children: [
-                    this.renderParentItem({
+                    this.renderConfigItem({
                         label: 'active',
                         value: active,
-                        defaultValue: 'default',
-                        icon: { id: 'circle-filled' },
-                        userConfigs: Configuration.userConfigKeys
+                        defaultValue: 'default'
                     }),
-                    this.renderParentItem({
+                    this.renderConfigItem({
                         label: 'activateOnStartup',
                         value: activateOnStartup,
-                        defaultValue: false,
-                        icon: { id: 'circle-filled' },
-                        userConfigs: Configuration.userConfigKeys
+                        defaultValue: false
                     }),
-                    this.renderParentItem({
+                    this.renderConfigItem({
                         label: 'keepExistingTerminals',
                         value: keepExistingTerminals,
-                        defaultValue: false,
-                        icon: { id: 'circle-filled' },
-                        userConfigs: Configuration.userConfigKeys
+                        defaultValue: false
                     }),
-                    this.renderParentItem({
+                    this.renderConfigItem({
                         label: 'noClear',
                         value: noClear,
-                        defaultValue: false,
-                        icon: { id: 'circle-filled' },
-                        userConfigs: Configuration.userConfigKeys
+                        defaultValue: false
                     }),
-                    this.renderParentItem({
+                    this.renderConfigItem({
                         label: 'theme',
                         value: theme,
-                        defaultValue: 'default',
-                        icon: { id: 'circle-filled' },
-                        userConfigs: Configuration.userConfigKeys
+                        defaultValue: 'default'
                     }),
-                    this.renderParentItem({
+                    this.renderConfigItem({
                         label: 'killProcess',
                         value: killProcess,
                         defaultValue: false,
-                        userConfigs: Configuration.userConfigKeys
+                        icon: { id: 'microscope' }
                     }),
-                    this.renderParentItem({
+                    this.renderConfigItem({
                         label: 'wslSupport',
                         value: isWSLSupport,
                         defaultValue: false,
-                        userConfigs: Configuration.userConfigKeys
+                        icon: { id: 'microscope' }
                     })
                 ]
             }),
-            this.renderParentItem({
+            this.renderGroupItem({
                 label: 'Sessions',
-                value: sessions,
-                defaultValue: { default: [] },
                 icon: { id: 'layers' },
-                userConfigs: Configuration.userConfigKeys,
                 collapsibleState: TreeItemCollapsibleState.Expanded,
                 children: Object.entries(sessions).map(([sessionName, session]) => {
                     return this.renderSessionItem({
@@ -144,7 +128,7 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
                         value: session,
                         children: session.map((terminalOrTerminalArray, index) => {
                             if (Array.isArray(terminalOrTerminalArray)) {
-                                const groupName = terminalOrTerminalArray?.[0].name;
+                                const terminalGroupName = terminalOrTerminalArray?.[0].name;
                                 return this.renderTerminalArrayItem({
                                     terminals: terminalOrTerminalArray,
                                     sessionId: sessionName,
@@ -155,7 +139,7 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
                                             theme: themeService,
                                             sessionId: sessionName,
                                             terminalArrayIndex: index,
-                                            groupName
+                                            terminalGroupName
                                         })
                                     )
                                 });
@@ -173,28 +157,40 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
         ];
     };
 
-    private renderParentItem = (params: {
+    private renderGroupItem = (params: {
+        label: string;
+        children?: TKTreeItem[];
+        collapsibleState?: TreeItemCollapsibleState;
+        icon: { id: string; color?: string };
+    }): TKTreeItem => {
+        const { label, icon, collapsibleState, children } = params;
+        const { id, color } = icon || {};
+        const item = new TKTreeItem(label, children);
+        item.contextValue = 'overview-context';
+        item.iconPath = new ThemeIcon(id, color);
+        if (collapsibleState) {
+            item.collapsibleState = collapsibleState;
+        }
+        return item;
+    };
+
+    private renderConfigItem = (params: {
         label: string;
         value: boolean | string | { [key: string]: any } | undefined;
         defaultValue: boolean | string | { [key: string]: any } | undefined;
-        userConfigs: string[];
         children?: TKTreeItem[];
-        collapsibleState?: TreeItemCollapsibleState;
         icon?: { id: string; color?: string };
     }): TKTreeItem => {
-        const { label, value, defaultValue, icon, collapsibleState, userConfigs, children } = params;
+        const { label, value, defaultValue, icon, children } = params;
         const { id, color } = icon || {};
-        const source = userConfigs.includes(label) ? 'settings.json' : 'sessions.json';
+        const source = Configuration.userConfigKeys.includes(label) ? 'settings.json' : 'sessions.json';
         const item = new TKTreeItem(label, children);
         item.description = `${value}`;
         item.tooltip = new MarkdownString(`### **${label}**: \`${value}\``)
             .appendCodeblock(`Default Value: ${defaultValue}`)
             .appendCodeblock(`Config Source: ${source}`);
         item.contextValue = 'overview-context';
-        item.iconPath = new ThemeIcon(id || 'microscope', color);
-        if (collapsibleState) {
-            item.collapsibleState = collapsibleState;
-        }
+        item.iconPath = new ThemeIcon(id || 'circle-filled', color);
         return item;
     };
 
@@ -252,12 +248,12 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
         theme: ThemeService;
         sessionId: string;
         terminalArrayIndex: number;
-        groupName?: string;
+        terminalGroupName?: string;
     }): TKTreeItem => {
-        const { terminal, theme, sessionId, terminalArrayIndex, groupName } = params;
+        const { terminal, theme, sessionId, terminalArrayIndex, terminalGroupName } = params;
         const { name: terminalName = '(empty)', commands, joinOperator } = terminal;
-        const icon = theme.getIcon(terminal.icon, groupName, terminalName);
-        const color = theme.getColor(terminal.color, groupName, terminalName);
+        const icon = theme.getIcon(terminal.icon, terminalGroupName, terminalName);
+        const color = theme.getColor(terminal.color, terminalGroupName, terminalName);
         const terminalCommands = commands?.join(TerminalApi.instance().getJoinOperator(joinOperator));
 
         const item = new TKTreeItem(terminalName);

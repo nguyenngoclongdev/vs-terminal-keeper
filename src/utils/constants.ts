@@ -9,7 +9,8 @@ export const extCommands = {
     refresh: 'terminal-keeper.refresh-activity',
     activeSessionActivity: 'terminal-keeper.active-session-activity',
     activeTerminalActivity: 'terminal-keeper.active-terminal-activity',
-    copyCommandActivity: 'terminal-keeper.copy-command-activity'
+    copyCommandActivity: 'terminal-keeper.copy-command-activity',
+    collapseAllActivity: 'terminal-keeper.collapse-all-activity'
 };
 
 export const sysCommands = {
