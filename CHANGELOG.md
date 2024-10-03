@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.37
+
+### Patch Changes
+
+- b1845ad: fix: allow collapse all tree item
+
 ## 1.1.36
 
 ### Patch Changes

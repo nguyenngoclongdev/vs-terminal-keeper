@@ -3,7 +3,7 @@
     "displayName": "Terminal Keeper",
     "description": "Easily save and recall previous terminal sessions, create new sessions, and edit or delete existing ones.",
     "icon": "assets/logo.png",
-    "version": "1.1.36",
+    "version": "1.1.37",
     "main": "./dist/extension.js",
     "browser": "./dist/web/extension.js",
     "preview": false,
