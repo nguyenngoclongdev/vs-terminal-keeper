@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.35
+
+### Patch Changes
+
+- a3a4372: update the UI of activity
+
 ## 1.1.34
 
 ### Patch Changes
