@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.36
+
+### Patch Changes
+
+- 0d65c5b: fix: sync icon and color from setting to activity
+
 ## 1.1.35
 
 ### Patch Changes
