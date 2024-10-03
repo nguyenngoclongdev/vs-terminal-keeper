@@ -9,15 +9,14 @@ import {
 export const openAsync = async (): Promise<void> => {
     try {
         // Write configuration file
-        const configInstance = Configuration.instance();
-        const isDefinedSessionFile = await configInstance.isDefinedSessionFile();
+        const isDefinedSessionFile = await Configuration.isDefinedSessionFile();
         if (!isDefinedSessionFile) {
             await showGenerateConfiguration();
             return;
         }
 
         // Open the terminal session configuration
-        showTextDocument(configInstance.sessionFilePath);
+        showTextDocument(Configuration.sessionFilePath);
     } catch (error) {
         showErrorMessageWithDetail(constants.openConfigurationFailed, error);
     }

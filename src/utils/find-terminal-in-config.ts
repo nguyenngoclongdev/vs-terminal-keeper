@@ -12,14 +12,13 @@ export const findTerminal = async (
     }
 
     // Read the config
-    const configInstance = Configuration.instance();
-    const isDefinedSessionFile = await configInstance.isDefinedSessionFile();
+    const isDefinedSessionFile = await Configuration.isDefinedSessionFile();
     if (!isDefinedSessionFile) {
         return undefined;
     }
 
     // Check the size of sessions
-    const config = await configInstance.load();
+    const config = await Configuration.load();
     if (!config || !config.sessions) {
         return undefined;
     }

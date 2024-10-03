@@ -83,23 +83,15 @@
         },
         "viewsWelcome": [
             {
-                "view": "terminalKeeperOverviewView",
+                "view": "terminalKeeperActivityView",
                 "contents": "Welcome to Terminal Keeper.\nLet's start by generating the configuration.\n[Generate Configuration](command:terminal-keeper.generate)\nTo learn more about how to manage the terminal session [read our docs!](https://github.com/nguyenngoclongdev/vs-terminal-keeper/)"
-            },
-            {
-                "view": "terminalKeeperSessionView",
-                "contents": "No sessions created yet."
             }
         ],
         "views": {
             "terminalKeeperActivitybar": [
                 {
-                    "id": "terminalKeeperOverviewView",
-                    "name": "Overview"
-                },
-                {
-                    "id": "terminalKeeperSessionView",
-                    "name": "Sessions"
+                    "id": "terminalKeeperActivityView",
+                    "name": ""
                 }
             ]
         },
@@ -138,13 +130,9 @@
                 "title": "Remove Terminal Session"
             },
             {
-                "command": "terminal-keeper.refresh",
-                "title": "Refresh",
+                "command": "terminal-keeper.refresh-activity",
+                "title": "Refresh Activity",
                 "icon": "$(refresh)"
-            },
-            {
-                "command": "terminal-keeper.refresh-command-activity",
-                "title": "Refresh Command"
             },
             {
                 "command": "terminal-keeper.active-session-activity",
@@ -155,40 +143,55 @@
                 "command": "terminal-keeper.active-terminal-activity",
                 "title": "Active Terminal",
                 "icon": "$(run)"
+            },
+            {
+                "command": "terminal-keeper.copy-command-activity",
+                "title": "Copy Commands"
             }
         ],
         "menus": {
             "view/title": [
                 {
                     "command": "terminal-keeper.active",
-                    "when": "view == terminalKeeperOverviewView",
+                    "when": "view == terminalKeeperActivityView",
                     "group": "navigation@1"
                 },
                 {
-                    "command": "terminal-keeper.open",
-                    "when": "view == terminalKeeperOverviewView",
-                    "group": "navigation@2"
+                    "command": "terminal-keeper.active",
+                    "when": "view == terminalKeeperActivityView"
                 },
                 {
-                    "command": "terminal-keeper.refresh",
-                    "when": "view == terminalKeeperOverviewView",
-                    "group": "navigation@3"
+                    "command": "terminal-keeper.open",
+                    "when": "view == terminalKeeperActivityView"
+                },
+                {
+                    "command": "terminal-keeper.refresh-activity",
+                    "when": "view == terminalKeeperActivityView"
+                },
+                {
+                    "command": "terminal-keeper.remove",
+                    "when": "view == terminalKeeperActivityView"
                 },
                 {
                     "command": "terminal-keeper.kill-all",
-                    "when": "view == terminalKeeperOverviewView"
+                    "when": "view == terminalKeeperActivityView"
                 }
             ],
             "view/item/context": [
                 {
                     "command": "terminal-keeper.active-session-activity",
-                    "when": "view == terminalKeeperSessionView && viewItem == session-context",
+                    "when": "viewItem == session-context",
                     "group": "inline@1"
                 },
                 {
                     "command": "terminal-keeper.active-terminal-activity",
-                    "when": "view == terminalKeeperSessionView && (viewItem == terminal-context || viewItem == terminal-array-context)",
+                    "when": "viewItem == terminal-array-context || viewItem == terminal-context",
                     "group": "inline@1"
+                },
+                {
+                    "command": "terminal-keeper.copy-command-activity",
+                    "when": "viewItem == terminal-context",
+                    "group": "terminal@1"
                 }
             ],
             "explorer/context": [

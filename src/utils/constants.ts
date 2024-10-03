@@ -6,15 +6,16 @@ export const extCommands = {
     remove: 'terminal-keeper.remove',
     migrate: 'terminal-keeper.migrate',
     killAll: 'terminal-keeper.kill-all',
-    refresh: 'terminal-keeper.refresh',
-    refreshCommandActivity: 'terminal-keeper.refresh-command-activity',
+    refresh: 'terminal-keeper.refresh-activity',
     activeSessionActivity: 'terminal-keeper.active-session-activity',
-    activeTerminalActivity: 'terminal-keeper.active-terminal-activity'
+    activeTerminalActivity: 'terminal-keeper.active-terminal-activity',
+    copyCommandActivity: 'terminal-keeper.copy-command-activity'
 };
 
 export const sysCommands = {
     openFolder: 'workbench.action.files.openFolder',
-    openWorkspace: 'workbench.action.openWorkspace'
+    openWorkspace: 'workbench.action.openWorkspace',
+    terminalTabFocus: 'workbench.action.terminal.focus'
 };
 
 export const constants = {

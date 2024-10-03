@@ -19,8 +19,7 @@ export const activeByTerminalAsync = async (
 
         // Read the config
         const { createTerminal, getCwdPath } = TerminalApi.instance();
-        const configInstance = Configuration.instance();
-        const config = await configInstance.load();
+        const config = await Configuration.load();
         const { theme = 'default', noClear = false } = config;
         const themeService = new ThemeService(theme);
 

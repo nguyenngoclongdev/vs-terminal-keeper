@@ -1,4 +1,4 @@
-import { ExtensionContext, Uri, commands, window } from 'vscode';
+import { ExtensionContext, Uri, commands, env, window } from 'vscode';
 import { activeAsync } from './commands/activeAsync';
 import { activeBySessionAsync } from './commands/activeBySessionAsync';
 import { activeByTerminalAsync } from './commands/activeByTerminalAsync';
@@ -10,11 +10,14 @@ import { removeAsync } from './commands/removeAsync';
 import { saveAsync } from './commands/saveAsync';
 import { Configuration } from './configuration/configuration';
 import { configFileVersions } from './configuration/interface';
-import { OverviewProvider } from './explorer/overview-provider';
-import { SessionProvider, SessionTreeItem } from './explorer/session-provider';
+import { TKTreeItem, TreeProvider } from './explorer/tree-provider';
 import { extCommands } from './utils/constants';
 
 export async function activate(context: ExtensionContext) {
+    // Init configuration
+    await Configuration.initialize();
+
+    // Subscriptions commands
     context.subscriptions.push(
         // Generate the configuration
         commands.registerCommand(extCommands.generate, async (...args: any[]) => {
@@ -48,58 +51,40 @@ export async function activate(context: ExtensionContext) {
         })
     );
 
-    // Init all tree data provider
-    const overviewProvider = new OverviewProvider();
-    const sessionProvider = new SessionProvider();
-    // const commandProvider = new CommandProvider();
-
-    // Register tree data provider
-    window.registerTreeDataProvider('terminalKeeperOverviewView', overviewProvider);
-    window.registerTreeDataProvider('terminalKeeperSessionView', sessionProvider);
-    // window.registerTreeDataProvider('terminalKeeperCommandView', commandProvider);
-
-    // Init command for tree data provider
+    // Init tree data provider
+    const treeProvider = new TreeProvider();
+    window.registerTreeDataProvider('terminalKeeperActivityView', treeProvider);
     context.subscriptions.push(
-        commands.registerCommand(extCommands.refresh, async () => {
-            overviewProvider.refresh();
-            sessionProvider.refresh();
-        }),
-        // commands.registerCommand(
-        //     extCommands.refreshCommandActivity,
-        //     async (sessionId: string, terminalArrayIndex: number, terminalName: string) => {
-        //         commandProvider.refresh(sessionId, terminalArrayIndex, terminalName);
-        //     }
-        // ),
-        commands.registerCommand(extCommands.activeSessionActivity, async (sessionTreeItem: SessionTreeItem) => {
+        commands.registerCommand(extCommands.refresh, async () => treeProvider.refresh()),
+        commands.registerCommand(extCommands.activeSessionActivity, async (sessionTreeItem: TKTreeItem) => {
             const { sessionId } = sessionTreeItem;
             await activeBySessionAsync(sessionId, true);
         }),
-        commands.registerCommand(extCommands.activeTerminalActivity, async (sessionTreeItem: SessionTreeItem) => {
+        commands.registerCommand(extCommands.activeTerminalActivity, async (sessionTreeItem: TKTreeItem) => {
             const { sessionId, terminalArrayIndex, label, contextValue } = sessionTreeItem;
             if (contextValue === 'terminal-array-context') {
                 await activeByTerminalAsync(sessionId, terminalArrayIndex, undefined);
             } else {
                 await activeByTerminalAsync(sessionId, terminalArrayIndex, label as string);
             }
+        }),
+        commands.registerCommand(extCommands.copyCommandActivity, async (sessionTreeItem: TKTreeItem) => {
+            const { description } = sessionTreeItem;
+            env.clipboard.writeText(`${description || ''}`);
         })
     );
 
+    // Watch configuration file changed
+    Configuration.watch(() => treeProvider.refresh());
+
     // Run on startup
-    const configInstance = Configuration.instance();
-    await configInstance.init();
-    const { $schema = '', activateOnStartup = false, active } = await configInstance.load();
+    const { $schema = '', activateOnStartup = false, active } = await Configuration.load();
     if ($schema && !$schema.includes(configFileVersions.latest)) {
         await commands.executeCommand(extCommands.migrate);
     }
     if (activateOnStartup) {
         await activeBySessionAsync(active);
     }
-
-    // Watch configuration file changed
-    configInstance.watch(() => {
-        overviewProvider.refresh();
-        sessionProvider.refresh();
-    });
 }
 
 export async function deactivate() {

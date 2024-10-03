@@ -1,6 +1,8 @@
+import { TerminalApi } from '@vscode-utility/terminal-browserify';
 import { commands, QuickPickItem, Uri, window, workspace } from 'vscode';
+import { Configuration } from '../configuration/configuration';
 import { SessionItem } from '../configuration/interface';
-import { constants, extCommands } from './constants';
+import { constants, extCommands, sysCommands } from './constants';
 
 export const showErrorMessageWithDetail = (message: string, error: unknown): void => {
     const detailError = error instanceof Error ? (error as Error)?.message : `${error}`;
@@ -117,4 +119,15 @@ export const showGenerateConfiguration = async (): Promise<void> => {
 export const isWorkspaceOpened = (): boolean => {
     // The name of the workspace. undefined when no workspace has been opened.
     return workspace.name !== undefined;
+};
+
+export const killAllTerminal = async () => {
+    try {
+        // Focus to terminal tab
+        await commands.executeCommand(sysCommands.terminalTabFocus);
+
+        // Kill all existing terminal in parallel
+        const isKillProcess = Configuration.getExperimentalConfig<boolean>('killProcess');
+        await TerminalApi.instance().killAllTerminalAsync(isKillProcess);
+    } catch (error) {}
 };

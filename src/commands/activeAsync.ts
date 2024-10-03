@@ -1,22 +1,26 @@
+import { TerminalApi, ThemeService } from '@vscode-utility/terminal-browserify';
 import { ProgressLocation, QuickPickItem, window } from 'vscode';
 import { Configuration } from '../configuration/configuration';
 import { constants } from '../utils/constants';
 import { updateStatusBar } from '../utils/show-status-bar';
-import { TerminalApi, ThemeService } from '@vscode-utility/terminal-browserify';
-import { getSessionQuickPickItems, showErrorMessageWithDetail, showGenerateConfiguration } from '../utils/utils';
+import {
+    getSessionQuickPickItems,
+    killAllTerminal,
+    showErrorMessageWithDetail,
+    showGenerateConfiguration
+} from '../utils/utils';
 
 export const activeAsync = async (workspacePath: string | undefined): Promise<void> => {
     try {
         // Read the config
-        const configInstance = Configuration.instance();
-        const isDefinedSessionFile = await configInstance.isDefinedSessionFile();
+        const isDefinedSessionFile = await Configuration.isDefinedSessionFile();
         if (!isDefinedSessionFile) {
             await showGenerateConfiguration();
             return;
         }
 
         // Check the size of sessions
-        const config = await configInstance.load();
+        const config = await Configuration.load();
         const { keepExistingTerminals = false, sessions, theme = 'default', noClear = false, active = '' } = config;
         if (!sessions) {
             window.showWarningMessage(constants.notExistAnySessions);
@@ -58,7 +62,7 @@ export const activeAsync = async (workspacePath: string | undefined): Promise<vo
         }
 
         // Kill previous terminal and create new terminal from session
-        const { createTerminal, focusTerminal, getCwdPath, killAllTerminalAsync } = TerminalApi.instance();
+        const { createTerminal, focusTerminal, getCwdPath } = TerminalApi.instance();
         window.withProgress(
             {
                 location: ProgressLocation.Window,
@@ -71,8 +75,7 @@ export const activeAsync = async (workspacePath: string | undefined): Promise<vo
                     progress.report({ message: 'Killing previous terminals...' });
 
                     // Kill all existing terminal in parallel
-                    const isKillProcess = configInstance.getExperimentalConfig<boolean>('killProcess');
-                    await killAllTerminalAsync(isKillProcess);
+                    await killAllTerminal();
                 }
 
                 // Validate data need use async function
@@ -123,7 +126,7 @@ export const activeAsync = async (workspacePath: string | undefined): Promise<vo
 
                 // Save active terminal to configuration
                 progress.report({ message: 'Waiting for the terminal session to render completely...' });
-                await configInstance.save({ active: selectedSessionKey });
+                await Configuration.save({ active: selectedSessionKey });
 
                 // Return a value when the task completes
                 return 'Initialization of the terminal session completed!';

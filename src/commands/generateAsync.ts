@@ -26,15 +26,14 @@ export const generateAsync = async (): Promise<void> => {
         }
 
         // Write configuration file
-        const configInstance = Configuration.instance();
-        const isDefinedSessionFile = await configInstance.isDefinedSessionFile();
+        const isDefinedSessionFile = await Configuration.isDefinedSessionFile();
         if (isDefinedSessionFile) {
             window.showWarningMessage(constants.configurationFileAlreadyExist);
             return;
         }
 
         // Generate configuration file
-        await configInstance.save(configurationTemplate);
+        await Configuration.save(configurationTemplate);
 
         // Show message
         window
@@ -42,12 +41,12 @@ export const generateAsync = async (): Promise<void> => {
             .then((selection) => {
                 if (selection === constants.viewConfigurationButton) {
                     // Open the terminal session configuration
-                    showTextDocument(configInstance.sessionFilePath);
+                    showTextDocument(Configuration.sessionFilePath);
                 }
             });
 
         // Open the terminal session configuration
-        showTextDocument(configInstance.sessionFilePath);
+        showTextDocument(Configuration.sessionFilePath);
     } catch (error) {
         showErrorMessageWithDetail(constants.generateConfigurationFailed, error);
     }

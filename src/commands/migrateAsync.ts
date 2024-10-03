@@ -7,14 +7,13 @@ import { showErrorMessageWithDetail } from '../utils/utils';
 export const migrateAsync = async (): Promise<void> => {
     try {
         // Write configuration file
-        const configInstance = Configuration.instance();
-        const isDefinedSessionFile = await configInstance.isDefinedSessionFile();
+        const isDefinedSessionFile = await Configuration.isDefinedSessionFile();
         if (!isDefinedSessionFile) {
             return;
         }
 
         // Get content file
-        const currentConfiguration = await configInstance.load();
+        const currentConfiguration = await Configuration.load();
         if (!currentConfiguration) {
             return;
         }
@@ -59,7 +58,7 @@ export const migrateAsync = async (): Promise<void> => {
         migrateConfiguration.$schema = latestSchema;
 
         // Write new session configuration to file
-        await configInstance.save(migrateConfiguration);
+        await Configuration.save(migrateConfiguration);
     } catch (error) {
         showErrorMessageWithDetail(constants.migrateConfigurationFailed, error);
     }

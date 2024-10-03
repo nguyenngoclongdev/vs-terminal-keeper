@@ -7,14 +7,13 @@ import { getSessionQuickPickItems, showErrorMessageWithDetail, showTextDocument 
 
 export const removeAsync = async (): Promise<void> => {
     try {
-        const configInstance = Configuration.instance();
-        const isDefinedSessionFile = await configInstance.isDefinedSessionFile();
+        const isDefinedSessionFile = await Configuration.isDefinedSessionFile();
         if (!isDefinedSessionFile) {
             window.showWarningMessage(constants.notExistConfiguration);
             return;
         }
 
-        const config = await configInstance.load();
+        const config = await Configuration.load();
         if (!config) {
             window.showWarningMessage(constants.notExistConfiguration);
             return;
@@ -65,7 +64,7 @@ export const removeAsync = async (): Promise<void> => {
         }
 
         // Write new session configuration to file
-        await configInstance.save(newestConfiguration);
+        await Configuration.save(newestConfiguration);
 
         // Show message
         window
@@ -73,7 +72,7 @@ export const removeAsync = async (): Promise<void> => {
             .then((selection) => {
                 if (selection === constants.viewConfigurationButton) {
                     // Open the terminal session configuration
-                    showTextDocument(configInstance.sessionFilePath);
+                    showTextDocument(Configuration.sessionFilePath);
                 }
             });
     } catch (error) {

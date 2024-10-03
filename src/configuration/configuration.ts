@@ -6,26 +6,12 @@ import { getTabWidth } from '../utils/utils';
 import { SessionConfiguration } from './interface';
 
 export class Configuration {
-    private workSpaceConfigurationSpace: string;
-    private vscodeDirPath: string;
-    public sessionFilePath: string;
-    public userConfigKeys: string[] = [];
+    private static workSpaceConfigurationSpace: string = 'terminal-keeper';
+    private static vscodeDirPath: string = '';
+    public static sessionFilePath: string = '';
+    public static userConfigKeys: string[] = [];
 
-    constructor() {
-        this.workSpaceConfigurationSpace = 'terminal-keeper';
-        this.vscodeDirPath = '';
-        this.sessionFilePath = '';
-    }
-
-    private static _instance: Configuration;
-    public static instance(): Configuration {
-        if (!Configuration._instance) {
-            this._instance = new Configuration();
-        }
-        return this._instance;
-    }
-
-    async init(): Promise<boolean> {
+    public static async initialize(): Promise<boolean> {
         try {
             // Get workspace directory path
             let workspaceDirPath = workspace.workspaceFolders?.[0].uri.fsPath;
@@ -46,7 +32,7 @@ export class Configuration {
         }
     }
 
-    async load(): Promise<SessionConfiguration> {
+    public static async load(): Promise<SessionConfiguration> {
         let sessionConfig = await this.getSessionConfiguration();
         const extensionConfig = this.getWorkspaceConfiguration();
         this.userConfigKeys = [];
@@ -59,7 +45,7 @@ export class Configuration {
         return sessionConfig;
     }
 
-    async save(newestConfig: SessionConfiguration): Promise<boolean> {
+    public static async save(newestConfig: SessionConfiguration): Promise<boolean> {
         const isDefinedSessionFile = await this.isDefinedSessionFile();
         if (isDefinedSessionFile) {
             return await this.update(newestConfig);
@@ -67,12 +53,12 @@ export class Configuration {
         return await this.saveNew(newestConfig);
     }
 
-    getExperimentalConfig<T>(key: string): T | undefined {
+    public static getExperimentalConfig<T>(key: string): T | undefined {
         const extensionConfig = this.getWorkspaceConfiguration();
         return extensionConfig.get<T>(key);
     }
 
-    watch(onConfigChange: () => void) {
+    public static watch(onConfigChange: () => void) {
         fs.watch(this.sessionFilePath).onDidCreate(() => {
             onConfigChange();
         });
@@ -89,11 +75,11 @@ export class Configuration {
         });
     }
 
-    async isDefinedSessionFile(): Promise<boolean> {
+    public static async isDefinedSessionFile(): Promise<boolean> {
         return await fs.existAsync(this.sessionFilePath);
     }
 
-    private isSetOnValue(value: any) {
+    private static isSetOnValue(value: any) {
         if (value === null || value === undefined) {
             return false;
         }
@@ -110,7 +96,7 @@ export class Configuration {
         return true;
     }
 
-    private async update(newestConfig: SessionConfiguration): Promise<boolean> {
+    private static async update(newestConfig: SessionConfiguration): Promise<boolean> {
         const config = this.getWorkspaceConfiguration();
         const originalContent = await this.getSessionConfiguration();
 
@@ -140,7 +126,7 @@ export class Configuration {
         return false;
     }
 
-    private saveNew = async (newestConfig: SessionConfiguration): Promise<boolean> => {
+    private static async saveNew(newestConfig: SessionConfiguration): Promise<boolean> {
         try {
             // TODO: maybe not need create .vscode before
             await fs.createDirectoryAsync(this.vscodeDirPath);
@@ -151,17 +137,17 @@ export class Configuration {
         } catch {
             return false;
         }
-    };
+    }
 
-    private async writeSessionFile(newestConfig: SessionConfiguration): Promise<void> {
+    private static async writeSessionFile(newestConfig: SessionConfiguration): Promise<void> {
         await fs.writeFileAsync(this.sessionFilePath, JSON.stringify(newestConfig, null, getTabWidth()));
     }
 
-    private getWorkspaceConfiguration(): WorkspaceConfiguration {
+    private static getWorkspaceConfiguration(): WorkspaceConfiguration {
         return workspace.getConfiguration(this.workSpaceConfigurationSpace);
     }
 
-    private async getSessionConfiguration(): Promise<SessionConfiguration> {
+    private static async getSessionConfiguration(): Promise<SessionConfiguration> {
         const sessionFileExist = await fs.existAsync(this.sessionFilePath);
         if (!sessionFileExist) {
             return {};
@@ -175,11 +161,11 @@ export class Configuration {
         }
     }
 
-    private getVscodeDirPath(workspaceDirPath: string): string {
+    private static getVscodeDirPath(workspaceDirPath: string): string {
         return posix.join(workspaceDirPath, '.vscode');
     }
 
-    private getSessionFilePath(workspaceDirPath: string): string {
+    private static getSessionFilePath(workspaceDirPath: string): string {
         const vscodeDirPath = this.getVscodeDirPath(workspaceDirPath);
         return posix.join(vscodeDirPath, 'sessions.json');
     }

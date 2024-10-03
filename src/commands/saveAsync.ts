@@ -8,14 +8,13 @@ import { TerminalApi } from '@vscode-utility/terminal-browserify';
 export const saveAsync = async (): Promise<void> => {
     try {
         // Get session content
-        const configInstance = Configuration.instance();
-        const isDefinedSessionFile = await configInstance.isDefinedSessionFile();
+        const isDefinedSessionFile = await Configuration.isDefinedSessionFile();
         if (!isDefinedSessionFile) {
             window.showWarningMessage(constants.notExistConfiguration);
             return;
         }
         
-        const config = await configInstance.load();
+        const config = await Configuration.load();
         if (!config) {
             window.showWarningMessage(constants.notExistConfiguration);
             return;
@@ -75,7 +74,7 @@ export const saveAsync = async (): Promise<void> => {
             };
         }
         const newestSessions = { ...config.sessions, ...{ [selectedSession]: session } };
-        await configInstance.save({ sessions: newestSessions });
+        await Configuration.save({ sessions: newestSessions });
 
         // Show message
         window
@@ -83,7 +82,7 @@ export const saveAsync = async (): Promise<void> => {
             .then((selection) => {
                 if (selection === constants.viewConfigurationButton) {
                     // Open the terminal session configuration
-                    showTextDocument(configInstance.sessionFilePath);
+                    showTextDocument(Configuration.sessionFilePath);
                 }
             });
     } catch (error) {
