@@ -1,4 +1,5 @@
 import { ExtensionContext, Uri, commands, env, window } from 'vscode';
+import { abortAllAsync } from './commands/abortAllAsync';
 import { activeAsync } from './commands/activeAsync';
 import { activeBySessionAsync } from './commands/activeBySessionAsync';
 import { activeByTerminalAsync } from './commands/activeByTerminalAsync';
@@ -49,6 +50,10 @@ export async function activate(context: ExtensionContext) {
         // Clear all terminals
         commands.registerCommand(extCommands.clearAll, async (...args: any[]) => {
             await clearAllAsync();
+        }),
+        // Abort all terminals
+        commands.registerCommand(extCommands.abortAll, async (...args: any[]) => {
+            await abortAllAsync();
         }),
         // Kill all terminals
         commands.registerCommand(extCommands.killAll, async (...args: any[]) => {

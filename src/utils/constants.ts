@@ -6,6 +6,7 @@ export const extCommands = {
     remove: 'terminal-keeper.remove',
     migrate: 'terminal-keeper.migrate',
     clearAll: 'terminal-keeper.clear-all',
+    abortAll: 'terminal-keeper.abort-all',
     killAll: 'terminal-keeper.kill-all',
     refresh: 'terminal-keeper.refresh-activity',
     activeSessionActivity: 'terminal-keeper.active-session-activity',
@@ -44,6 +45,7 @@ export const constants = {
     activeTerminalFailed: 'Failed to activate the terminal.',
     killTerminalFailed: 'Failed to kill the terminals.',
     clearTerminalFailed: 'Failed to clear the terminals.',
+    abortTerminalFailed: 'Failed to abort the terminals.',
     workingDirNotExist: 'The terminal "{terminal}" cannot find the current working directory "{cwd}".',
 
     // Valid configuration file

@@ -16,7 +16,9 @@ export const killAllAsync = async (): Promise<void> => {
                 progress.report({ message: 'Kill all terminals...' });
 
                 // Kill all existing terminal in parallel
-                await killAllTerminal();
+                if (window.terminals && window.terminals.length > 0) {
+                    await killAllTerminal();
+                }
 
                 // Return a value when the task completes
                 return 'Kill all of the terminal completed!';

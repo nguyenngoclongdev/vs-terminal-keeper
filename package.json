@@ -107,6 +107,11 @@
                 "title": "Clear All"
             },
             {
+                "command": "terminal-keeper.abort-all",
+                "category": "Terminal Keeper",
+                "title": "Abort All"
+            },
+            {
                 "command": "terminal-keeper.kill-all",
                 "category": "Terminal Keeper",
                 "title": "Kill All"
@@ -195,9 +200,14 @@
                     "group": "activity@2"
                 },
                 {
-                    "command": "terminal-keeper.kill-all",
+                    "command": "terminal-keeper.abort-all",
                     "when": "view == terminalKeeperActivityView",
                     "group": "activity@3"
+                },
+                {
+                    "command": "terminal-keeper.kill-all",
+                    "when": "view == terminalKeeperActivityView",
+                    "group": "activity@4"
                 },
                 {
                     "command": "terminal-keeper.save",
