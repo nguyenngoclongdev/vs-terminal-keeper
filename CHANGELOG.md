@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.38
+
+### Patch Changes
+
+- 044a1fb: fix: improve the UI on activity
+
 ## 1.1.37
 
 ### Patch Changes
