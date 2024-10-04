@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.39
+
+### Patch Changes
+
+- b00f0d2: fix: add clear all command
+
 ## 1.1.38
 
 ### Patch Changes
