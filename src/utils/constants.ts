@@ -8,7 +8,8 @@ export const extCommands = {
     killAll: 'terminal-keeper.kill-all',
     refresh: 'terminal-keeper.refresh-activity',
     activeSessionActivity: 'terminal-keeper.active-session-activity',
-    activeTerminalActivity: 'terminal-keeper.active-terminal-activity',
+    sendToNewTerminalActivity: 'terminal-keeper.send-to-new-terminal-activity',
+    sendToCurrentTerminalActivity:'terminal-keeper.send-to-current-terminal-activity',
     copyCommandActivity: 'terminal-keeper.copy-command-activity',
     collapseAllActivity: 'terminal-keeper.collapse-all-activity'
 };

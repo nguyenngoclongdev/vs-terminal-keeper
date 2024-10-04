@@ -148,7 +148,8 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
                                 terminal: terminalOrTerminalArray,
                                 theme: themeService,
                                 sessionId: sessionName,
-                                terminalArrayIndex: index
+                                terminalArrayIndex: index,
+                                terminalGroupName: terminalOrTerminalArray.name
                             });
                         })
                     });

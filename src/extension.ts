@@ -64,10 +64,19 @@ export async function activate(context: ExtensionContext) {
         commands.registerCommand(extCommands.collapseAllActivity, async () => {
             await commands.executeCommand(`workbench.actions.treeView.${activityId}.collapseAll`);
         }),
-        commands.registerCommand(extCommands.activeTerminalActivity, async (sessionTreeItem: TKTreeItem) => {
+        commands.registerCommand(extCommands.sendToNewTerminalActivity, async (sessionTreeItem: TKTreeItem) => {
             const { sessionId, terminalArrayIndex, label, contextValue } = sessionTreeItem;
             if (contextValue === 'terminal-array-context') {
                 await activeByTerminalAsync(sessionId, terminalArrayIndex, undefined);
+            } else {
+                await activeByTerminalAsync(sessionId, terminalArrayIndex, label as string);
+            }
+        }),
+        commands.registerCommand(extCommands.sendToCurrentTerminalActivity, async (sessionTreeItem: TKTreeItem) => {
+            const { sessionId, terminalArrayIndex, label, description } = sessionTreeItem;
+            const { activeTerminal } = window;
+            if (activeTerminal) {
+                activeTerminal.sendText(`${description || ''}`, false);
             } else {
                 await activeByTerminalAsync(sessionId, terminalArrayIndex, label as string);
             }

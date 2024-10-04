@@ -99,17 +99,17 @@
             {
                 "command": "terminal-keeper.generate",
                 "category": "Terminal Keeper",
-                "title": "Generate Configuration File"
+                "title": "Generate Configuration"
             },
             {
                 "command": "terminal-keeper.kill-all",
                 "category": "Terminal Keeper",
-                "title": "Kill All Terminals"
+                "title": "Kill All"
             },
             {
                 "command": "terminal-keeper.active",
                 "category": "Terminal Keeper",
-                "title": "Active Terminal Session",
+                "title": "Active Session",
                 "icon": "$(run-all)"
             },
             {
@@ -121,22 +121,23 @@
             {
                 "command": "terminal-keeper.save",
                 "category": "Terminal Keeper",
-                "title": "Save Terminal Session",
+                "title": "Save Session",
                 "enablement": "false"
             },
             {
                 "command": "terminal-keeper.remove",
                 "category": "Terminal Keeper",
-                "title": "Remove Terminal Session"
+                "title": "Remove Session"
             },
             {
                 "command": "terminal-keeper.refresh-activity",
-                "title": "Refresh Activity",
+                "title": "Refresh",
                 "icon": "$(refresh)"
             },
             {
                 "command": "terminal-keeper.collapse-all-activity",
-                "title": "Collapse All"
+                "title": "Collapse All",
+                "icon": "$(collapse-all)"
             },
             {
                 "command": "terminal-keeper.active-session-activity",
@@ -144,13 +145,17 @@
                 "icon": "$(run)"
             },
             {
-                "command": "terminal-keeper.active-terminal-activity",
-                "title": "Active Terminal",
-                "icon": "$(run)"
+                "command": "terminal-keeper.send-to-new-terminal-activity",
+                "title": "Send to new Terminal",
+                "icon": "$(send)"
+            },
+            {
+                "command": "terminal-keeper.send-to-current-terminal-activity",
+                "title": "Send to current Terminal"
             },
             {
                 "command": "terminal-keeper.copy-command-activity",
-                "title": "Copy Commands"
+                "title": "Copy"
             }
         ],
         "menus": {
@@ -161,28 +166,34 @@
                     "group": "navigation@1"
                 },
                 {
-                    "command": "terminal-keeper.active",
-                    "when": "view == terminalKeeperActivityView"
-                },
-                {
                     "command": "terminal-keeper.open",
-                    "when": "view == terminalKeeperActivityView"
-                },
-                {
-                    "command": "terminal-keeper.refresh-activity",
-                    "when": "view == terminalKeeperActivityView"
-                },
-                {
-                    "command": "terminal-keeper.remove",
-                    "when": "view == terminalKeeperActivityView"
-                },
-                {
-                    "command": "terminal-keeper.kill-all",
-                    "when": "view == terminalKeeperActivityView"
+                    "when": "view == terminalKeeperActivityView",
+                    "group": "navigation@2"
                 },
                 {
                     "command": "terminal-keeper.collapse-all-activity",
-                    "when": "view == terminalKeeperActivityView"
+                    "when": "view == terminalKeeperActivityView",
+                    "group": "navigation@3"
+                },
+                {
+                    "command": "terminal-keeper.refresh-activity",
+                    "when": "view == terminalKeeperActivityView",
+                    "group": "activity@1"
+                },
+                {
+                    "command": "terminal-keeper.kill-all",
+                    "when": "view == terminalKeeperActivityView",
+                    "group": "activity@2"
+                },
+                {
+                    "command": "terminal-keeper.save",
+                    "when": "view == terminalKeeperActivityView",
+                    "group": "tk@1"
+                },
+                {
+                    "command": "terminal-keeper.remove",
+                    "when": "view == terminalKeeperActivityView",
+                    "group": "tk@2"
                 }
             ],
             "view/item/context": [
@@ -192,14 +203,24 @@
                     "group": "inline@1"
                 },
                 {
-                    "command": "terminal-keeper.active-terminal-activity",
+                    "command": "terminal-keeper.send-to-new-terminal-activity",
                     "when": "viewItem == terminal-array-context || viewItem == terminal-context",
                     "group": "inline@1"
                 },
                 {
-                    "command": "terminal-keeper.copy-command-activity",
+                    "command": "terminal-keeper.send-to-new-terminal-activity",
                     "when": "viewItem == terminal-context",
                     "group": "terminal@1"
+                },
+                {
+                    "command": "terminal-keeper.send-to-current-terminal-activity",
+                    "when": "viewItem == terminal-context",
+                    "group": "terminal@2"
+                },
+                {
+                    "command": "terminal-keeper.copy-command-activity",
+                    "when": "viewItem == terminal-context",
+                    "group": "terminal@3"
                 }
             ],
             "explorer/context": [
