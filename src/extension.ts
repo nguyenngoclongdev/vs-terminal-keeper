@@ -2,6 +2,7 @@ import { ExtensionContext, Uri, commands, env, window } from 'vscode';
 import { activeAsync } from './commands/activeAsync';
 import { activeBySessionAsync } from './commands/activeBySessionAsync';
 import { activeByTerminalAsync } from './commands/activeByTerminalAsync';
+import { clearAllAsync } from './commands/clearAllAsync';
 import { generateAsync } from './commands/generateAsync';
 import { killAllAsync } from './commands/killAllAsync';
 import { migrateAsync } from './commands/migrateAsync';
@@ -11,7 +12,7 @@ import { saveAsync } from './commands/saveAsync';
 import { Configuration } from './configuration/configuration';
 import { configFileVersions } from './configuration/interface';
 import { TKTreeItem, TreeProvider } from './explorer/tree-provider';
-import { extCommands } from './utils/constants';
+import { constants, extCommands } from './utils/constants';
 
 export async function activate(context: ExtensionContext) {
     // Init configuration
@@ -45,6 +46,10 @@ export async function activate(context: ExtensionContext) {
         commands.registerCommand(extCommands.migrate, async (...args: any[]) => {
             await migrateAsync();
         }),
+        // Clear all terminals
+        commands.registerCommand(extCommands.clearAll, async (...args: any[]) => {
+            await clearAllAsync();
+        }),
         // Kill all terminals
         commands.registerCommand(extCommands.killAll, async (...args: any[]) => {
             await killAllAsync();
@@ -63,6 +68,9 @@ export async function activate(context: ExtensionContext) {
         }),
         commands.registerCommand(extCommands.collapseAllActivity, async () => {
             await commands.executeCommand(`workbench.actions.treeView.${activityId}.collapseAll`);
+        }),
+        commands.registerCommand(extCommands.helpAndFeedbackActivity, async () => {
+            await env.openExternal(Uri.parse(constants.helpAndFeedbackUrl));
         }),
         commands.registerCommand(extCommands.sendToNewTerminalActivity, async (sessionTreeItem: TKTreeItem) => {
             const { sessionId, terminalArrayIndex, label, contextValue } = sessionTreeItem;

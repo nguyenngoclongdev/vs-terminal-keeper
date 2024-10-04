@@ -5,13 +5,15 @@ export const extCommands = {
     save: 'terminal-keeper.save',
     remove: 'terminal-keeper.remove',
     migrate: 'terminal-keeper.migrate',
+    clearAll: 'terminal-keeper.clear-all',
     killAll: 'terminal-keeper.kill-all',
     refresh: 'terminal-keeper.refresh-activity',
     activeSessionActivity: 'terminal-keeper.active-session-activity',
     sendToNewTerminalActivity: 'terminal-keeper.send-to-new-terminal-activity',
-    sendToCurrentTerminalActivity:'terminal-keeper.send-to-current-terminal-activity',
+    sendToCurrentTerminalActivity: 'terminal-keeper.send-to-current-terminal-activity',
     copyCommandActivity: 'terminal-keeper.copy-command-activity',
-    collapseAllActivity: 'terminal-keeper.collapse-all-activity'
+    collapseAllActivity: 'terminal-keeper.collapse-all-activity',
+    helpAndFeedbackActivity: 'terminal-keeper.help-and-feedback-activity'
 };
 
 export const sysCommands = {
@@ -23,6 +25,7 @@ export const sysCommands = {
 export const constants = {
     // Common
     defaultSession: 'default',
+    helpAndFeedbackUrl: 'https://github.com/nguyenngoclongdev/vs-terminal-keeper/issues',
 
     // Open the configuration file
     openConfigurationFailed: 'Failed to open the configuration file!',
@@ -40,6 +43,7 @@ export const constants = {
     activeSessionFailed: 'Failed to activate the session.',
     activeTerminalFailed: 'Failed to activate the terminal.',
     killTerminalFailed: 'Failed to kill the terminals.',
+    clearTerminalFailed: 'Failed to clear the terminals.',
     workingDirNotExist: 'The terminal "{terminal}" cannot find the current working directory "{cwd}".',
 
     // Valid configuration file

@@ -102,6 +102,11 @@
                 "title": "Generate Configuration"
             },
             {
+                "command": "terminal-keeper.clear-all",
+                "category": "Terminal Keeper",
+                "title": "Clear All"
+            },
+            {
                 "command": "terminal-keeper.kill-all",
                 "category": "Terminal Keeper",
                 "title": "Kill All"
@@ -156,6 +161,10 @@
             {
                 "command": "terminal-keeper.copy-command-activity",
                 "title": "Copy"
+            },
+            {
+                "command": "terminal-keeper.help-and-feedback-activity",
+                "title": "Help & Feedback"
             }
         ],
         "menus": {
@@ -181,19 +190,29 @@
                     "group": "activity@1"
                 },
                 {
-                    "command": "terminal-keeper.kill-all",
+                    "command": "terminal-keeper.clear-all",
                     "when": "view == terminalKeeperActivityView",
                     "group": "activity@2"
                 },
                 {
+                    "command": "terminal-keeper.kill-all",
+                    "when": "view == terminalKeeperActivityView",
+                    "group": "activity@3"
+                },
+                {
                     "command": "terminal-keeper.save",
                     "when": "view == terminalKeeperActivityView",
-                    "group": "tk@1"
+                    "group": "tk1@1"
                 },
                 {
                     "command": "terminal-keeper.remove",
                     "when": "view == terminalKeeperActivityView",
-                    "group": "tk@2"
+                    "group": "tk1@2"
+                },
+                {
+                    "command": "terminal-keeper.help-and-feedback-activity",
+                    "when": "view == terminalKeeperActivityView",
+                    "group": "tk2@1"
                 }
             ],
             "view/item/context": [
