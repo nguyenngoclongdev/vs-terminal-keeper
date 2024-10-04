@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.40
+
+### Patch Changes
+
+- 4f0bd2a: fix: add abort all functions in activity
+
 ## 1.1.39
 
 ### Patch Changes
