@@ -5,6 +5,7 @@ import { activeBySessionAsync } from './commands/activeBySessionAsync';
 import { activeByTerminalAsync } from './commands/activeByTerminalAsync';
 import { clearAllAsync } from './commands/clearAllAsync';
 import { generateAsync } from './commands/generateAsync';
+import { importAsync } from './commands/importAsync';
 import { killAllAsync } from './commands/killAllAsync';
 import { migrateAsync } from './commands/migrateAsync';
 import { openAsync } from './commands/openAsync';
@@ -72,6 +73,12 @@ export async function activate(context: ExtensionContext) {
         }),
         commands.registerCommand(extCommands.collapseAllActivity, async () => {
             await commands.executeCommand(sysCommands.activityCollapseAll);
+        }),
+        commands.registerCommand(extCommands.importPackageJsonActivity, async () => {
+            await importAsync('package.json');
+        }),
+        commands.registerCommand(extCommands.importMakefileActivity, async () => {
+            await importAsync('makefile');
         }),
         commands.registerCommand(extCommands.helpAndFeedbackActivity, async () => {
             await env.openExternal(Uri.parse(constants.helpAndFeedbackUrl));

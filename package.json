@@ -129,6 +129,14 @@
                 "icon": "$(gear)"
             },
             {
+                "command": "terminal-keeper.import-from-package-json",
+                "title": "From 'package.json'"
+            },
+            {
+                "command": "terminal-keeper.import-from-makefile",
+                "title": "From 'Makefile'"
+            },
+            {
                 "command": "terminal-keeper.save",
                 "category": "Terminal Keeper",
                 "title": "Save Session",
@@ -172,7 +180,29 @@
                 "title": "Help & Feedback"
             }
         ],
+        "submenus": [
+            {
+                "id": "import.submenu",
+                "label": "Import Session"
+            }
+        ],
         "menus": {
+            "import.submenu": [
+                {
+                    "command": "terminal-keeper.import-from-package-json",
+                    "group": "source@1"
+                },
+                {
+                    "command": "terminal-keeper.import-from-makefile",
+                    "group": "source@2"
+                }
+            ],
+            "editor/context": [
+                {
+                    "submenu": "import.submenu",
+                    "group": "import"
+                }
+            ],
             "view/title": [
                 {
                     "command": "terminal-keeper.active",
@@ -210,14 +240,19 @@
                     "group": "activity@4"
                 },
                 {
-                    "command": "terminal-keeper.save",
+                    "submenu": "import.submenu",
                     "when": "view == terminalKeeperActivityView",
                     "group": "tk1@1"
                 },
                 {
-                    "command": "terminal-keeper.remove",
+                    "command": "terminal-keeper.save",
                     "when": "view == terminalKeeperActivityView",
                     "group": "tk1@2"
+                },
+                {
+                    "command": "terminal-keeper.remove",
+                    "when": "view == terminalKeeperActivityView",
+                    "group": "tk1@3"
                 },
                 {
                     "command": "terminal-keeper.help-and-feedback-activity",

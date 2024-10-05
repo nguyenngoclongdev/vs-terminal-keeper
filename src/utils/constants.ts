@@ -10,6 +10,8 @@ export const extCommands = {
     killAll: 'terminal-keeper.kill-all',
     refresh: 'terminal-keeper.refresh-activity',
     activeSessionActivity: 'terminal-keeper.active-session-activity',
+    importPackageJsonActivity: 'terminal-keeper.import-from-package-json',
+    importMakefileActivity: 'terminal-keeper.import-from-makefile',
     sendToNewTerminalActivity: 'terminal-keeper.send-to-new-terminal-activity',
     sendToCurrentTerminalActivity: 'terminal-keeper.send-to-current-terminal-activity',
     copyCommandActivity: 'terminal-keeper.copy-command-activity',
@@ -45,6 +47,8 @@ export const constants = {
     // Active terminal session
     selectSessionActiveTitle: 'Select a session to activate',
     selectSessionActivePlaceHolder: 'Select session...',
+    selectFileTitle: 'Select a file to import',
+    selectFilePlaceHolder: 'Select file...',
     activeSessionFailed: 'Failed to activate the session.',
     activeTerminalFailed: 'Failed to activate the terminal.',
     killTerminalFailed: 'Failed to kill the terminals.',
