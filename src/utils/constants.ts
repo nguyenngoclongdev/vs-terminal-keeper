@@ -17,10 +17,14 @@ export const extCommands = {
     helpAndFeedbackActivity: 'terminal-keeper.help-and-feedback-activity'
 };
 
+export const ACTIVITY_VIEW_ID = 'terminalKeeperActivityView';
 export const sysCommands = {
     openFolder: 'workbench.action.files.openFolder',
     openWorkspace: 'workbench.action.openWorkspace',
-    terminalTabFocus: 'workbench.action.terminal.focus'
+    terminalTabFocus: 'workbench.action.terminal.focus',
+    terminalClear: 'workbench.action.terminal.clear',
+    activityCollapseAll: `workbench.actions.treeView.${ACTIVITY_VIEW_ID}.collapseAll`,
+    activityRefresh: `workbench.actions.treeView.${ACTIVITY_VIEW_ID}.refresh`
 };
 
 export const constants = {

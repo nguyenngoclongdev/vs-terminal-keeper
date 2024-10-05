@@ -13,7 +13,7 @@ import { saveAsync } from './commands/saveAsync';
 import { Configuration } from './configuration/configuration';
 import { configFileVersions } from './configuration/interface';
 import { TKTreeItem, TreeProvider } from './explorer/tree-provider';
-import { constants, extCommands } from './utils/constants';
+import { ACTIVITY_VIEW_ID, constants, extCommands, sysCommands } from './utils/constants';
 
 export async function activate(context: ExtensionContext) {
     // Init configuration
@@ -62,9 +62,8 @@ export async function activate(context: ExtensionContext) {
     );
 
     // Init tree data provider
-    const activityId = 'terminalKeeperActivityView';
     const treeProvider = new TreeProvider();
-    window.registerTreeDataProvider(activityId, treeProvider);
+    window.registerTreeDataProvider(ACTIVITY_VIEW_ID, treeProvider);
     context.subscriptions.push(
         commands.registerCommand(extCommands.refresh, async () => treeProvider.refresh()),
         commands.registerCommand(extCommands.activeSessionActivity, async (sessionTreeItem: TKTreeItem) => {
@@ -72,7 +71,7 @@ export async function activate(context: ExtensionContext) {
             await activeBySessionAsync(sessionId, true);
         }),
         commands.registerCommand(extCommands.collapseAllActivity, async () => {
-            await commands.executeCommand(`workbench.actions.treeView.${activityId}.collapseAll`);
+            await commands.executeCommand(sysCommands.activityCollapseAll);
         }),
         commands.registerCommand(extCommands.helpAndFeedbackActivity, async () => {
             await env.openExternal(Uri.parse(constants.helpAndFeedbackUrl));

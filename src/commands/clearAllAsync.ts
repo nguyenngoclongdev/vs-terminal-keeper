@@ -1,5 +1,5 @@
 import { commands, ProgressLocation, window } from 'vscode';
-import { constants } from '../utils/constants';
+import { constants, sysCommands } from '../utils/constants';
 import { showErrorMessageWithDetail } from '../utils/utils';
 
 export const clearAllAsync = async (): Promise<void> => {
@@ -17,7 +17,7 @@ export const clearAllAsync = async (): Promise<void> => {
                 // Clear all existing terminal in parallel
                 window.terminals.forEach(async (terminal) => {
                     terminal.show();
-                    await commands.executeCommand('workbench.action.terminal.clear', terminal);
+                    await commands.executeCommand(sysCommands.terminalClear, terminal);
                 });
 
                 // Return a value when the task completes
