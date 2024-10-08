@@ -16,7 +16,7 @@
   <img src="https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/terminal-keeper-showcase-reverse.gif">
 </p>
 
-This extension is designed to allows users to store and manage their terminal sessions. With Terminal Keeper, users can easily save and recall previous terminal sessions, create new sessions, and edit or delete existing ones. Terminal Keeper makes managing terminal sessions in VSCode simpler and more convenient than ever before.
+Terminal Keeper makes managing terminal sessions in VSCode simpler and more convenient than ever before. Quickly restore previous sessions, choose and remove sessions effortlessly, and enjoy customizable themes. Import commands from various files with ease.
 
 If you find this extension useful for your projects, please consider supporting me by [Github](https://github.com/sponsors/nguyenngoclongdev), [Patreon](https://patreon.com/nguyenngoclong), [KO-FI](https://ko-fi.com/nguyenngoclong) or [Paypal](https://paypal.me/longnguyenngoc). It's a great way to help me maintain and improve this tool in the future. Your support is truly appreciated!
 
@@ -35,11 +35,12 @@ Get it from [Visual Studio Marketplace](https://marketplace.visualstudio.com/ite
 
 # Features
 
--   Generate configuration templates automatically.
--   Automatically activate the last used terminal session when starting up.
--   Choose which terminal session to activate.
--   Remove unwanted terminal sessions.
--   Multiple built-in themes are available for terminal icons and colors.
+-   Effortlessly generate configuration templates.
+-   Automatically restore your last terminal session on startup.
+-   Easily select which terminal session to activate.
+-   Seamlessly remove unwanted terminal sessions.
+-   Explore a variety of built-in themes for terminal icons and colors.
+-   Import commands from files like package.json, pipenv, makefile, grunt, gradle, gulp, ant, and more.
 -   ~~Save the current terminal session~~ (this feature is currently disabled due to limitations in the VSCode API. We are unable to detect certain features such as icons, colors, and split terminals. We may re-enable this feature if the VSCode API provides full support for these features.)
 
 ## Using the extension
@@ -62,6 +63,10 @@ Usually, the color and icon are chosen randomly based on the terminal name or gr
 ### Terminal Keeper Activity ✨
 
 ![Terminal Keeper Activity](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/terminal-keeper-activity.gif)
+
+### Import commands from different files ✨
+
+![Terminal Keeper Import](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/terminal-keeper-import.gif)
 
 ### Generate configuration templates
 

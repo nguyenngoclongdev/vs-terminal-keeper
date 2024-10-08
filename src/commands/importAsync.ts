@@ -99,8 +99,13 @@ const chooseFilePath = async (filePaths: string[]): Promise<string | undefined> 
 };
 
 const chooseSessionName = async (): Promise<string | undefined> => {
-    // Show choose session name box
+    // Get current session
     const config = await Configuration.load();
+    if (!config.sessions) {
+        config.sessions = { default: [] };
+    }
+
+    // Show choose session name box
     const sessionsWithDescription: QuickPickItem[] = getSessionQuickPickItems(config.sessions);
     sessionsWithDescription.forEach((sessionItem) => {
         sessionItem.detail = `Overwrites scripts to session ${sessionItem.label}`;
@@ -204,13 +209,13 @@ export const importAsync = async (fileType: ImportFileType): Promise<void> => {
         }
 
         // Save scripts to sessions.json
-        const configSaved = await Configuration.load();
-        if (!configSaved.sessions) {
-            configSaved.sessions = { default: [] };
+        const config = await Configuration.load();
+        if (!config.sessions) {
+            config.sessions = { default: [] };
         }
-        const previousTerminalItems = configSaved.sessions[sessionName] || [];
-        configSaved.sessions[sessionName] = previousTerminalItems.concat(terminalItems);
-        await Configuration.save(configSaved);
+        const previousTerminalItems = config.sessions[sessionName] || [];
+        config.sessions[sessionName] = previousTerminalItems.concat(terminalItems);
+        await Configuration.save(config);
     } catch (error) {
         showErrorMessageWithDetail(constants.importFileFailed.replace('{fileType}', fileType), error);
     }
