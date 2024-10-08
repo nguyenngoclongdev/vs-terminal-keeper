@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.41
+
+### Patch Changes
+
+- dad1570: feat: Allow the import of commands from another source that exists in the workspace.
+
 ## 1.1.40
 
 ### Patch Changes
