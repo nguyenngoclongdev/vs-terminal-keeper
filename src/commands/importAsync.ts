@@ -1,136 +1,189 @@
-import { fs } from '@vscode-utility/fs-browserify';
 import { TerminalItem } from '@vscode-utility/terminal-browserify';
-import path from 'path/posix';
+import { glob } from 'glob';
 import { QuickPickItem, window, workspace, WorkspaceFolder } from 'vscode';
 import { Configuration } from '../configuration/configuration';
 import { configurationTemplate } from '../configuration/template';
 import { constants } from '../utils/constants';
 import { getSessionQuickPickItems, showErrorMessageWithDetail } from '../utils/utils';
-import { extractMakefileCommands } from './modules/makefileParse';
-import { extractPackageJsonCommands } from './modules/packageJsonParse';
+import { extractAntCommands } from './modules/antParse';
+import { extractGradleCommands } from './modules/gradleParse';
+import { extractGruntCommands } from './modules/gruntParse';
+import { extractGulpCommands } from './modules/gulpParse';
+import { extractJsonScriptCommands } from './modules/jsonScriptParse';
+import { extractMakeCommands } from './modules/makeParse';
+import { extractPipenvCommands } from './modules/pipenvParse';
 
-const getFilePaths = async (workspaceFolders: readonly WorkspaceFolder[], filename: string): Promise<string[]> => {
-    const filePaths = [];
-    for (let i = 0; i < workspaceFolders?.length; i++) {
-        const workspaceFolder = workspaceFolders[i];
-        const filePath = path.join(workspaceFolder.uri.fsPath, filename);
-        if (await fs.existAsync(filePath)) {
-            filePaths.push(filePath);
+export type ImportFileType = 'npm' | 'composer' | 'make' | 'gradle' | 'pipenv' | 'ant' | 'grunt' | 'gulp';
+
+const getFilenames = (fileType: ImportFileType): Array<string> | undefined => {
+    switch (fileType) {
+        case 'npm':
+            return ['package.json'];
+        case 'composer':
+            return ['composer.json'];
+        case 'make':
+            return ['Makefile', 'makefile'];
+        case 'gradle':
+            return ['build.gradle', 'test.gradle'];
+        case 'pipenv':
+            return ['Pipfile', 'pipfile'];
+        case 'ant':
+            return ['build.xml'];
+        case 'grunt':
+            return ['GRUNTFILE.JS'];
+        case 'gulp':
+            return ['GULPFILE.js', 'GULPFILE.mjs', 'gulpfile.js', 'gulpfile.mjs'];
+        default:
+            return undefined;
+    }
+};
+
+const getCommands = async (fileType: ImportFileType, filePath: string): Promise<Record<string, string> | undefined> => {
+    switch (fileType) {
+        case 'npm':
+            return extractJsonScriptCommands(filePath);
+        case 'composer':
+            return extractJsonScriptCommands(filePath);
+        case 'make':
+            return extractMakeCommands(filePath);
+        case 'gradle':
+            return extractGradleCommands(filePath);
+        case 'pipenv':
+            return extractPipenvCommands(filePath);
+        case 'ant':
+            return extractAntCommands(filePath);
+        case 'grunt':
+            return extractGruntCommands(filePath);
+        case 'gulp':
+            return extractGulpCommands(filePath);
+        default:
+            return undefined;
+    }
+};
+
+const getFilePaths = async (workspaceFolders: readonly WorkspaceFolder[], filenames: string[]): Promise<string[]> => {
+    const filePaths: string[] = [];
+    for (let i = 0; i < workspaceFolders.length; i++) {
+        const wsFolder = workspaceFolders[i];
+        for (let j = 0; j < filenames.length; j++) {
+            const filename = filenames[j];
+            const files = await glob(`**/${filename}`, { cwd: wsFolder.uri.fsPath, nodir: true, absolute: true });
+            filePaths.push(...files);
         }
     }
     return filePaths;
 };
 
-const getFilename = (fileType: string): string | undefined => {
-    switch (fileType) {
-        case 'package.json':
-            return 'package.json';
-        case 'makefile':
-            return 'Makefile';
-        default:
-            return undefined;
+const chooseFilePath = async (filePaths: string[]): Promise<string | undefined> => {
+    let selectedFilePath = filePaths[0];
+    if (filePaths.length >= 1) {
+        const options = filePaths.map((filePath) => ({ label: filePath, detail: `$(file)${filePath}` }));
+        const quickPickItem = await window.showQuickPick(options, {
+            title: constants.selectFileTitle,
+            placeHolder: constants.selectFilePlaceHolder,
+            canPickMany: false,
+            ignoreFocusOut: true
+        });
+        return quickPickItem ? quickPickItem.label : undefined;
     }
+    return selectedFilePath;
 };
 
-export const getCommands = async (fileType: string, filePath: string): Promise<Record<string, string> | undefined> => {
-    switch (fileType) {
-        case 'package.json':
-            return extractPackageJsonCommands(filePath);
-        case 'makefile':
-            return extractMakefileCommands(filePath);
-        default:
-            return undefined;
+const chooseSessionName = async (): Promise<string | undefined> => {
+    // Show choose session name box
+    const config = await Configuration.load();
+    const sessionsWithDescription: QuickPickItem[] = getSessionQuickPickItems(config.sessions);
+    sessionsWithDescription.forEach((sessionItem) => {
+        sessionItem.detail = `Overwrites scripts to session ${sessionItem.label}`;
+    });
+    const addNewSession: QuickPickItem = {
+        label: 'Add new session...',
+        detail: 'Create new session, and save scripts to it.',
+        alwaysShow: true
+    };
+    const quickPickItem = await window.showQuickPick([addNewSession].concat(sessionsWithDescription), {
+        title: 'Select the session you want to override or add new session',
+        placeHolder: 'Session name...',
+        ignoreFocusOut: true
+    });
+    if (!quickPickItem) {
+        return undefined;
     }
+
+    // Show input box if select add new
+    let sessionName = quickPickItem.label;
+    if (sessionName === addNewSession.label) {
+        const sessionNameInput = await window.showInputBox({
+            title: 'Please enter the session name.',
+            placeHolder: 'e.g. build, migrate, start, deploy',
+            ignoreFocusOut: true,
+            validateInput: (value: string) => {
+                if (!value) {
+                    return 'The session name cannot be null or empty.';
+                }
+                if (sessionsWithDescription.some((s) => s.label === value)) {
+                    return 'The session name already exists.';
+                }
+                return ''; // input valid is OK
+            }
+        });
+        return sessionNameInput ? sessionNameInput : undefined;
+    }
+    return sessionName;
 };
 
-export const importAsync = async (fileType: string): Promise<void> => {
+export const importAsync = async (fileType: ImportFileType): Promise<void> => {
     try {
         const { workspaceFolders } = workspace;
         if (!workspaceFolders || workspaceFolders.length <= 0) {
-            console.log('🚀 ~ importAsync ~ workspaceFolders:', workspaceFolders);
-            return; // TODO: warning
+            window.showWarningMessage(constants.openWorkspace);
+            return;
         }
 
         // Get filename by fileType
-        const filename = getFilename(fileType);
-        if (!filename) {
-            console.log('🚀 ~ importAsync ~ filename:', filename);
-            return; // TODO: warning
+        const filenames = getFilenames(fileType);
+        if (!filenames || filenames.length <= 0) {
+            window.showWarningMessage(constants.notSupportFileType.replace('{fileType}', fileType));
+            return;
         }
 
         // Get all filepaths
-        const filePaths = await getFilePaths(workspaceFolders, filename);
+        const filePaths = await getFilePaths(workspaceFolders, filenames);
         if (!filePaths || filePaths.length <= 0) {
-            console.log('🚀 ~ importAsync ~ filePaths:', filePaths);
-            return; // TODO: warning
+            window.showWarningMessage(
+                constants.notExistImportFile
+                    .replace('{filename}', filenames.join(', '))
+                    .replace('{workspace}', workspaceFolders.map((w) => w.uri.fsPath).join(', '))
+            );
+            return;
         }
 
         // Choose the file if more than one
-        let selectedFilePath = filePaths[0];
-        if (filePaths.length >= 1) {
-            const options = filePaths.map((filePath) => ({ label: filePath, detail: `$(file)${filePath}` }));
-            const quickPickItem = await window.showQuickPick(options, {
-                title: constants.selectFileTitle,
-                placeHolder: constants.selectFilePlaceHolder,
-                canPickMany: false,
-                ignoreFocusOut: true
-            });
-            if (!quickPickItem) {
-                return;
-            }
-
-            // Set quick pick item as a selected file
-            selectedFilePath = quickPickItem.label;
+        let selectedFilePath = await chooseFilePath(filePaths);
+        if (!selectedFilePath) {
+            return;
         }
 
         // Read the script of file
         const scripts = await getCommands(fileType, selectedFilePath);
         if (!scripts) {
-            console.log('🚀 ~ importAsync ~ scripts:', fileType, selectedFilePath, scripts);
-            return; // TODO: warning
+            window.showWarningMessage(constants.notExistAnyCommands.replace('{filePath}', selectedFilePath));
+            return;
         }
 
+        // Parse to terminal item from scripts
+        const terminalItems = Object.entries(scripts).map(([key, value]) => {
+            const item: TerminalItem = {
+                name: key,
+                commands: [value]
+            };
+            return item;
+        });
+
         // Select name of sessions to override or add new session
-        const config = await Configuration.load();
-        const sessionsWithDescription: QuickPickItem[] = getSessionQuickPickItems(config.sessions);
-        sessionsWithDescription.forEach((sessionItem) => {
-            sessionItem.detail = `Overwrites scripts to session ${sessionItem.label}`;
-        });
-        const addNewSession: QuickPickItem = {
-            label: 'Add new session...',
-            detail: 'Create new session, and save scripts to it.',
-            alwaysShow: true
-        };
-        const quickPickItem = await window.showQuickPick([addNewSession].concat(sessionsWithDescription), {
-            title: 'Select the session you want to override or add new session',
-            placeHolder: 'Session name...',
-            ignoreFocusOut: true
-        });
-        if (!quickPickItem) {
-            console.log('🚀 ~ importAsync ~ quickPickItem:', quickPickItem);
-            return undefined;
-        }
-        let sessionName = quickPickItem.label;
-        if (quickPickItem.label === addNewSession.label) {
-            const sessionNameInput = await window.showInputBox({
-                title: 'Please enter the session name.',
-                placeHolder: 'e.g. build, migrate, start, deploy',
-                ignoreFocusOut: true,
-                validateInput: (value: string) => {
-                    if (!value) {
-                        return 'The session name cannot be null or empty.';
-                    }
-                    if (sessionsWithDescription.some((s) => s.label === value)) {
-                        return 'The session name already exists.';
-                    }
-                    return ''; // input valid is OK
-                }
-            });
-            if (!sessionNameInput) {
-                console.log('🚀 ~ importAsync ~ sessionNameInput:', sessionNameInput);
-                return undefined;
-            }
-            sessionName = sessionNameInput;
+        let sessionName = await chooseSessionName();
+        if (!sessionName) {
+            return;
         }
 
         // Create new sessions.json if not exist, otherwise save to existing file
@@ -146,15 +199,10 @@ export const importAsync = async (fileType: string): Promise<void> => {
         if (!configSaved.sessions) {
             configSaved.sessions = { default: [] };
         }
-        configSaved.sessions[sessionName] = Object.entries(scripts).map(([key, value]) => {
-            const item: TerminalItem = {
-                name: key,
-                commands: [value]
-            };
-            return item;
-        });
+        const previousTerminalItems = configSaved.sessions[sessionName] || [];
+        configSaved.sessions[sessionName] = previousTerminalItems.concat(terminalItems);
         await Configuration.save(configSaved);
     } catch (error) {
-        showErrorMessageWithDetail(constants.activeSessionFailed, error);
+        showErrorMessageWithDetail(constants.importFileFailed.replace('{fileType}', fileType), error);
     }
 };

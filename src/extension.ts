@@ -74,12 +74,6 @@ export async function activate(context: ExtensionContext) {
         commands.registerCommand(extCommands.collapseAllActivity, async () => {
             await commands.executeCommand(sysCommands.activityCollapseAll);
         }),
-        commands.registerCommand(extCommands.importPackageJsonActivity, async () => {
-            await importAsync('package.json');
-        }),
-        commands.registerCommand(extCommands.importMakefileActivity, async () => {
-            await importAsync('makefile');
-        }),
         commands.registerCommand(extCommands.helpAndFeedbackActivity, async () => {
             await env.openExternal(Uri.parse(constants.helpAndFeedbackUrl));
         }),
@@ -103,6 +97,30 @@ export async function activate(context: ExtensionContext) {
         commands.registerCommand(extCommands.copyCommandActivity, async (sessionTreeItem: TKTreeItem) => {
             const { description } = sessionTreeItem;
             env.clipboard.writeText(`${description || ''}`);
+        }),
+        commands.registerCommand(extCommands.importFromNPMActivity, async () => {
+            await importAsync('npm');
+        }),
+        commands.registerCommand(extCommands.importFromComposerActivity, async () => {
+            await importAsync('composer');
+        }),
+        commands.registerCommand(extCommands.importFromMakeActivity, async () => {
+            await importAsync('make');
+        }),
+        commands.registerCommand(extCommands.importFromGradleActivity, async () => {
+            await importAsync('gradle');
+        }),
+        commands.registerCommand(extCommands.importFromPipenvActivity, async () => {
+            await importAsync('pipenv');
+        }),
+        commands.registerCommand(extCommands.importFromAntActivity, async () => {
+            await importAsync('ant');
+        }),
+        commands.registerCommand(extCommands.importFromGruntActivity, async () => {
+            await importAsync('grunt');
+        }),
+        commands.registerCommand(extCommands.importFromGulpActivity, async () => {
+            await importAsync('gulp');
         })
     );
 
