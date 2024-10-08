@@ -1,5 +1,12 @@
 # Terminal Keeper
 
+## 1.1.42
+
+### Patch Changes
+
+- 067bb00: fix: init the default session on import and update README
+- 876f4c0: fix: ignore node_modules on find the import file
+
 ## 1.1.41
 
 ### Patch Changes
