@@ -1,6 +1,6 @@
 import { TerminalItem } from '@vscode-utility/terminal-browserify';
 import { glob } from 'glob';
-import path from 'path/posix';
+import path from 'path';
 import { QuickPickItem, window, workspace, WorkspaceFolder } from 'vscode';
 import { Configuration } from '../configuration/configuration';
 import { configurationTemplate } from '../configuration/template';
