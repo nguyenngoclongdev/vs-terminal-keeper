@@ -48,8 +48,10 @@ const webExtensionConfig = {
             stream: require.resolve('stream-browserify'),
             os: require.resolve('os-browserify/browser'),
             constants: require.resolve("constants-browserify"),
+            timers: require.resolve('timers-browserify'),
             child_process: false,
-            fs: false
+            fs: false,
+            url: false
         }
     },
     module: {

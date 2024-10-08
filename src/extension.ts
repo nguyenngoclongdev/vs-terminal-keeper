@@ -5,6 +5,7 @@ import { activeBySessionAsync } from './commands/activeBySessionAsync';
 import { activeByTerminalAsync } from './commands/activeByTerminalAsync';
 import { clearAllAsync } from './commands/clearAllAsync';
 import { generateAsync } from './commands/generateAsync';
+import { importAsync } from './commands/importAsync';
 import { killAllAsync } from './commands/killAllAsync';
 import { migrateAsync } from './commands/migrateAsync';
 import { openAsync } from './commands/openAsync';
@@ -96,6 +97,30 @@ export async function activate(context: ExtensionContext) {
         commands.registerCommand(extCommands.copyCommandActivity, async (sessionTreeItem: TKTreeItem) => {
             const { description } = sessionTreeItem;
             env.clipboard.writeText(`${description || ''}`);
+        }),
+        commands.registerCommand(extCommands.importFromNPMActivity, async () => {
+            await importAsync('npm');
+        }),
+        commands.registerCommand(extCommands.importFromComposerActivity, async () => {
+            await importAsync('composer');
+        }),
+        commands.registerCommand(extCommands.importFromMakeActivity, async () => {
+            await importAsync('make');
+        }),
+        commands.registerCommand(extCommands.importFromGradleActivity, async () => {
+            await importAsync('gradle');
+        }),
+        commands.registerCommand(extCommands.importFromPipenvActivity, async () => {
+            await importAsync('pipenv');
+        }),
+        commands.registerCommand(extCommands.importFromAntActivity, async () => {
+            await importAsync('ant');
+        }),
+        commands.registerCommand(extCommands.importFromGruntActivity, async () => {
+            await importAsync('grunt');
+        }),
+        commands.registerCommand(extCommands.importFromGulpActivity, async () => {
+            await importAsync('gulp');
         })
     );
 

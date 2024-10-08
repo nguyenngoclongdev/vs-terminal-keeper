@@ -10,6 +10,14 @@ export const extCommands = {
     killAll: 'terminal-keeper.kill-all',
     refresh: 'terminal-keeper.refresh-activity',
     activeSessionActivity: 'terminal-keeper.active-session-activity',
+    importFromNPMActivity: 'terminal-keeper.import-from-npm',
+    importFromComposerActivity: 'terminal-keeper.import-from-composer',
+    importFromMakeActivity: 'terminal-keeper.import-from-make',
+    importFromGradleActivity: 'terminal-keeper.import-from-gradle',
+    importFromPipenvActivity: 'terminal-keeper.import-from-pipenv',
+    importFromAntActivity: 'terminal-keeper.import-from-ant',
+    importFromGruntActivity: 'terminal-keeper.import-from-grunt',
+    importFromGulpActivity: 'terminal-keeper.import-from-gulp',
     sendToNewTerminalActivity: 'terminal-keeper.send-to-new-terminal-activity',
     sendToCurrentTerminalActivity: 'terminal-keeper.send-to-current-terminal-activity',
     copyCommandActivity: 'terminal-keeper.copy-command-activity',
@@ -45,6 +53,8 @@ export const constants = {
     // Active terminal session
     selectSessionActiveTitle: 'Select a session to activate',
     selectSessionActivePlaceHolder: 'Select session...',
+    selectFileTitle: 'Select a file to import',
+    selectFilePlaceHolder: 'Select file...',
     activeSessionFailed: 'Failed to activate the session.',
     activeTerminalFailed: 'Failed to activate the terminal.',
     killTerminalFailed: 'Failed to kill the terminals.',
@@ -76,6 +86,12 @@ export const constants = {
     sessionNameIsDuplicated: 'The session name already exists.',
     saveSessionSuccess: 'The session was successfully saved!',
     saveSessionFailed: 'Failed to save the session.',
+
+    // Import commands
+    importFileFailed: 'Failed to import the command from file type {fileType}.',
+    notSupportFileType: 'The file type {fileType} is not supported!',
+    notExistImportFile: 'The file {filename} does not exist in any workspace {workspace}.',
+    notExistAnyCommands: 'There are no definition commands in the {filePath}.',
 
     // Migrate the configuration file
     migrateConfigurationFailed: 'The attempt to upgrade to the most recent configuration file schema was unsuccessful!',

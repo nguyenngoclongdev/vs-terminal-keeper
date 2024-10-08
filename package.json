@@ -95,6 +95,12 @@
                 }
             ]
         },
+        "submenus": [
+            {
+                "id": "import.submenu",
+                "label": "Import Session"
+            }
+        ],
         "commands": [
             {
                 "command": "terminal-keeper.generate",
@@ -170,9 +176,81 @@
             {
                 "command": "terminal-keeper.help-and-feedback-activity",
                 "title": "Help & Feedback"
+            },
+            {
+                "command": "terminal-keeper.import-from-npm",
+                "title": "From npm (e.g. package.json)"
+            },
+            {
+                "command": "terminal-keeper.import-from-composer",
+                "title": "From composer (e.g. composer.json)"
+            },
+            {
+                "command": "terminal-keeper.import-from-make",
+                "title": "From makefile (e.g. Makefile, makefile)"
+            },
+            {
+                "command": "terminal-keeper.import-from-gradle",
+                "title": "From gradle (e.g. build.gradle, test.gradle)"
+            },
+            {
+                "command": "terminal-keeper.import-from-pipenv",
+                "title": "From pipenv (e.g. Pipfile, pipfile)"
+            },
+            {
+                "command": "terminal-keeper.import-from-ant",
+                "title": "From ant (e.g. build.xml)"
+            },
+            {
+                "command": "terminal-keeper.import-from-grunt",
+                "title": "From grunt (e.g. GRUNTFILE.JS)"
+            },
+            {
+                "command": "terminal-keeper.import-from-gulp",
+                "title": "From gulp (e.g. gulpfile.mjs, gulpfile.js, GULPFILE.js)"
             }
         ],
         "menus": {
+            "import.submenu": [
+                {
+                    "command": "terminal-keeper.import-from-npm",
+                    "group": "source@1"
+                },
+                {
+                    "command": "terminal-keeper.import-from-composer",
+                    "group": "source@2"
+                },
+                {
+                    "command": "terminal-keeper.import-from-make",
+                    "group": "source@3"
+                },
+                {
+                    "command": "terminal-keeper.import-from-gradle",
+                    "group": "source@4"
+                },
+                {
+                    "command": "terminal-keeper.import-from-pipenv",
+                    "group": "source@5"
+                },
+                {
+                    "command": "terminal-keeper.import-from-ant",
+                    "group": "source@6"
+                },
+                {
+                    "command": "terminal-keeper.import-from-grunt",
+                    "group": "source@7"
+                },
+                {
+                    "command": "terminal-keeper.import-from-gulp",
+                    "group": "source@8"
+                }
+            ],
+            "editor/context": [
+                {
+                    "submenu": "import.submenu",
+                    "group": "import"
+                }
+            ],
             "view/title": [
                 {
                     "command": "terminal-keeper.active",
@@ -210,14 +288,19 @@
                     "group": "activity@4"
                 },
                 {
-                    "command": "terminal-keeper.save",
+                    "submenu": "import.submenu",
                     "when": "view == terminalKeeperActivityView",
                     "group": "tk1@1"
                 },
                 {
-                    "command": "terminal-keeper.remove",
+                    "command": "terminal-keeper.save",
                     "when": "view == terminalKeeperActivityView",
                     "group": "tk1@2"
+                },
+                {
+                    "command": "terminal-keeper.remove",
+                    "when": "view == terminalKeeperActivityView",
+                    "group": "tk1@3"
                 },
                 {
                     "command": "terminal-keeper.help-and-feedback-activity",
@@ -335,6 +418,7 @@
         "@types/mocha": "^10.0.1",
         "@types/node": "^20.2.5",
         "@types/vscode": "^1.64.0",
+        "@types/xml2js": "^0.4.14",
         "@types/webpack-env": "^1.18.1",
         "@typescript-eslint/eslint-plugin": "^5.59.8",
         "@typescript-eslint/parser": "^5.59.8",
@@ -351,6 +435,7 @@
         "path-browserify": "^1.0.1",
         "process": "^0.11.10",
         "stream-browserify": "^3.0.0",
+        "timers-browserify": "^2.0.12",
         "ts-loader": "^9.4.3",
         "typescript": "^5.0.4",
         "webpack": "^5.84.1",
@@ -358,7 +443,10 @@
     },
     "dependencies": {
         "@vscode-utility/fs-browserify": "^1.0.8",
-        "@vscode-utility/terminal-browserify": "^1.0.2"
+        "@vscode-utility/terminal-browserify": "^1.0.2",
+        "@sgarciac/bombadil": "^2.3.0",
+        "glob": "11.0.0",
+        "xml2js": "^0.6.2"
     },
     "author": {
         "name": "Nguyen Ngoc Long",
