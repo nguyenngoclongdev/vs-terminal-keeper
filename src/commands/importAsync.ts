@@ -68,7 +68,12 @@ const getFilePaths = async (workspaceFolders: readonly WorkspaceFolder[], filena
         const wsFolder = workspaceFolders[i];
         for (let j = 0; j < filenames.length; j++) {
             const filename = filenames[j];
-            const files = await glob(`**/${filename}`, { cwd: wsFolder.uri.fsPath, nodir: true, absolute: true });
+            const files = await glob(`**/${filename}`, {
+                cwd: wsFolder.uri.fsPath,
+                nodir: true,
+                absolute: true,
+                ignore: 'node_modules/**'
+            });
             filePaths.push(...files);
         }
     }
