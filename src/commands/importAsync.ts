@@ -1,5 +1,6 @@
 import { TerminalItem } from '@vscode-utility/terminal-browserify';
 import { glob } from 'glob';
+import path from 'path/posix';
 import { QuickPickItem, window, workspace, WorkspaceFolder } from 'vscode';
 import { Configuration } from '../configuration/configuration';
 import { configurationTemplate } from '../configuration/template';
@@ -77,14 +78,17 @@ const getFilePaths = async (workspaceFolders: readonly WorkspaceFolder[], filena
 const chooseFilePath = async (filePaths: string[]): Promise<string | undefined> => {
     let selectedFilePath = filePaths[0];
     if (filePaths.length >= 1) {
-        const options = filePaths.map((filePath) => ({ label: filePath, detail: `$(file)${filePath}` }));
+        const options = filePaths.map((filePath): QuickPickItem => {
+            const filename = path.basename(filePath);
+            return { label: filename, detail: filePath.replace(filename, '') };
+        });
         const quickPickItem = await window.showQuickPick(options, {
             title: constants.selectFileTitle,
             placeHolder: constants.selectFilePlaceHolder,
             canPickMany: false,
             ignoreFocusOut: true
         });
-        return quickPickItem ? quickPickItem.label : undefined;
+        return quickPickItem ? path.join(quickPickItem.detail || '', quickPickItem.label) : undefined;
     }
     return selectedFilePath;
 };
