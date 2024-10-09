@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.44
+
+### Patch Changes
+
+- 53b488d: fix: ignore sub directory node_modules when find the import file
+
 ## 1.1.43
 
 ### Patch Changes
