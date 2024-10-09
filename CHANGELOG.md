@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.43
+
+### Patch Changes
+
+- 336eb7f: bump version
+
 ## 1.1.42
 
 ### Patch Changes
