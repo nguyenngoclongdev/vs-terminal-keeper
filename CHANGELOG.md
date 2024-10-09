@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.45
+
+### Patch Changes
+
+- ed29746: fix: using glob to find the import file
+
 ## 1.1.44
 
 ### Patch Changes
