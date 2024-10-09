@@ -16,25 +16,37 @@ import { extractPipenvCommands } from './modules/pipenvParse';
 
 export type ImportFileType = 'npm' | 'composer' | 'make' | 'gradle' | 'pipenv' | 'ant' | 'grunt' | 'gulp';
 
-const getFilenames = (fileType: ImportFileType): Array<string> | undefined => {
+const getGlobFiles = (fileType: ImportFileType): Array<string> | undefined => {
     switch (fileType) {
         case 'npm':
-            return ['package.json'];
+            return ['**/package.json'];
         case 'composer':
-            return ['composer.json'];
+            return ['**/composer.json'];
         case 'make':
-            return ['Makefile', 'makefile'];
+            return ['**/[Mm]akefile'];
         case 'gradle':
-            return ['build.gradle', 'test.gradle'];
+            return ['**/*.[Gg][Rr][Aa][Dd][Ll][Ee]'];
         case 'pipenv':
-            return ['Pipfile', 'pipfile'];
+            return ['**/[Pp][Ii][Pp][Ff][Ii][Ll][Ee]'];
         case 'ant':
-            return ['build.xml'];
+            return ['**/[Bb][Uu][Ii][Ll][Dd].[Xx][Mm][Ll]'];
         case 'grunt':
-            return ['GRUNTFILE.JS'];
+            return ['**/[Gg][Rr][Uu][Nn][Tt][Ff][Ii][Ll][Ee].[Jj][Ss]'];
         case 'gulp':
-            return ['GULPFILE.js', 'GULPFILE.mjs', 'gulpfile.js', 'gulpfile.mjs'];
+            return [
+                '**/[Gg][Uu][Ll][Pp][Ff][Ii][Ll][Ee].{[Jj][Ss],[Tt][Ss],[Mm][Jj][Ss],[Bb][Aa][Bb][Ee][Ll].[Jj][Ss]}'
+            ];
         default:
+            // AppPublisher: **/.publishrc*
+            // Maven: **/pom.xml
+            // Bash: **/*.[Ss][Hh]
+            // Batch: **/*.{[Bb][Aa][Tt],[Cc][Mm][Dd]}
+            // NSIS: **/*.[Nn][Ss][Ii]
+            // Perl: **/*.[Pp][Ll]
+            // PowerShell: **/*.[Pp][Ss]1
+            // Python: **/*.[Pp][Yy]
+            // Ruby: **/*.rb
+            // tsc: **/tsconfig.{json,*.json}
             return undefined;
     }
 };
@@ -62,13 +74,13 @@ const getCommands = async (fileType: ImportFileType, filePath: string): Promise<
     }
 };
 
-const getFilePaths = async (workspaceFolders: readonly WorkspaceFolder[], filenames: string[]): Promise<string[]> => {
+const getFilePaths = async (workspaceFolders: readonly WorkspaceFolder[], globFiles: string[]): Promise<string[]> => {
     const filePaths: string[] = [];
     for (let i = 0; i < workspaceFolders.length; i++) {
         const wsFolder = workspaceFolders[i];
-        for (let j = 0; j < filenames.length; j++) {
-            const filename = filenames[j];
-            const files = await glob(`**/${filename}`, {
+        for (let j = 0; j < globFiles.length; j++) {
+            const globFile = globFiles[j];
+            const files = await glob(globFile, {
                 cwd: wsFolder.uri.fsPath,
                 nodir: true,
                 absolute: true,
@@ -155,18 +167,18 @@ export const importAsync = async (fileType: ImportFileType): Promise<void> => {
         }
 
         // Get filename by fileType
-        const filenames = getFilenames(fileType);
-        if (!filenames || filenames.length <= 0) {
+        const globFiles = getGlobFiles(fileType);
+        if (!globFiles || globFiles.length <= 0) {
             window.showWarningMessage(constants.notSupportFileType.replace('{fileType}', fileType));
             return;
         }
 
         // Get all filepaths
-        const filePaths = await getFilePaths(workspaceFolders, filenames);
+        const filePaths = await getFilePaths(workspaceFolders, globFiles);
         if (!filePaths || filePaths.length <= 0) {
             window.showWarningMessage(
                 constants.notExistImportFile
-                    .replace('{filename}', filenames.join(', '))
+                    .replace('{fileType}', fileType)
                     .replace('{workspace}', workspaceFolders.map((w) => w.uri.fsPath).join(', '))
             );
             return;

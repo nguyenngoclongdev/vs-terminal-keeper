@@ -90,7 +90,7 @@ export const constants = {
     // Import commands
     importFileFailed: 'Failed to import the command from file type {fileType}.',
     notSupportFileType: 'The file type {fileType} is not supported!',
-    notExistImportFile: 'The file {filename} does not exist in any workspace {workspace}.',
+    notExistImportFile: 'The file type {fileType} does not exist in any workspace {workspace}.',
     notExistAnyCommands: 'There are no definition commands in the {filePath}.',
 
     // Migrate the configuration file

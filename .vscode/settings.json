@@ -26,6 +26,7 @@
     "gitlens.hovers.currentLine.over": "line",
     "gitlens.codeLens.enabled": false,
     "cSpell.words": [
+        "akefile",
         "bombadil",
         "callhierarchy",
         "gradlew",
@@ -36,6 +37,7 @@
         "nmake",
         "nodir",
         "NOTPARALLEL",
+        "NSIS",
         "ONESHELL",
         "outdir",
         "outfile",
@@ -43,6 +45,7 @@
         "pipfile",
         "posttest",
         "pree",
+        "publishrc",
         "registertask",
         "SECONDEXPANSION",
         "sgarciac",
