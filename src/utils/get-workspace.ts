@@ -1,3 +1,4 @@
+import { fs } from '@vscode-utility/fs-browserify';
 import { exec } from 'child_process';
 import * as path from 'path';
 import { promisify } from 'util';
@@ -40,4 +41,27 @@ export const getWorkspaceRootPath = async (uri?: Uri): Promise<string | undefine
 
     const stat = await workspace.fs.stat(Uri.file(cwd));
     return stat.type === FileType.File ? path.dirname(cwd) : cwd;
+};
+
+export const getRecursiveWorkspace = async (): Promise<string | undefined> => {
+    const { workspaceFolders } = workspace;
+    if (!workspaceFolders) {
+        return undefined;
+    }
+
+    let workspaceHasSessionsFile: string | undefined;
+    for (const folder of workspaceFolders) {
+        try {
+            const workspacePath = folder.uri.fsPath;
+            const sessionsFilePath = path.join(workspacePath, '.vscode', 'sessions.json');
+            const isExistSessionsFile = await fs.existAsync(sessionsFilePath);
+            if (isExistSessionsFile) {
+                workspaceHasSessionsFile = sessionsFilePath;
+                break;
+            }
+        } catch (error) {
+            console.log('No config in workspace', folder, error);
+        }
+    }
+    return workspaceHasSessionsFile;
 };

@@ -1,5 +1,5 @@
 import { fs } from '@vscode-utility/fs-browserify';
-import { posix } from 'path';
+import path from 'path';
 import { workspace, WorkspaceConfiguration } from 'vscode';
 import { getWorkspaceRootPath } from '../utils/get-workspace';
 import { getTabWidth } from '../utils/utils';
@@ -162,11 +162,11 @@ export class Configuration {
     }
 
     private static getVscodeDirPath(workspaceDirPath: string): string {
-        return posix.join(workspaceDirPath, '.vscode');
+        return path.join(workspaceDirPath, '.vscode');
     }
 
     private static getSessionFilePath(workspaceDirPath: string): string {
         const vscodeDirPath = this.getVscodeDirPath(workspaceDirPath);
-        return posix.join(vscodeDirPath, 'sessions.json');
+        return path.join(vscodeDirPath, 'sessions.json');
     }
 }
