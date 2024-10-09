@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.46
+
+### Patch Changes
+
+- 2df1a8a: fix: change path.posix.join to path.join to resolve the path correctly on wsl
+
 ## 1.1.45
 
 ### Patch Changes
