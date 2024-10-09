@@ -72,7 +72,7 @@ const getFilePaths = async (workspaceFolders: readonly WorkspaceFolder[], filena
                 cwd: wsFolder.uri.fsPath,
                 nodir: true,
                 absolute: true,
-                ignore: 'node_modules/**'
+                ignore: '**/node_modules/**'
             });
             filePaths.push(...files);
         }
