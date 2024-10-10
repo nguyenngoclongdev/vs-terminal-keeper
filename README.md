@@ -42,7 +42,7 @@ Get it from [Visual Studio Marketplace](https://marketplace.visualstudio.com/ite
 -   Explore Vibrant Themes: Personalize your terminal with a variety of colorful themes for icons and colors that brighten your workspace.
 -   ✨ Simple Session Management: Use Terminal Keeper Activity to manage your terminal sessions effortlessly.
 -   ✨ Import Commands with Ease: Bring in commands from files like package.json, pipenv, makefile, grunt, gradle, gulp, ant, and more quickly.
--   ✨ ~~Save Your Terminal Session~~: Automatically detect icons, colors, and split terminals to create a new session. (Note: Due to current limitations in the VSCode API, retrieving the last command from the current terminal isn't supported yet. Please fill it in manually. In the feature if api support we can supported.)
+-   ~~Save Your Terminal Session~~: Preserve your current terminal session along with its icon, color, and all terminal configurations. (Note: Due to current limitations in the VSCode API, we cannot retrieve the icon, color, or last command from the terminal just yet. We hope to implement this feature in the future if the API allows it!)
 
 ## Using the extension
 
