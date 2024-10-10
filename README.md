@@ -35,13 +35,14 @@ Get it from [Visual Studio Marketplace](https://marketplace.visualstudio.com/ite
 
 # Features
 
--   Effortlessly generate configuration templates.
--   Automatically restore your last terminal session on startup.
--   Easily select which terminal session to activate.
--   Seamlessly remove unwanted terminal sessions.
--   Explore a variety of built-in themes for terminal icons and colors.
--   Import commands from files like package.json, pipenv, makefile, grunt, gradle, gulp, ant, and more.
--   ~~Save the current terminal session~~ (this feature is currently disabled due to limitations in the VSCode API. We are unable to detect certain features such as icons, colors, and split terminals. We may re-enable this feature if the VSCode API provides full support for these features.)
+-   Easy Configuration: Quickly create templates to simplify your terminal setup.
+-   Restore Last Session Automatically: Start your day smoothly by bringing back your last terminal session when you open the app.
+-   Select Your Terminal Session: Choose which terminal session to open with just a few clicks, giving you control over your work.
+-   Remove Unwanted Sessions: Easily delete any terminal sessions you no longer need, keeping your workspace tidy.
+-   Explore Vibrant Themes: Personalize your terminal with a variety of colorful themes for icons and colors that brighten your workspace.
+-   ✨ Simple Session Management: Use Terminal Keeper Activity to manage your terminal sessions effortlessly.
+-   ✨ Import Commands with Ease: Bring in commands from files like package.json, pipenv, makefile, grunt, gradle, gulp, ant, and more quickly.
+-   ✨ ~~Save Your Terminal Session~~: Automatically detect icons, colors, and split terminals to create a new session. (Note: Due to current limitations in the VSCode API, retrieving the last command from the current terminal isn't supported yet. Please fill it in manually. In the feature if api support we can supported.)
 
 ## Using the extension
 

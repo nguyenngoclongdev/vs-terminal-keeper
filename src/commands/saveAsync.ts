@@ -1,9 +1,56 @@
+import { TerminalApi } from '@vscode-utility/terminal-browserify';
 import { QuickPickItem, window } from 'vscode';
 import { Configuration } from '../configuration/configuration';
-import { SessionItem } from '../configuration/interface';
+import { SessionConfiguration, SessionItem } from '../configuration/interface';
 import { constants } from '../utils/constants';
-import { getSessionQuickPickItems, showErrorMessageWithDetail, showInputBox, showTextDocument } from '../utils/utils';
-import { TerminalApi } from '@vscode-utility/terminal-browserify';
+import { getSessionQuickPickItems, showErrorMessageWithDetail, showTextDocument } from '../utils/utils';
+
+const chooseSessionName = async (config: SessionConfiguration): Promise<string | undefined> => {
+    // Get current session
+    if (!config.sessions) {
+        config.sessions = { default: [] };
+    }
+
+    // Show choose session name box
+    const sessionsWithDescription: QuickPickItem[] = getSessionQuickPickItems(config.sessions);
+    sessionsWithDescription.forEach((sessionItem) => {
+        sessionItem.detail = `Overwrites scripts to session ${sessionItem.label}`;
+    });
+    const addNewSession: QuickPickItem = {
+        label: 'Add new session...',
+        detail: 'Create new session, and save scripts to it.',
+        alwaysShow: true
+    };
+    const quickPickItem = await window.showQuickPick([addNewSession].concat(sessionsWithDescription), {
+        title: 'Select the session you want to override or add new session',
+        placeHolder: 'Session name...',
+        ignoreFocusOut: true
+    });
+    if (!quickPickItem) {
+        return undefined;
+    }
+
+    // Show input box if select add new
+    let sessionName = quickPickItem.label;
+    if (sessionName === addNewSession.label) {
+        const sessionNameInput = await window.showInputBox({
+            title: 'Please enter the session name.',
+            placeHolder: 'e.g. build, migrate, start, deploy',
+            ignoreFocusOut: true,
+            validateInput: (value: string) => {
+                if (!value) {
+                    return 'The session name cannot be null or empty.';
+                }
+                if (sessionsWithDescription.some((s) => s.label === value)) {
+                    return 'The session name already exists.';
+                }
+                return ''; // input valid is OK
+            }
+        });
+        return sessionNameInput ? sessionNameInput : undefined;
+    }
+    return sessionName;
+};
 
 export const saveAsync = async (): Promise<void> => {
     try {
@@ -13,55 +60,17 @@ export const saveAsync = async (): Promise<void> => {
             window.showWarningMessage(constants.notExistConfiguration);
             return;
         }
-        
+
         const config = await Configuration.load();
         if (!config) {
             window.showWarningMessage(constants.notExistConfiguration);
             return;
         }
 
-        // Check the size of sessions
-        const { sessions } = config;
-        const sessionsWithDescription: QuickPickItem[] = getSessionQuickPickItems(sessions);
-        const sessionKeys = sessionsWithDescription.map((session) => session.label);
-
-        // Show quick pick to allow override on existed session
-        const quickPickSession = await window.showQuickPick(
-            sessionsWithDescription.concat({ label: constants.newSession, alwaysShow: true }),
-            {
-                title: constants.selectSessionSaveTitle,
-                placeHolder: constants.selectSessionSavePlaceHolder,
-                canPickMany: false,
-                ignoreFocusOut: true
-            }
-        );
-        if (!quickPickSession) {
+        // Select name of sessions to override or add new session
+        let sessionName = await chooseSessionName(config);
+        if (!sessionName) {
             return;
-        }
-
-        // Set selected session
-        let selectedSession = quickPickSession.label;
-        if (quickPickSession.label === constants.newSession && quickPickSession.alwaysShow) {
-            // Show input box to enter the session name
-            const inputBoxContent = await showInputBox({
-                title: constants.enterSessionNameTitle,
-                placeHolder: constants.enterSessionNamePlaceHolder,
-                validateInput: (value) => {
-                    if (!value) {
-                        return constants.sessionNameNotEmpty;
-                    }
-                    if (sessionKeys.includes(value)) {
-                        return constants.sessionNameIsDuplicated;
-                    }
-                    return ''; // input valid is OK
-                }
-            });
-            if (!inputBoxContent) {
-                return;
-            }
-
-            // Set input content as selected session
-            selectedSession = inputBoxContent;
         }
 
         // Scan all current terminal
@@ -73,7 +82,7 @@ export const saveAsync = async (): Promise<void> => {
                 default: []
             };
         }
-        const newestSessions = { ...config.sessions, ...{ [selectedSession]: session } };
+        const newestSessions = { ...config.sessions, ...{ [sessionName]: session } };
         await Configuration.save({ sessions: newestSessions });
 
         // Show message
