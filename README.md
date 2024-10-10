@@ -35,14 +35,14 @@ Get it from [Visual Studio Marketplace](https://marketplace.visualstudio.com/ite
 
 # Features
 
--   Easy Configuration: Quickly create templates to simplify your terminal setup.
--   Restore Last Session Automatically: Start your day smoothly by bringing back your last terminal session when you open the app.
--   Select Your Terminal Session: Choose which terminal session to open with just a few clicks, giving you control over your work.
--   Remove Unwanted Sessions: Easily delete any terminal sessions you no longer need, keeping your workspace tidy.
--   Explore Vibrant Themes: Personalize your terminal with a variety of colorful themes for icons and colors that brighten your workspace.
--   ✨ Simple Session Management: Use Terminal Keeper Activity to manage your terminal sessions effortlessly.
--   ✨ Import Commands with Ease: Bring in commands from files like package.json, pipenv, makefile, grunt, gradle, gulp, ant, and more quickly.
--   ~~Save Your Terminal Session~~: Preserve your current terminal session along with its icon, color, and all terminal configurations. (Note: Due to current limitations in the VSCode API, we cannot retrieve the icon, color, or last command from the terminal just yet. We hope to implement this feature in the future if the API allows it!)
+-   **Easy Configuration**: Quickly create templates to simplify your terminal setup.
+-   **Restore Last Session Automatically**: Start your day smoothly by bringing back your last terminal session when you open the app.
+-   **Select Your Terminal Session**: Choose which terminal session to open with just a few clicks, giving you control over your work.
+-   **Remove Unwanted Sessions**: Easily delete any terminal sessions you no longer need, keeping your workspace tidy.
+-   **Explore Vibrant Themes**: Personalize your terminal with a variety of colorful themes for icons and colors that brighten your workspace.
+-   **✨ Simple Session Management**: Use Terminal Keeper Activity to manage your terminal sessions effortlessly.
+-   **✨ Import Commands with Ease**: Bring in commands from files like package.json, pipenv, makefile, grunt, gradle, gulp, ant, and more quickly.
+-   **~~Save Your Terminal Session~~**: Preserve your current terminal session along with its icon, color, and all terminal configurations. (Note: Due to current limitations in the VSCode API, we cannot retrieve the icon, color, or last command from the terminal just yet. We hope to implement this feature in the future if the API allows it!)
 
 ## Using the extension
 
