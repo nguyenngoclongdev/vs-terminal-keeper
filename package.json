@@ -1,7 +1,7 @@
 {
     "name": "terminal-keeper",
     "displayName": "Terminal Keeper",
-    "description": "Easily save and recall previous terminal sessions, create new sessions, and edit or delete existing ones.",
+    "description": "Elevate your terminal experience! Effortlessly configuration, seamlessly restore your last session, and manage sessions with ease. Personalize your workspace with colorful themes and boost productivity by importing commands swiftly.",
     "icon": "assets/logo.png",
     "version": "1.1.46",
     "main": "./dist/extension.js",

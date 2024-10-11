@@ -16,7 +16,7 @@
   <img src="https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/terminal-keeper-showcase-reverse.gif">
 </p>
 
-Terminal Keeper simplifies the management of terminal sessions in Visual Studio Code, making it easier and more convenient than ever. Restore previous sessions, manage your workspace effortlessly, and customize your terminal with vibrant themes.
+Elevate your terminal experience! Effortlessly configuration, seamlessly restore your last session, and manage sessions with ease. Personalize your workspace with colorful themes and boost productivity by importing commands swiftly.
 
 If you find this extension useful for your projects, please consider supporting me by [Github](https://github.com/sponsors/nguyenngoclongdev), [Patreon](https://patreon.com/nguyenngoclong), [KO-FI](https://ko-fi.com/nguyenngoclong) or [Paypal](https://paypal.me/longnguyenngoc). It's a great way to help me maintain and improve this tool in the future. Your support is truly appreciated!
 
