@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.47
+
+### Patch Changes
+
+- 62b8c5c: fix: update extension description
+
 ## 1.1.46
 
 ### Patch Changes
