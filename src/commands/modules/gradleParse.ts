@@ -13,8 +13,8 @@ const getCommand = (): string => {
     return gradle;
 };
 
-const buildCommands = (contents: string): Record<string, string> => {
-    const scripts: Record<string, string> = {};
+const buildCommands = (contents: string): Record<string, string[]> => {
+    const scripts: Record<string, string[]> = {};
     const cmd = getCommand();
     let idx = 0;
     let eol = contents.indexOf('\n', 0);
@@ -31,7 +31,7 @@ const buildCommands = (contents: string): Record<string, string> => {
                 if (idx2 !== -1) {
                     const tgtName = line.substring(idx1, idx2).trim();
                     if (tgtName) {
-                        scripts[tgtName] = `${cmd} ${tgtName}`;
+                        scripts[tgtName] = [`${cmd} ${tgtName}`];
                     }
                 }
             }
@@ -42,7 +42,7 @@ const buildCommands = (contents: string): Record<string, string> => {
     return scripts;
 };
 
-export const extractGradleCommands = async (filePath: string): Promise<Record<string, string> | undefined> => {
+export const extractGradleCommands = async (filePath: string): Promise<Record<string, string[]> | undefined> => {
     const content = await getFileContent(filePath);
     return buildCommands(content);
 };

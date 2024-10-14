@@ -51,7 +51,10 @@ const getGlobFiles = (fileType: ImportFileType): Array<string> | undefined => {
     }
 };
 
-const getCommands = async (fileType: ImportFileType, filePath: string): Promise<Record<string, string> | undefined> => {
+const getCommands = async (
+    fileType: ImportFileType,
+    filePath: string
+): Promise<Record<string, string[]> | undefined> => {
     switch (fileType) {
         case 'npm':
             return extractJsonScriptCommands(filePath);
@@ -200,12 +203,8 @@ export const importAsync = async (fileType: ImportFileType): Promise<void> => {
 
         // Parse to terminal item from scripts
         const cwd = path.dirname(selectedFilePath);
-        const terminalItems = Object.entries(scripts).map(([key, value]) => {
-            const item: TerminalItem = {
-                name: key,
-                cwd,
-                commands: [value]
-            };
+        const terminalItems = Object.entries(scripts).map(([name, commands]) => {
+            const item: TerminalItem = { name, cwd, commands };
             return item;
         });
 

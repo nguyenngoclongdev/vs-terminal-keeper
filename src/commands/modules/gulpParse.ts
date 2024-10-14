@@ -13,7 +13,7 @@ const parseGulpExport = (line: string) => {
     let idx1: number, idx2: number;
     let tgtName: string | undefined;
 
-    if (line.toLowerCase().trimLeft().startsWith('exports.')) {
+    if (line.toLowerCase().trimStart().startsWith('exports.')) {
         idx1 = line.indexOf('.') + 1;
         idx2 = line.indexOf(' ', idx1);
         /* istanbul ignore if */
@@ -24,7 +24,7 @@ const parseGulpExport = (line: string) => {
         if (idx1 !== -1) {
             tgtName = line.substring(idx1, idx2).trim();
         }
-    } else if (line.toLowerCase().trimLeft().startsWith('exports[')) {
+    } else if (line.toLowerCase().trimStart().startsWith('exports[')) {
         /* istanbul ignore else */
         idx1 = line.indexOf('[') + 2; // skip past [ and '/"
         idx2 = line.indexOf(']', idx1) - 1; // move up to "/'
@@ -80,8 +80,8 @@ const parseGulpTask = (line: string, contents: string, eol: number) => {
     return tgtName;
 };
 
-const buildCommands = (contents: string): Record<string, string> => {
-    const scripts: Record<string, string> = {};
+const buildCommands = (contents: string): Record<string, string[]> => {
+    const scripts: Record<string, string[]> = {};
     const cmd = getCommand();
     let idx = 0;
     let eol = contents.indexOf('\n', 0);
@@ -96,7 +96,7 @@ const buildCommands = (contents: string): Record<string, string> => {
                 tgtName = parseGulpTask(line, contents, eol);
             }
             if (tgtName) {
-                scripts[tgtName] = `${cmd} ${tgtName}`;
+                scripts[tgtName] = [`${cmd} ${tgtName}`];
             }
         }
         idx = eol + 1;
@@ -105,7 +105,7 @@ const buildCommands = (contents: string): Record<string, string> => {
     return scripts;
 };
 
-export const extractGulpCommands = async (filePath: string): Promise<Record<string, string> | undefined> => {
+export const extractGulpCommands = async (filePath: string): Promise<Record<string, string[]> | undefined> => {
     const content = await getFileContent(filePath);
     return buildCommands(content);
 };

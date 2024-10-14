@@ -49,8 +49,8 @@ const getCommand = (): string => {
     return make;
 };
 
-const buildCommands = (contents: string): Record<string, string> => {
-    const scripts: Record<string, string> = {};
+const buildCommands = (contents: string): Record<string, string[]> => {
+    const scripts: Record<string, string[]> = {};
     const cmd = getCommand();
     let match;
     while ((match = ruleTargetExp.exec(contents))) {
@@ -59,13 +59,13 @@ const buildCommands = (contents: string): Record<string, string> => {
             continue;
         }
         if (isNormalTarget(tgtName)) {
-            scripts[tgtName] = `${cmd} ${tgtName}`;
+            scripts[tgtName] = [`${cmd} ${tgtName}`];
         }
     }
     return scripts;
 };
 
-export const extractMakeCommands = async (filePath: string): Promise<Record<string, string> | undefined> => {
+export const extractMakeCommands = async (filePath: string): Promise<Record<string, string[]> | undefined> => {
     const content = await getFileContent(filePath);
     return buildCommands(content);
 };

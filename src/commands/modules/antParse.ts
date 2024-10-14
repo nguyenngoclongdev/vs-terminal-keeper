@@ -14,8 +14,8 @@ const getCommand = (): string => {
     return ant;
 };
 
-const buildCommands = async (contents: string): Promise<Record<string, string>> => {
-    const scripts: Record<string, string> = {};
+const buildCommands = async (contents: string): Promise<Record<string, string[]>> => {
+    const scripts: Record<string, string[]> = {};
     const cmd = getCommand();
     const text = await parseStringPromise(contents);
     if (text && text.project && text.project.target) {
@@ -23,14 +23,15 @@ const buildCommands = async (contents: string): Promise<Record<string, string>> 
         const targets = text.project.target;
         for (const tgt of targets) {
             if (tgt.$ && tgt.$.name) {
-                scripts[defaultTask === tgt.$.name ? tgt.$.name + ' - Default' : tgt.$.name] = `${cmd} ${tgt.$.name}`;
+                const name = defaultTask === tgt.$.name ? tgt.$.name + ' - Default' : tgt.$.name;
+                scripts[name] = [`${cmd} ${tgt.$.name}`];
             }
         }
     }
     return scripts;
 };
 
-export const extractAntCommands = async (filePath: string): Promise<Record<string, string> | undefined> => {
+export const extractAntCommands = async (filePath: string): Promise<Record<string, string[]> | undefined> => {
     const content = await getFileContent(filePath);
     return await buildCommands(content);
 };
