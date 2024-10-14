@@ -96,8 +96,9 @@ const chooseFilePath = async (filePaths: string[]): Promise<string | undefined> 
     let selectedFilePath = filePaths[0];
     if (filePaths.length >= 1) {
         const options = filePaths.map((filePath): QuickPickItem => {
+            const dirname = path.dirname(filePath);
             const filename = path.basename(filePath);
-            return { label: filename, detail: filePath.replace(filename, '') };
+            return { label: filename, detail: dirname };
         });
         const quickPickItem = await window.showQuickPick(options, {
             title: constants.selectFileTitle,
@@ -198,9 +199,11 @@ export const importAsync = async (fileType: ImportFileType): Promise<void> => {
         }
 
         // Parse to terminal item from scripts
+        const cwd = path.dirname(selectedFilePath);
         const terminalItems = Object.entries(scripts).map(([key, value]) => {
             const item: TerminalItem = {
                 name: key,
+                cwd,
                 commands: [value]
             };
             return item;
