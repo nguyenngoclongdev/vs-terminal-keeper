@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.49
+
+### Patch Changes
+
+- bfe1708: fix: allow to import the array commands
+
 ## 1.1.48
 
 ### Patch Changes
