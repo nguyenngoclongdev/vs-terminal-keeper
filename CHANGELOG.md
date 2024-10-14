@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.48
+
+### Patch Changes
+
+- 89d08da: fix: add cwd when import the commands
+
 ## 1.1.47
 
 ### Patch Changes
