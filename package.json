@@ -151,6 +151,11 @@
                 "icon": "$(refresh)"
             },
             {
+                "command": "terminal-keeper.navigate-activity",
+                "title": "Edit",
+                "icon": "$(search)"
+            },
+            {
                 "command": "terminal-keeper.collapse-all-activity",
                 "title": "Collapse All",
                 "icon": "$(collapse-all)"
@@ -333,6 +338,11 @@
                     "command": "terminal-keeper.copy-command-activity",
                     "when": "viewItem == terminal-context",
                     "group": "terminal@3"
+                },
+                {
+                    "command": "terminal-keeper.navigate-activity",
+                    "when": "viewItem == terminal-context",
+                    "group": "terminal@4"
                 }
             ],
             "explorer/context": [
@@ -401,7 +411,7 @@
         "cs": "changeset",
         "test": "node ./dist/__test__/runTest.js",
         "clean": "rm -rf dist node_modules web/build web/node_modules *.vsix",
-        "build": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
+        "build": "node esbuild.js",
         "build:webext": "webpack",
         "watch": "tsc -watch -p ./",
         "watch:webext": "webpack --watch"

@@ -8,6 +8,7 @@ import { generateAsync } from './commands/generateAsync';
 import { importAsync } from './commands/importAsync';
 import { killAllAsync } from './commands/killAllAsync';
 import { migrateAsync } from './commands/migrateAsync';
+import { navigateAsync } from './commands/navigateAsync';
 import { openAsync } from './commands/openAsync';
 import { removeAsync } from './commands/removeAsync';
 import { saveAsync } from './commands/saveAsync';
@@ -73,6 +74,9 @@ export async function activate(context: ExtensionContext) {
         }),
         commands.registerCommand(extCommands.collapseAllActivity, async () => {
             await commands.executeCommand(sysCommands.activityCollapseAll);
+        }),
+        commands.registerCommand(extCommands.navigateActivity, async (sessionTreeItem: TKTreeItem) => {
+            await navigateAsync(sessionTreeItem);
         }),
         commands.registerCommand(extCommands.helpAndFeedbackActivity, async () => {
             await env.openExternal(Uri.parse(constants.helpAndFeedbackUrl));

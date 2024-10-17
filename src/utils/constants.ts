@@ -22,6 +22,7 @@ export const extCommands = {
     sendToCurrentTerminalActivity: 'terminal-keeper.send-to-current-terminal-activity',
     copyCommandActivity: 'terminal-keeper.copy-command-activity',
     collapseAllActivity: 'terminal-keeper.collapse-all-activity',
+    navigateActivity: 'terminal-keeper.navigate-activity',
     helpAndFeedbackActivity: 'terminal-keeper.help-and-feedback-activity'
 };
 

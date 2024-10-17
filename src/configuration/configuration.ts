@@ -7,7 +7,7 @@ import { SessionConfiguration } from './interface';
 
 export class Configuration {
     private static workSpaceConfigurationSpace: string = 'terminal-keeper';
-    private static vscodeDirPath: string = '';
+    public static vscodeDirPath: string = '';
     public static sessionFilePath: string = '';
     public static userConfigKeys: string[] = [];
 

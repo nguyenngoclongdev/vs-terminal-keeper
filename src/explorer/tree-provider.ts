@@ -11,11 +11,16 @@ import {
 } from 'vscode';
 import { Configuration } from '../configuration/configuration';
 import { SessionItem } from '../configuration/interface';
+import { extCommands } from '../utils/constants';
 
 export class TKTreeItem extends TreeItem {
     sessionId: string | undefined;
     terminalArrayIndex: number | undefined;
     children: TKTreeItem[] | undefined;
+
+    // Use to navigate to json
+    source: 'settings.json' | 'sessions.json' | undefined;
+    keyword: string | undefined;
 
     constructor(label: string, children?: TKTreeItem[]) {
         super(label, children === undefined ? TreeItemCollapsibleState.None : TreeItemCollapsibleState.Collapsed);
@@ -192,6 +197,13 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
             .appendCodeblock(`Config Source: ${source}`);
         item.contextValue = 'overview-context';
         item.iconPath = new ThemeIcon(id || 'circle-filled', color);
+        item.source = source;
+        item.keyword = label;
+        item.command = {
+            title: 'Navigate to configuration',
+            command: extCommands.navigateActivity,
+            arguments: [item]
+        };
         return item;
     };
 
@@ -264,6 +276,13 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
         item.iconPath = new ThemeIcon(icon?.id || 'terminal', color);
         item.sessionId = sessionId;
         item.terminalArrayIndex = terminalArrayIndex;
+        item.source = 'sessions.json';
+        item.keyword = terminalName;
+        item.command = {
+            title: 'Navigate to configuration',
+            command: extCommands.navigateActivity,
+            arguments: [item]
+        };
         return item;
     };
 }
