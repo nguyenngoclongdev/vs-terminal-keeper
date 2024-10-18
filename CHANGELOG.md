@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.50
+
+### Patch Changes
+
+- 75601aa: fix: quick navigate to configuration file from activity
+
 ## 1.1.49
 
 ### Patch Changes
