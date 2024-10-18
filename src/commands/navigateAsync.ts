@@ -12,13 +12,19 @@ const getFileUriBySource = (source: string | undefined): Uri => {
     return Uri.file(Configuration.sessionFilePath);
 };
 
+const escapeRegExp = (input: string) => {
+    return input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
+
 const getKeywordRegex = (treeItem: TKTreeItem): RegExp => {
-    const { source, keyword } = treeItem;
-    let keywordFull = keyword || '';
-    if (source === 'settings.json') {
-        keywordFull = `terminal-keeper.${keyword}`;
-    }
-    return new RegExp(keywordFull, 'gm');
+    const { keywords = [] } = treeItem;
+    const enhanceKeywords = keywords.map((keyword) => {
+        let enhanceKeyword = escapeRegExp(keyword)
+            .replace(`: `, `: ?`) // match space or no space
+            .replace(`"`, `(?:'|")`); // match single quote or double quote
+        return enhanceKeyword;
+    });
+    return new RegExp(enhanceKeywords.join('|'), 'gm');
 };
 
 export const navigateAsync = async (treeItem: TKTreeItem): Promise<void> => {

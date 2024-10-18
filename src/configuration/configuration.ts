@@ -6,7 +6,7 @@ import { getTabWidth } from '../utils/utils';
 import { SessionConfiguration } from './interface';
 
 export class Configuration {
-    private static workSpaceConfigurationSpace: string = 'terminal-keeper';
+    public static wsConfigurationSpace: string = 'terminal-keeper';
     public static vscodeDirPath: string = '';
     public static sessionFilePath: string = '';
     public static userConfigKeys: string[] = [];
@@ -144,7 +144,7 @@ export class Configuration {
     }
 
     private static getWorkspaceConfiguration(): WorkspaceConfiguration {
-        return workspace.getConfiguration(this.workSpaceConfigurationSpace);
+        return workspace.getConfiguration(this.wsConfigurationSpace);
     }
 
     private static async getSessionConfiguration(): Promise<SessionConfiguration> {

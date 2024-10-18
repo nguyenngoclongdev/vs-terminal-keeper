@@ -20,7 +20,7 @@ export class TKTreeItem extends TreeItem {
 
     // Use to navigate to json
     source: 'settings.json' | 'sessions.json' | undefined;
-    keyword: string | undefined;
+    keywords: string[] | undefined;
 
     constructor(label: string, children?: TKTreeItem[]) {
         super(label, children === undefined ? TreeItemCollapsibleState.None : TreeItemCollapsibleState.Collapsed);
@@ -198,7 +198,13 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
         item.contextValue = 'overview-context';
         item.iconPath = new ThemeIcon(id || 'circle-filled', color);
         item.source = source;
-        item.keyword = label;
+        item.keywords =
+            source === 'settings.json'
+                ? [
+                      `"${Configuration.wsConfigurationSpace}.${label}": ${value}`,
+                      `"${Configuration.wsConfigurationSpace}.${label}": "${value}"`
+                  ]
+                : [`"${label}": ${value}`, `"${label}": "${value}"`];
         item.command = {
             title: 'Navigate to configuration',
             command: extCommands.navigateActivity,
@@ -277,7 +283,7 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
         item.sessionId = sessionId;
         item.terminalArrayIndex = terminalArrayIndex;
         item.source = 'sessions.json';
-        item.keyword = terminalName;
+        item.keywords = [`"name": "${terminalName}"`];
         item.command = {
             title: 'Navigate to configuration',
             command: extCommands.navigateActivity,
