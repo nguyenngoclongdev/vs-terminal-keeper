@@ -1,5 +1,11 @@
 # Terminal Keeper
 
+## 1.1.51
+
+### Patch Changes
+
+- c283352: fix: quick navigate to sessions.json
+
 ## 1.1.50
 
 ### Patch Changes
