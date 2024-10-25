@@ -7,8 +7,9 @@ export default defineConfig({
   title: "Terminal Keeper",
   description:
     "Elevate your terminal experience! Effortlessly configuration, seamlessly restore your last session, and manage sessions with ease. Personalize your workspace with colorful themes and boost productivity by importing commands swiftly.",
+  base: '/vs-terminal-keeper/',
   head: [
-    ["link", { rel: "icon", type: "image/png", href: "/assets/logo.png" }],
+    ["link", { rel: "icon", type: "image/png", href: "./assets/logo.png" }],
   ],
   lastUpdated: true,
   locales: {
@@ -23,7 +24,7 @@ export default defineConfig({
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: "/assets/logo.svg",
+    logo: "./assets/logo.svg",
     search: {
       provider: "local",
     },
