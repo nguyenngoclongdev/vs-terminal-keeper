@@ -171,8 +171,8 @@ const members = [
 
 <br>
 
-# Feedback
+# Our wall of love
 
-Say hello to our awesome team.
+See what the community is saying about Terminal Keeper. Share the love!
 
 <VPTeamMembers size="small" :members="members" />
