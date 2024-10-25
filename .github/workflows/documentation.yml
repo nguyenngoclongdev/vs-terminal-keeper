@@ -45,8 +45,8 @@ jobs:
       - name: Build VitePress site
         run: npm run build
 
-      - name: Bundle CNAME with site dist
-        run: cp CNAME .vitepress/dist
+      # - name: Bundle CNAME with site dist
+      #   run: cp CNAME .vitepress/dist
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v4
