@@ -24,8 +24,8 @@ Choose between randomly assigned colors and icons based on the terminal name or 
     "default": [
       {
         "name": "dev",
-        "icon": "account", // 👈 add this line
-        "color": "terminal.ansiBlue", // 👈 add this line
+        "icon": "account", // [!code focus]
+        "color": "terminal.ansiBlue", // [!code focus]
         "commands": []
       }
     ]

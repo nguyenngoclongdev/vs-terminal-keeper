@@ -1,5 +1,3 @@
-# Terminal Keeper
-
 ## 1.1.51
 
 ### Patch Changes

@@ -8,9 +8,26 @@
 
 ![Quick open configuration](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/open-configuration.gif)
 
-## Terminal Settings
+## Advance Configuration
 
-You can further configure Terminal Keeper through your VSCode settings. Below are some customizable options:
+For users seeking advanced customization, Terminal Keeper offers several additional settings.
+
+### Split-Terminal Setup
+
+Terminal Keeper allows splitting terminals within a session. Use nested arrays in the sessions.json configuration to specify terminals that open side-by-side.
+```json
+{
+   "sessions": {
+      "custom": [
+         [
+            {"name": "Server", "commands": ["npm run server"]},
+            {"name": "Database", "commands": ["npm run db"]}
+         ]
+      ]
+   }
+}
+```
+
 
 ### Session Options
 
@@ -126,51 +143,76 @@ strictEnv?: boolean,
 focus?: boolean
 ```
 
-## Example Configuration
+::: details Click me to view example configuration
 
 ```jsonc
 {
-  "$schema": "https://cdn.statically.io/gh/nguyenngoclongdev/cdn/main/schema/v10/terminal-keeper.json",
-  "theme": "tribe",
-  "active": "default",
-  "activateOnStartup": true,
-  "keepExistingTerminals": false,
-  "sessions": {
-    "default": [
-      {
-        "name": "hello",
-        "autoExecuteCommands": true,
-        "icon": "person",
-        "color": "terminal.ansiGreen",
-        "commands": ["echo hello"],
-      },
-      [
-        {
-          "name": "docker:ros",
-          "commands": [""],
-        },
-        {
-          "name": "docker:k8s",
-          "commands": [""],
-        },
-      ],
-      [
-        {
-          "name": "docker:nats",
-          "commands": [""],
-        },
-        {
-          "name": "docker:fleet",
-          "commands": [""],
-        },
-      ],
-    ],
-    "saved-session": [
-      {
-        "name": "connect",
-        "commands": [""],
-      },
-    ],
-  },
+    "$schema": "https://cdn.statically.io/gh/nguyenngoclongdev/cdn/main/schema/v10/terminal-keeper.json",
+    "theme": "neon",
+    "active": "default",
+    "activateOnStartup": true,
+    "keepExistingTerminals": true,
+    "sessions": {
+        "default": [
+            {
+                "name": "workspace:frontend",
+                "autoExecuteCommands": true,
+                "icon": "folder-opened",
+                "color": "terminal.ansiCyan",
+                "commands": ["npm install", "npm start"]
+            },
+            [
+                {
+                    "name": "workspace:backend",
+                    "commands": ["npm run dev"]
+                },
+                {
+                    "name": "workspace:database",
+                    "commands": ["mongo", "watch"]
+                }
+            ],
+            [
+                {
+                    "name": "workspace:docker",
+                    "commands": ["docker-compose up -d"]
+                },
+                {
+                    "name": "workspace:tests",
+                    "commands": ["npm test"]
+                }
+            ]
+        ],
+        "saved-session": [
+            {
+                "name": "ssh:production",
+                "commands": ["ssh user@production-server"]
+            },
+            {
+                "name": "ssh:staging",
+                "commands": ["ssh user@staging-server"]
+            }
+        ]
+    }
 }
 ```
+
+:::
+
+## Workspace settings.
+
+Setting Section: settings.json
+
+::: warning
+If you have a configuration in your user settings, we will prioritize reading and updating from there. If there's no configuration information in the user settings, we will read and update from the sessions file.
+:::
+
+| Keys                                    |                             Type                              |                                                                                                                                                                                                                            Description | Default |
+| --------------------------------------- | :-----------------------------------------------------------: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | ------: |
+| `terminal-keeper.activateOnStartup`     |                            boolean                            |                                                                                                                                                                               Activated the session when Visual Studio Code starts up. |         |
+| `terminal-keeper.active`                |                            string                             |                                                                                                                                                                                                Used to determine which session to use. |         |
+| `terminal-keeper.keepExistingTerminals` |                            boolean                            |                                                                                                                                                                               Keep existing terminals open when a session is executed. |         |
+| `terminal-keeper.noClear`               |                            boolean                            | A Boolean variable indicating whether to execute the clear command during initialization. If the value is true, the clear command will not be executed upon initialization. If the value is false, the clear command will be executed. |         |
+| `terminal-keeper.theme`                 | default, inkwell, chaos, tribe, iconic, neon, solarized, dice |                                                                                                                                                                    The theme can either automatically select colors/icons or manually. |         |
+| `terminal-keeper.killProcess`           |                            boolean                            |                                                                                                                                                                    (Experimental) Kill the active process when the terminal is closed. |   false |
+| `terminal-keeper.wslSupport`            |                            boolean                            |                                                                                                                                                 (Experimental) When enable, will convert wsl path to windows path when connect to WSL. |   false |
+| `terminal-keeper.quickRun`              |                            boolean                            |                                                                                                                                                                            Add a button to quick active session from the terminal tab. |    true |

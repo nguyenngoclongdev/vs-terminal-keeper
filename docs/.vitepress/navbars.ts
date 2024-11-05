@@ -22,17 +22,17 @@ const en = [
     link: "/manage/configuration",
   },
   {
+    text: "Changelog",
+    link: "/more/changelog",
+  },
+  {
     text: getVersion(),
     items: [
-      {
-        text: "Changelog",
-        link: "https://github.com/nguyenngoclongdev/vs-terminal-keeper/blob/main/CHANGELOG.md",
-      },
       { text: "Contribute", link: "/contribute/core" },
-      {
-        text: "VSCode Marketplace",
-        link: "https://marketplace.visualstudio.com/items?itemName=nguyenngoclong.terminal-keeper",
-      },
+      // {
+      //   text: "VSCode Marketplace",
+      //   link: "https://marketplace.visualstudio.com/items?itemName=nguyenngoclong.terminal-keeper",
+      // },
       {
         text: "Open VSX",
         link: "https://open-vsx.org/extension/nguyenngoclong/terminal-keeper",

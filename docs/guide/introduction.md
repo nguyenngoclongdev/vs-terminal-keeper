@@ -1,17 +1,32 @@
 # Introduction
 
-[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/nguyenngoclong.terminal-keeper)](https://marketplace.visualstudio.com/items?itemName=nguyenngoclong.terminal-keeper)
-[![Open VSX Installs](https://img.shields.io/open-vsx/dt/nguyenngoclong/terminal-keeper?color=%2396C41F&label=open-vsx)](https://open-vsx.org/extension/nguyenngoclong/terminal-keeper)
-[![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/nguyenngoclong.terminal-keeper?label=vs-marketplace)](https://marketplace.visualstudio.com/items?itemName=nguyenngoclong.terminal-keeper)
-[![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/nguyenngoclong.terminal-keeper)](https://marketplace.visualstudio.com/items?itemName=nguyenngoclong.terminal-keeper)
-[![Visual Studio Marketplace Rating (Stars)](https://img.shields.io/visual-studio-marketplace/stars/nguyenngoclong.terminal-keeper)](https://marketplace.visualstudio.com/items?itemName=nguyenngoclong.terminal-keeper)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/nguyenngoclongdev/vs-terminal-keeper/blob/main/LICENSE)
+## What is Terminal Keeper
 
-`Terminal Keeper` is a Visual Studio Code (VSCode) extension designed to enhance your terminal experience. It allows for easy configuration, session restoration, and command management within your terminal. The extension offers personalization options through colorful themes and provides efficiency by enabling quick command imports.
+**Terminal Keeper** is an extension for Visual Studio Code (VSCode) that enhances terminal management by allowing users to create, save, and restore multiple terminal sessions with custom configurations. It’s especially useful for developers working with multi-terminal setups and recurring commands, enabling efficient workflow organization within VSCode.
 
-## Why use Terminal Keeper?
+:::tip
+Just want to try it out? Skip to the [Quickstart](getting-started.md).
+:::
 
-- Effortless Configuration: Customize your terminal environment with minimal effort.
-- Session Management: Seamlessly restore your last terminal session and manage multiple sessions.
-- Personalization: Apply colorful themes to make your terminal more visually appealing.
-- Command Imports: Swiftly import commonly used commands to boost productivity.
+## Why Terminal Keeper?
+
+- Easy Setup: Quickly configure and manage terminal sessions.
+- Productivity Boost: Automatically restores your previous session, imports commands, and customizes themes to suit your workflow.
+- Streamlined Experience: Simplifies switching between terminal sessions and supports multiple configurations per project.
+- Personalize: Customizable themes, making it easier to work in a terminal that suits your preferences.
+
+## Who is it for?
+
+**Terminal Keeper** is perfect for developers who frequently use the terminal in VSCode and need better control over their terminal workflows. Whether you're a solo developer or part of a larger team, **Terminal Keeper** offers the tools to improve your development experience by making session and terminal management more intuitive and less time-consuming.
+
+## Key Features
+
+- **Automatic Session Restoration**: Automatically restore your last terminal session when reopening VSCode, saving you time setting up each day.
+- **Quick Run Button**: Adds a button to the terminal interface for quickly running commands.
+- **Session Management**:
+    - Save, restore, and organize multiple terminal sessions.
+    - Easily select or remove specific sessions.
+- **Theme Customization**: Personalize terminal sessions with different colors and icons.
+- **Command Importing**: Import commands from popular files like package.json, Makefile, pipenv, and others.
+
+Whether you're a seasoned VSCode user or just getting started, **Terminal Keeper** is here to streamline your terminal management, letting you focus on what really matters—coding!

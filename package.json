@@ -259,6 +259,11 @@
             "view/title": [
                 {
                     "command": "terminal-keeper.active",
+                    "when": "view == terminal && config.terminal-keeper.quickRun == true",
+                    "group": "navigation"
+                },
+                {
+                    "command": "terminal-keeper.active",
                     "when": "view == terminalKeeperActivityView",
                     "group": "navigation@1"
                 },
@@ -380,7 +385,7 @@
                     "default": null,
                     "enum": [
                         "default",
-                        "inkwell",
+                        "inkwell", 
                         "chaos",
                         "tribe",
                         "iconic",
@@ -393,12 +398,26 @@
                 "terminal-keeper.killProcess": {
                     "type": "boolean",
                     "default": false,
-                    "description": "(Experimental) Kill the active process when the terminal is closed."
+                    "description": "Kill the active process when the terminal is closed.",
+                    "tags": [
+                        "preview"
+                    ]
                 },
                 "terminal-keeper.wslSupport": {
                     "type": "boolean",
                     "default": false,
-                    "description": "(Experimental) When enable, will convert wsl path to windows path when connect to WSL."
+                    "description": "When enable, will convert wsl path to windows path when connect to WSL.",
+                    "tags": [
+                        "experimental"
+                    ]
+                },
+                "terminal-keeper.quickRun": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Add a button to quick active session from the terminal tab.",
+                    "tags": [
+                        "preview"
+                    ]
                 }
             }
         }

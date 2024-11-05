@@ -28,7 +28,7 @@ To stop the terminal from clearing on startup, modify the `session.json` file by
 ```json
 {
     "active": "default",
-    "noClear": true, // 👈 add this line
+    "noClear": true, // [!code focus]
     "sessions": {...}
 }
 ```
@@ -48,7 +48,7 @@ If you have multiple terminal splits and want to focus on a specific one when a 
     "default": [
       {
         "name": "dev",
-        "focus": true, // 👈 add this line
+        "focus": true, // [!code focus]
         "commands": []
       }
     ]
@@ -67,7 +67,7 @@ You can customize the join operator between commands using the `joinOperator` op
     "default": [
       {
         "name": "dev",
-        "joinOperator": "&&", // 👈 add this line
+        "joinOperator": "&&", // [!code focus]
         "commands": ["npm run build", "npm run dev"]
       }
     ]

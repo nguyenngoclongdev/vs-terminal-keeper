@@ -171,7 +171,7 @@ const members = [
 
 <br>
 
-# Our wall of love
+## Our wall of love
 
 See what the community is saying about Terminal Keeper. Share the love!
 
