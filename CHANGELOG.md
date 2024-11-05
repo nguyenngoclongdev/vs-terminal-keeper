@@ -1,5 +1,11 @@
 ## 1.1.51
 
+## 1.1.52
+
+### Patch Changes
+
+- 57be352: add quick config on terminal tabs
+
 ### Patch Changes
 
 - c283352: fix: quick navigate to sessions.json
