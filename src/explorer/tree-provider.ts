@@ -227,12 +227,14 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
     }): TKTreeItem => {
         const { label, value, children } = params;
 
+        const hideCommandsInExplorerDescriptions =
+            Configuration.getExperimentalConfig<boolean>('hideCommandsInExplorerDescriptions') ?? false;
         const terminalNames = value.map((s) => (Array.isArray(s) ? `[${s.map((v) => v.name).join(', ')}]` : s.name));
         const item = new TKTreeItem(label, children);
-        (item.description = terminalNames.join(', ')),
-            (item.tooltip = new MarkdownString(
-                `### **${label}**${EOL}${terminalNames.map((t) => `- ${t}`).join(EOL)}`
-            ));
+        if (!hideCommandsInExplorerDescriptions) {
+            item.description = terminalNames.join(', ');
+        }
+        item.tooltip = new MarkdownString(`### **${label}**${EOL}${terminalNames.map((t) => `- ${t}`).join(EOL)}`);
         item.contextValue = 'session-context';
         item.iconPath = new ThemeIcon('versions');
         item.sessionId = label;
