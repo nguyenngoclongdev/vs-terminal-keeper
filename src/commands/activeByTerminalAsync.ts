@@ -35,11 +35,22 @@ export const activeByTerminalAsync = async (
 
         // Create terminal
         if (Array.isArray(terminal)) {
-            const parentTerminal = createTerminal(themeService, terminal[0], { kind: 'parent' }, noClear);
-            for (let i = terminal.length - 1; i >= 1; i--) {
-                createTerminal(themeService, terminal[i], { kind: 'children', parentTerminal }, noClear);
+            const terminals = terminal.filter((t) => !t.disabled);
+            if (terminals.length <= 0) {
+                window.showWarningMessage(constants.groupTerminalWillBeDisabled);
+                return;
+            }
+
+            const parentTerminal = createTerminal(themeService, terminals[0], { kind: 'parent' }, noClear);
+            for (let i = terminals.length - 1; i >= 1; i--) {
+                createTerminal(themeService, terminals[i], { kind: 'children', parentTerminal }, noClear);
             }
         } else {
+            if (terminal.disabled) {
+                window.showWarningMessage(constants.terminalWillBeDisabled);
+                return;
+            }
+
             createTerminal(themeService, terminal, { kind: 'standalone' }, noClear);
         }
     } catch (error) {

@@ -67,8 +67,11 @@ export const constants = {
     selectSessionToActive: 'Please select a session to activate. The session "{session}" you choose is null or empty.',
     notExistAnySessions: 'There are no sessions in the configuration file.',
     notExistAnySpitTerminal: 'There are no split terminals for the session "{session}" in the configuration file.',
+    notExistAnySpitTerminalAfterFilter: 'There are no split terminals for the session "{session}" in the configuration file after removing the disabled terminals.',
     selectTerminalToActive: 'Please select a terminal to activate.',
     configurationFileAlreadyExist: 'A configuration file already exists, cannot generate a new one.',
+    terminalWillBeDisabled: 'Cannot execute terminal because the selected terminal is currently disabled.',
+    groupTerminalWillBeDisabled: 'Cannot execute group terminal because all terminals in the group are currently disabled.',
 
     // Remove the terminal session
     selectSessionRemoveTitle: 'Select a session to remove:',

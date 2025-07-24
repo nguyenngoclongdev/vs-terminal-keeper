@@ -219,8 +219,11 @@ shellPath?: string,
 // Whether the terminal process environment should be exactly as provided in TerminalOptions.env. When this is false (default), the environment will be based on the window's environment and also apply configured platform settings like terminal.integrated.env.windows on top. When this is true, the complete environment must be provided as nothing will be inherited from the process or any configuration.
 strictEnv?: boolean,
 
-// ✨ Focused the terminal on startup.
-focus?: boolean
+// Focused the terminal on startup.
+focus?: boolean,
+
+// ✨ When true, this terminal will be disabled and not launched during an active session. Useful for temporarily turning off terminals without removing them.
+disabled?: boolean
 ```
 
 ### Optional: Hide Terminal Commands in Explorer Descriptions

@@ -9,6 +9,7 @@ import {
     showErrorMessageWithDetail,
     showGenerateConfiguration
 } from '../utils/utils';
+import { SessionItem } from '../configuration/interface';
 
 export const activeAsync = async (workspacePath: string | undefined): Promise<void> => {
     try {
@@ -61,6 +62,22 @@ export const activeAsync = async (workspacePath: string | undefined): Promise<vo
             return;
         }
 
+        // Filter all disabled terminal from session
+        const activatedSession = selectedSession
+            .map((sessionItem) => {
+                if (Array.isArray(sessionItem)) {
+                    const filtered = sessionItem.filter((i) => !i.disabled);
+                    return filtered.length <= 0 ? undefined : filtered;
+                } else {
+                    return sessionItem.disabled ? undefined : sessionItem;
+                }
+            })
+            .filter(Boolean) as SessionItem[];
+        if (!activatedSession || activatedSession.length <= 0) {
+            window.showWarningMessage(constants.notExistAnySpitTerminalAfterFilter.replace('{session}', selectedSessionKey));
+            return;
+        }
+
         // Kill previous terminal and create new terminal from session
         const { createTerminal, focusTerminal, getCwdPath } = TerminalApi.instance();
         window.withProgress(
@@ -80,9 +97,9 @@ export const activeAsync = async (workspacePath: string | undefined): Promise<vo
 
                 // Validate data need use async function
                 progress.report({ message: 'Validating the configuration file...' });
-                const flatSelectedSession = selectedSession.flat();
-                for (let i = 0; i < flatSelectedSession.length; i++) {
-                    const sessionItem = flatSelectedSession[i];
+                const flatActivatedSession = activatedSession.flat();
+                for (let i = 0; i < flatActivatedSession.length; i++) {
+                    const sessionItem = flatActivatedSession[i];
                     progress.report({ message: `Checking that "${sessionItem.cwd}" exists...` });
                     const cwdPath = await getCwdPath(sessionItem.cwd);
                     if (cwdPath) {
@@ -95,7 +112,7 @@ export const activeAsync = async (workspacePath: string | undefined): Promise<vo
 
                 // Create terminal list
                 const themeService = new ThemeService(theme);
-                selectedSession.forEach((sessionItem) => {
+                activatedSession.forEach((sessionItem) => {
                     if (Array.isArray(sessionItem)) {
                         progress.report({
                             message: `Initializing the terminal session for "${sessionItem[0].name}"...`
@@ -119,7 +136,7 @@ export const activeAsync = async (workspacePath: string | undefined): Promise<vo
                 });
 
                 // Focus on specified terminal
-                focusTerminal(flatSelectedSession);
+                focusTerminal(flatActivatedSession);
 
                 // Update status bar
                 updateStatusBar(selectedSessionKey);

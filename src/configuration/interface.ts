@@ -10,7 +10,8 @@ export const configFileVersions = {
     v7: '/v7/',
     v8: '/v8/',
     v9: '/v9/',
-    latest: '/v10/'
+    v10: '/v10/',
+    latest: '/v11/',
 };
 
 export type SessionItem = TerminalItem | Array<TerminalItem>;

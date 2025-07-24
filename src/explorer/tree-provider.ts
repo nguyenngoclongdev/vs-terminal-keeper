@@ -22,13 +22,6 @@ export class TKTreeItem extends TreeItem {
     source: 'settings.json' | 'sessions.json' | undefined;
     keywords: string[] | undefined;
 
-    // These are already defined in TreeItem, but TS may need explicit redeclaration for assignment
-    description?: string;
-    tooltip?: string | MarkdownString;
-    contextValue?: string;
-    iconPath?: any;
-    command?: any;
-
     constructor(label: string, children?: TKTreeItem[]) {
         super(label, children === undefined ? TreeItemCollapsibleState.None : TreeItemCollapsibleState.Collapsed);
         this.children = children;
@@ -256,8 +249,8 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
         item.tooltip = new MarkdownString(`### **[${label}]**${EOL}`).appendMarkdown(
             terminals
                 .map(
-                    ({ name, commands, joinOperator }) =>
-                        `- ${name}${EOL}\`\`\`sh${EOL}${commands?.join(
+                    ({ name, commands, joinOperator, disabled }) =>
+                        `- ${name}${disabled ? ' (disabled)' : ''}${EOL}\`\`\`sh${EOL}${commands?.join(
                             TerminalApi.instance().getJoinOperator(joinOperator)
                         )}${EOL}\`\`\`${EOL}`
                 )
@@ -290,7 +283,9 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
         if (!hideCommandsInExplorerDescriptions) {
             item.description = terminalCommands;
         }
-        item.tooltip = new MarkdownString(`### **${terminalName}**`).appendCodeblock(`${terminalCommands}`, 'sh');
+        item.tooltip = new MarkdownString(
+            `### **${terminalName}**${terminal.disabled ? ' (disabled)' : ''}`
+        ).appendCodeblock(`${terminalCommands}`, 'sh');
         item.contextValue = 'terminal-context';
         item.iconPath = new ThemeIcon(icon?.id || 'terminal', color);
         item.sessionId = sessionId;
