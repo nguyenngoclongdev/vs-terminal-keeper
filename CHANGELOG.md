@@ -1,5 +1,11 @@
 ## 1.1.51
 
+## 1.1.55
+
+### Patch Changes
+
+- f99a045: Allow define disabled terminal to not launched during an active session
+
 ## 1.1.54
 
 ### Patch Changes
