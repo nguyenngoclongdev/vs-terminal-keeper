@@ -27,7 +27,7 @@ If you find this extension useful for your projects, please consider supporting 
 
 ## Our Sponsors ❤️
 
-<a href="https://github.com/webia1"><img src="https://github.com/webia1.png" width="50px" alt="webia1" /></a>
+<a href="https://dev.to/webia1"><img src="https://media2.dev.to/dynamic/image/width=320,height=320,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Fuser%2Fprofile_image%2F394714%2F0cab7789-c023-4b2d-a22d-757f369e6fcd.JPG" width="50px" alt="webia1" /></a>
 <a href="https://github.com/sponsors/nguyenngoclongdev"><img src="https://raw.githubusercontent.com/nguyenngoclongdev/vs-terminal-keeper/main/assets/sponsor.png" width="35px" alt="sponsor" /></a>
 
 ## Our Contributors 🤝
