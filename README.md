@@ -217,6 +217,16 @@ strictEnv?: boolean,
 focus?: boolean
 ```
 
+### Optional: Hide Terminal Commands in Explorer Descriptions
+
+By default, Terminal Keeper shows the commands for each terminal as a description in the explorer tree view. If you prefer a cleaner look, you can hide these descriptions by setting the following option in your VS Code settings:
+
+```json
+"terminal-keeper.hideCommandsInExplorerDescriptions": true
+```
+
+This will remove the command text from the explorer tree items, showing only the terminal names.
+
 ## Troubleshoot
 
 If you see the error message `The terminal process failed to launch: A native exception occurred during launch (posix_spawnp failed.).` while running your vscode, it's important to know that this error is not caused by the `Terminal Keeper`, but rather by VSCode itself. Therefore, it's recommended that you don't submit an issue to `Terminal Keeper` regarding this error.

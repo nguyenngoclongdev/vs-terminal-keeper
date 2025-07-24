@@ -22,6 +22,13 @@ export class TKTreeItem extends TreeItem {
     source: 'settings.json' | 'sessions.json' | undefined;
     keywords: string[] | undefined;
 
+    // These are already defined in TreeItem, but TS may need explicit redeclaration for assignment
+    description?: string;
+    tooltip?: string | MarkdownString;
+    contextValue?: string;
+    iconPath?: any;
+    command?: any;
+
     constructor(label: string, children?: TKTreeItem[]) {
         super(label, children === undefined ? TreeItemCollapsibleState.None : TreeItemCollapsibleState.Collapsed);
         this.children = children;
@@ -220,12 +227,14 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
     }): TKTreeItem => {
         const { label, value, children } = params;
 
+        const hideCommandsInExplorerDescriptions =
+            Configuration.getExperimentalConfig<boolean>('hideCommandsInExplorerDescriptions') ?? false;
         const terminalNames = value.map((s) => (Array.isArray(s) ? `[${s.map((v) => v.name).join(', ')}]` : s.name));
         const item = new TKTreeItem(label, children);
-        (item.description = terminalNames.join(', ')),
-            (item.tooltip = new MarkdownString(
-                `### **${label}**${EOL}${terminalNames.map((t) => `- ${t}`).join(EOL)}`
-            ));
+        if (!hideCommandsInExplorerDescriptions) {
+            item.description = terminalNames.join(', ');
+        }
+        item.tooltip = new MarkdownString(`### **${label}**${EOL}${terminalNames.map((t) => `- ${t}`).join(EOL)}`);
         item.contextValue = 'session-context';
         item.iconPath = new ThemeIcon('versions');
         item.sessionId = label;
@@ -274,9 +283,13 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
         const icon = theme.getIcon(terminal.icon, terminalGroupName, terminalName);
         const color = theme.getColor(terminal.color, terminalGroupName, terminalName);
         const terminalCommands = commands?.join(TerminalApi.instance().getJoinOperator(joinOperator));
+        const hideCommandsInExplorerDescriptions =
+            Configuration.getExperimentalConfig<boolean>('hideCommandsInExplorerDescriptions') ?? false;
 
         const item = new TKTreeItem(terminalName);
-        item.description = terminalCommands;
+        if (!hideCommandsInExplorerDescriptions) {
+            item.description = terminalCommands;
+        }
         item.tooltip = new MarkdownString(`### **${terminalName}**`).appendCodeblock(`${terminalCommands}`, 'sh');
         item.contextValue = 'terminal-context';
         item.iconPath = new ThemeIcon(icon?.id || 'terminal', color);

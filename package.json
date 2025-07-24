@@ -418,6 +418,11 @@
                     "tags": [
                         "preview"
                     ]
+                },
+                "terminal-keeper.hideCommandsInExplorerDescriptions": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Hide the terminal commands in the explorer tree item descriptions."
                 }
             }
         }
