@@ -1,5 +1,11 @@
 ## 1.1.51
 
+## 1.1.54
+
+### Patch Changes
+
+- bd5c3c2: Add Hide Terminal Commands in Explorer Descriptions
+
 ## 1.1.53
 
 ### Patch Changes
