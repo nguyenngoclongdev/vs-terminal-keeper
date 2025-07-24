@@ -30,7 +30,7 @@ If you find this extension useful for your projects, please consider supporting 
 <a href="https://github.com/webia1"><img src="https://github.com/webia1.png" width="50px" alt="webia1" /></a>
 <a href="https://github.com/sponsors/nguyenngoclongdev"><img src="https://raw.githubusercontent.com/nguyenngoclongdev/vs-terminal-keeper/main/assets/sponsor.png" width="35px" alt="sponsor" /></a>
 
-## Our Contributor 🤝
+## Our Contributors 🤝
 
 <a href="https://github.com/nguyenngoclongdev/vs-terminal-keeper/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=nguyenngoclongdev/vs-terminal-keeper" />
