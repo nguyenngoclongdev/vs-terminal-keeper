@@ -477,7 +477,7 @@
     },
     "dependencies": {
         "@vscode-utility/fs-browserify": "^1.0.8",
-        "@vscode-utility/terminal-browserify": "^1.0.2",
+        "@vscode-utility/terminal-browserify": "^1.0.3",
         "@sgarciac/bombadil": "^2.3.0",
         "glob": "11.0.0",
         "xml2js": "^0.6.2"

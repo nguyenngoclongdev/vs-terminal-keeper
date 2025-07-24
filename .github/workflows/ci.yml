@@ -24,14 +24,14 @@ jobs:
               with:
                   node-version: 16.x
                   cache: 'npm'
-                  always-auth: true
-                  registry-url: https://npm.pkg.github.com/
-                  scope: '@vscode-utility'
+                #   always-auth: true
+                #   registry-url: https://npm.pkg.github.com/
+                #   scope: '@vscode-utility'
 
             - name: Install dependency
               run: npm ci
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+            #   env:
+            #       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
             - name: Create Release Pull Request or publish package
               id: changesets
