@@ -111,7 +111,7 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
                         value: noClear,
                         defaultValue: false,
                         description:
-                            'A Boolean variable indicating whether to execute the clear command during initialization. If the value is true, the clear command will not be executed upon initialization. If the value is false, the clear command will be executed.'
+                            `A Boolean variable indicating whether to execute the clear command during initialization.${EOL}If the value is true, the clear command will not be executed upon initialization.${EOL}If the value is false, the clear command will be executed.`
                     }),
                     this.renderConfigItem({
                         label: 'theme',
