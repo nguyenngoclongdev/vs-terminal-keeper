@@ -1,5 +1,11 @@
 ## 1.1.51
 
+## 1.1.56
+
+### Patch Changes
+
+- d38b6dc: Add new setting to explorer
+
 ## 1.1.55
 
 ### Patch Changes
