@@ -75,6 +75,10 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
         // Get experimental config
         const killProcess = Configuration.getExperimentalConfig<boolean>('killProcess');
         const isWSLSupport = Configuration.getExperimentalConfig<boolean>('wslSupport');
+        const isQuickRun = Configuration.getExperimentalConfig<boolean>('quickRun');
+        const isHideCommandsInExplorer = Configuration.getExperimentalConfig<boolean>(
+            'hideCommandsInExplorerDescriptions'
+        );
 
         // Generate tree item.
         const themeService = new ThemeService(theme);
@@ -87,39 +91,61 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
                     this.renderConfigItem({
                         label: 'active',
                         value: active,
-                        defaultValue: 'default'
+                        defaultValue: 'default',
+                        description: 'Used to determine which session to use.'
                     }),
                     this.renderConfigItem({
                         label: 'activateOnStartup',
                         value: activateOnStartup,
-                        defaultValue: false
+                        defaultValue: false,
+                        description: 'Activated the session when Visual Studio Code starts up.'
                     }),
                     this.renderConfigItem({
                         label: 'keepExistingTerminals',
                         value: keepExistingTerminals,
-                        defaultValue: false
+                        defaultValue: false,
+                        description: 'Keep existing terminals open when a session is executed.'
                     }),
                     this.renderConfigItem({
                         label: 'noClear',
                         value: noClear,
-                        defaultValue: false
+                        defaultValue: false,
+                        description:
+                            'A Boolean variable indicating whether to execute the clear command during initialization. If the value is true, the clear command will not be executed upon initialization. If the value is false, the clear command will be executed.'
                     }),
                     this.renderConfigItem({
                         label: 'theme',
                         value: theme,
-                        defaultValue: 'default'
+                        defaultValue: 'default',
+                        description: 'The theme can either automatically select colors/icons or manually.'
                     }),
                     this.renderConfigItem({
                         label: 'killProcess',
                         value: killProcess,
                         defaultValue: false,
-                        icon: { id: 'microscope' }
+                        icon: { id: 'microscope' },
+                        description: 'Kill the active process when the terminal is closed.'
                     }),
                     this.renderConfigItem({
                         label: 'wslSupport',
                         value: isWSLSupport,
                         defaultValue: false,
-                        icon: { id: 'microscope' }
+                        icon: { id: 'microscope' },
+                        description: 'When enable, will convert wsl path to windows path when connect to WSL.'
+                    }),
+                    this.renderConfigItem({
+                        label: 'quickRun',
+                        value: isQuickRun,
+                        defaultValue: true,
+                        icon: { id: 'microscope' },
+                        description: 'Add a button to quick active session from the terminal tab.'
+                    }),
+                    this.renderConfigItem({
+                        label: 'hideCommandsInExplorerDescriptions',
+                        value: isHideCommandsInExplorer,
+                        defaultValue: false,
+                        icon: { id: 'microscope' },
+                        description: 'Hide the terminal commands in the explorer tree item descriptions.'
                     })
                 ]
             }),
@@ -184,15 +210,17 @@ export class TreeProvider implements TreeDataProvider<TKTreeItem> {
         label: string;
         value: boolean | string | { [key: string]: any } | undefined;
         defaultValue: boolean | string | { [key: string]: any } | undefined;
+        description?: string;
         children?: TKTreeItem[];
         icon?: { id: string; color?: string };
     }): TKTreeItem => {
-        const { label, value, defaultValue, icon, children } = params;
+        const { label, value, defaultValue, icon, children, description } = params;
         const { id, color } = icon || {};
         const source = Configuration.userConfigKeys.includes(label) ? 'settings.json' : 'sessions.json';
         const item = new TKTreeItem(label, children);
         item.description = `${value}`;
         item.tooltip = new MarkdownString(`### **${label}**: \`${value}\``)
+            .appendText(description ? `${EOL}${description}` : '')
             .appendCodeblock(`Default Value: ${defaultValue}`)
             .appendCodeblock(`Config Source: ${source}`);
         item.contextValue = 'overview-context';
