@@ -1,5 +1,11 @@
 ## 1.1.51
 
+## 1.1.57
+
+### Patch Changes
+
+- 88c9c81: update version and homepage URL in package files
+
 ## 1.1.56
 
 ### Patch Changes
