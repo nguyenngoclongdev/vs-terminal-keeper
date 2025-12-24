@@ -23,7 +23,8 @@ export const extCommands = {
     copyCommandActivity: 'terminal-keeper.copy-command-activity',
     collapseAllActivity: 'terminal-keeper.collapse-all-activity',
     navigateActivity: 'terminal-keeper.navigate-activity',
-    helpAndFeedbackActivity: 'terminal-keeper.help-and-feedback-activity'
+    helpAndFeedbackActivity: 'terminal-keeper.help-and-feedback-activity',
+    runTerminalByName: 'terminal-keeper.run-terminal-by-name'
 };
 
 export const ACTIVITY_VIEW_ID = 'terminalKeeperActivityView';
@@ -99,6 +100,13 @@ export const constants = {
 
     // Migrate the configuration file
     migrateConfigurationFailed: 'The attempt to upgrade to the most recent configuration file schema was unsuccessful!',
+
+    // Run terminal by name
+    selectTerminalTitle: 'Select a terminal to run',
+    selectTerminalPlaceHolder: 'Select terminal...',
+    terminalNotFound: 'Terminal "{name}" not found in session "{session}".',
+    terminalNotFoundInAny: 'Terminal "{name}" not found in any session.',
+    runTerminalByNameFailed: 'Failed to run terminal by name.',
 
     // The components
     yesButton: 'Yes',

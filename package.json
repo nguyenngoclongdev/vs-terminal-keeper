@@ -213,6 +213,11 @@
             {
                 "command": "terminal-keeper.import-from-gulp",
                 "title": "From gulp (e.g. gulpfile.mjs, gulpfile.js, GULPFILE.js)"
+            },
+            {
+                "command": "terminal-keeper.run-terminal-by-name",
+                "category": "Terminal Keeper",
+                "title": "Run Terminal by Name"
             }
         ],
         "menus": {
