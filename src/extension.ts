@@ -11,6 +11,7 @@ import { migrateAsync } from './commands/migrateAsync';
 import { navigateAsync } from './commands/navigateAsync';
 import { openAsync } from './commands/openAsync';
 import { removeAsync } from './commands/removeAsync';
+import { runTerminalByNameAsync, RunTerminalByNameArgs } from './commands/runTerminalByNameAsync';
 import { saveAsync } from './commands/saveAsync';
 import { Configuration } from './configuration/configuration';
 import { configFileVersions } from './configuration/interface';
@@ -60,6 +61,10 @@ export async function activate(context: ExtensionContext) {
         // Kill all terminals
         commands.registerCommand(extCommands.killAll, async (...args: any[]) => {
             await killAllAsync();
+        }),
+        // Run terminal by name
+        commands.registerCommand(extCommands.runTerminalByName, async (args: RunTerminalByNameArgs) => {
+            await runTerminalByNameAsync(args);
         })
     );
 
