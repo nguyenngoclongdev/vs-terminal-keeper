@@ -226,6 +226,23 @@ focus?: boolean,
 disabled?: boolean
 ```
 
+### Keybinding Support
+
+Run specific terminals directly via keyboard shortcuts by adding custom keybindings to your `keybindings.json`:
+
+```json
+{
+    "key": "ctrl+shift+t",
+    "command": "terminal-keeper.run-terminal-by-name",
+    "args": { "name": "dev-server", "session": "default" }
+}
+```
+
+| Argument | Required | Description |
+|----------|----------|-------------|
+| `name` | No | Terminal name to run. If omitted, shows a picker with all available terminals. |
+| `session` | No | Limit search to a specific session. |
+
 ### Optional: Hide Terminal Commands in Explorer Descriptions
 
 By default, Terminal Keeper shows the commands for each terminal as a description in the explorer tree view. If you prefer a cleaner look, you can hide these descriptions by setting the following option in your VS Code settings:
