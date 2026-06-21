@@ -16,7 +16,7 @@
   <img src="https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/terminal-keeper-showcase-reverse.gif">
 </p>
 
-Elevate your terminal experience! Effortlessly configuration, seamlessly restore your last session, and manage sessions with ease. Personalize your workspace with colorful themes and boost productivity by importing commands swiftly.
+Terminal Keeper helps you define, launch, and manage repeatable VS Code terminal sessions. Create named sessions for your projects, restore them automatically when VS Code starts, import commands from common project files, and keep terminals recognizable with colors, icons, and themes.
 
 If you find this extension useful for your projects, please consider supporting me by [Github](https://github.com/sponsors/nguyenngoclongdev), [Patreon](https://patreon.com/nguyenngoclong), [KO-FI](https://ko-fi.com/nguyenngoclong) or [Paypal](https://paypal.me/longnguyenngoc). It's a great way to help me maintain and improve this tool in the future. Your support is truly appreciated!
 
@@ -36,22 +36,30 @@ If you find this extension useful for your projects, please consider supporting 
   <img src="https://contrib.rocks/image?repo=nguyenngoclongdev/vs-terminal-keeper" />
 </a>
 
-# Installation
+## Installation
 
-Get it from [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=nguyenngoclong.terminal-keeper) or [Open VSX Registry](https://open-vsx.org/extension/nguyenngoclong/terminal-keeper).
+Install Terminal Keeper from one of these registries:
 
-# Features
+- [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=nguyenngoclong.terminal-keeper)
+- [Open VSX Registry](https://open-vsx.org/extension/nguyenngoclong/terminal-keeper)
 
--   **Easy Configuration**: Quickly create templates to simplify your terminal setup.
--   **Restore Last Session Automatically**: Start your day smoothly by bringing back your last terminal session when you open the app.
--   **Session Selection**: Choose which terminal session to open with just a few clicks, giving you control over your work.
--   **Session Removal**: Easily delete any terminal sessions you no longer need, keeping your workspace tidy.
--   **Session Saving (Coming Soon)**: Preserve your current terminal session along with its icon, color, and all terminal configurations. (Note: Due to current limitations in the VSCode API, we cannot retrieve the icon, color, or last command from the terminal just yet. We hope to implement this feature in the future if the API allows it!)
--   **Customizable Themes**: Personalize your terminal with a variety of colorful themes for icons and colors that brighten your workspace.
--   **✨ Simple Session Management**: Utilize the Terminal Keeper Activity for effortless session management.
--   **✨ Commands Importing**: Quickly import commands from files like package.json, pipenv, Makefile, grunt, gradle, gulp, ant, and more.
+## Why use Terminal Keeper?
 
-## Using the extension
+Terminal Keeper is useful when you often open the same terminals for a project, such as a dev server, test watcher, background worker, or documentation server. Instead of reopening and retyping commands manually, save those workflows as sessions and activate them when you need them.
+
+## Features
+
+- **Easy configuration**: Generate a starter configuration and customize it for each workspace.
+- **Automatic startup activation**: Restore your configured session when VS Code starts.
+- **Session picker**: Choose which named terminal session to launch.
+- **Session cleanup**: Remove sessions you no longer need.
+- **Custom themes**: Assign colors and icons manually or let Terminal Keeper choose them for you.
+- **Activity Bar management**: Launch, edit, send, copy, import, and remove sessions from the Terminal Keeper view.
+- **Command importing**: Import commands from `package.json`, `composer.json`, `Pipfile`, `Makefile`, Gradle, Ant, Grunt, Gulp, and similar project files.
+- **Keybinding support**: Run a terminal by name directly from a keyboard shortcut.
+- **Session saving (coming soon)**: VS Code currently does not expose every terminal detail needed to save an existing terminal exactly as-is, but this may be added when the API allows it.
+
+## Quick start
 
 ![Activate the last used terminal session](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/active-default-session.gif)
 
@@ -64,6 +72,13 @@ Get it from [Visual Studio Marketplace](https://marketplace.visualstudio.com/ite
    - Remove Session
 
 > If this is your first time using Terminal Keeper, you'll be prompted to generate a configuration. Choose "Yes" to create and customize your settings.
+
+A typical workflow looks like this:
+
+1. Generate a configuration file for the current workspace.
+2. Add or edit sessions in the generated configuration.
+3. Activate a session from the Command Palette or Terminal Keeper Activity Bar view.
+4. Reuse that session whenever you return to the project.
 
 ### Built-in themes
 
@@ -111,6 +126,8 @@ Choose between randomly assigned colors and icons based on the terminal name or 
 
 ## Configuration
 
+Terminal Keeper stores sessions in a configuration object. Each session contains one or more terminals. Use an object for a normal terminal, or an array of terminal objects when you want split terminals.
+
 ```ts
 {
     // Used to determine which session to use.
@@ -122,13 +139,13 @@ Choose between randomly assigned colors and icons based on the terminal name or 
     // Keep existing terminals open when a session is executed.
     keepExistingTerminals: boolean,
 
-    // A Boolean variable indicating whether to execute the clear command during initialization. If the value is true, the clear command will not be executed upon initialization. If the value is false, the clear command will be executed.
+    // Skip running the clear command during initialization.
     noClear: boolean,
 
-    // The theme can either automatically select colors/icons or manually.
+    // Theme used to assign terminal colors and icons.
     theme: string,
 
-    // List of terminal sessions, multiple terminal sessions can be defined, but a default session must always exist.
+    // List of terminal sessions. Multiple sessions can be defined, but default must always exist.
     sessions: {
 
         // The default session
@@ -174,7 +191,9 @@ Choose between randomly assigned colors and icons based on the terminal name or 
 }
 ```
 
-### Terminal Options
+### Terminal options
+
+Most terminal options mirror the VS Code terminal API. Common options are `name`, `commands`, `cwd`, `color`, `icon`, and `focus`.
 
 ```ts
 // A human-readable string which will be used to represent the terminal in the UI.
@@ -226,24 +245,24 @@ focus?: boolean,
 disabled?: boolean
 ```
 
-### Keybinding Support
+### Keybinding support
 
 Run specific terminals directly via keyboard shortcuts by adding custom keybindings to your `keybindings.json`:
 
 ```json
 {
-    "key": "ctrl+shift+t",
-    "command": "terminal-keeper.run-terminal-by-name",
-    "args": { "name": "dev-server", "session": "default" }
+  "key": "ctrl+shift+t",
+  "command": "terminal-keeper.run-terminal-by-name",
+  "args": { "name": "dev-server", "session": "default" }
 }
 ```
 
-| Argument | Required | Description |
-|----------|----------|-------------|
-| `name` | No | Terminal name to run. If omitted, shows a picker with all available terminals. |
-| `session` | No | Limit search to a specific session. |
+| Argument  | Required | Description                                                                    |
+| --------- | -------- | ------------------------------------------------------------------------------ |
+| `name`    | No       | Terminal name to run. If omitted, shows a picker with all available terminals. |
+| `session` | No       | Limit search to a specific session.                                            |
 
-### Optional: Hide Terminal Commands in Explorer Descriptions
+### Optional: hide terminal commands in Explorer descriptions
 
 By default, Terminal Keeper shows the commands for each terminal as a description in the explorer tree view. If you prefer a cleaner look, you can hide these descriptions by setting the following option in your VS Code settings:
 
@@ -253,21 +272,32 @@ By default, Terminal Keeper shows the commands for each terminal as a descriptio
 
 This will remove the command text from the explorer tree items, showing only the terminal names.
 
-## Troubleshoot
+## Troubleshooting
 
-If you see the error message `The terminal process failed to launch: A native exception occurred during launch (posix_spawnp failed.).` while running your vscode, it's important to know that this error is not caused by the `Terminal Keeper`, but rather by VSCode itself. Therefore, it's recommended that you don't submit an issue to `Terminal Keeper` regarding this error.
+### `posix_spawnp failed` terminal launch error
 
-This error is usually caused by VSCode's inability to start a new terminal process. There could be various reasons why this error occurs, such as incorrect configuration or conflicts with other programs on your system.
+If you see this VS Code message:
 
-If you encounter this error, you can try quitting all instances of VSCode and reopening it, or restarting your computer to see if the problem is resolved. If the problem persists, you can refer to the troubleshooting guide provided by VSCode or seek help from the VSCode community through forums or support pages.
+```text
+The terminal process failed to launch: A native exception occurred during launch (posix_spawnp failed.).
+```
 
-You can find more information about this error and how to troubleshoot it at this link: https://code.visualstudio.com/docs/supporting/troubleshoot-terminal-launch
+The failure usually means VS Code could not start a terminal process. It is typically caused by shell configuration, PATH issues, or conflicts with local system tools rather than Terminal Keeper itself.
+
+Try these steps first:
+
+1. Close all VS Code windows and reopen the project.
+2. Restart your computer if the issue continues.
+3. Check your VS Code terminal profile and shell path settings.
+4. Review the official VS Code terminal troubleshooting guide: https://code.visualstudio.com/docs/supporting/troubleshoot-terminal-launch
+
+Please open a Terminal Keeper issue only if the terminal launches normally without this extension but fails specifically when Terminal Keeper activates a session.
 
 ## Feedback
 
 If you discover a bug, or have a suggestion for a feature request, please
 submit an [issue](https://github.com/nguyenngoclongdev/vs-terminal-keeper/issues).
 
-## LICENSE
+## License
 
 This extension is licensed under the [MIT License](LICENSE)
