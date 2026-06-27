@@ -1,5 +1,11 @@
 ## 1.1.51
 
+## 1.2.1
+
+### Patch Changes
+
+- ff452de: update README
+
 ## 1.2.0
 
 ### Minor Changes
