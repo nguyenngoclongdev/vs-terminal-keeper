@@ -47,17 +47,42 @@ Install Terminal Keeper from one of these registries:
 
 Terminal Keeper is useful when you often open the same terminals for a project, such as a dev server, test watcher, background worker, or documentation server. Instead of reopening and retyping commands manually, save those workflows as sessions and activate them when you need them.
 
+## Highlights
+
+* 🚀 **Launch repeatable terminal workflows** with a single command.
+* 🔄 **Automatically restore sessions** whenever VS Code starts.
+* 🗂️ **Organize terminals into named sessions** for different projects or environments.
+* 📥 **Import commands** from `package.json`, `composer.json`, `Makefile`, `Pipfile`, Gradle, Ant, Grunt, Gulp, and more.
+* 🎨 **Customize terminal colors and icons** or let Terminal Keeper generate them automatically.
+* ⌨️ **Run terminals directly from keyboard shortcuts** using built-in keybinding support.
+* 🧩 **Works with both Visual Studio Marketplace and Open VSX.**
+* 🚫 **No ads. No telemetry. No unnecessary setup.**
+
 ## Features
 
-- **Easy configuration**: Generate a starter configuration and customize it for each workspace.
-- **Automatic startup activation**: Restore your configured session when VS Code starts.
-- **Session picker**: Choose which named terminal session to launch.
-- **Session cleanup**: Remove sessions you no longer need.
-- **Custom themes**: Assign colors and icons manually or let Terminal Keeper choose them for you.
-- **Activity Bar management**: Launch, edit, send, copy, import, and remove sessions from the Terminal Keeper view.
-- **Command importing**: Import commands from `package.json`, `composer.json`, `Pipfile`, `Makefile`, Gradle, Ant, Grunt, Gulp, and similar project files.
-- **Keybinding support**: Run a terminal by name directly from a keyboard shortcut.
-- **Session saving (coming soon)**: VS Code currently does not expose every terminal detail needed to save an existing terminal exactly as-is, but this may be added when the API allows it.
+### Session Management
+
+* **Named terminal sessions** – Organize terminals into reusable sessions for different workflows.
+* **Automatic startup activation** – Restore your preferred session automatically when VS Code starts.
+* **Session picker** – Quickly switch between saved sessions from the Command Palette.
+* **Session cleanup** – Remove sessions you no longer need with a single command.
+
+### Productivity
+
+* **Workspace configuration** – Generate a starter configuration and customize it for each workspace.
+* **Command importing** – Import commands from common project files instead of writing them manually.
+* **Activity Bar integration** – Create, edit, activate, copy, import, and manage sessions from a dedicated explorer view.
+* **Keybinding support** – Launch a terminal or session directly from your own keyboard shortcuts.
+
+### Customization
+
+* **Terminal themes** – Assign colors and icons manually or let Terminal Keeper generate consistent themes automatically.
+* **Split terminal layouts** – Define both regular and split terminals inside a session.
+* **Flexible terminal options** – Configure working directory, environment variables, shell, focus behavior, startup messages, and more.
+
+### Coming Soon
+
+* **Save existing terminal sessions** – VS Code currently doesn't expose enough terminal state through its API to recreate running terminals exactly as they are. Support will be added if the API makes this possible in the future.
 
 ## Quick start
 
@@ -86,41 +111,60 @@ A typical workflow looks like this:
   <img src="https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/terminal-keeper-theme.png">
 </p>
 
-Choose between randomly assigned colors and icons based on the terminal name or opt for the `Dice` theme for a fresh look every time you activate a session.
+Built-in themes automatically assign consistent colors and icons to terminals based on their names, making large workspaces much easier to navigate at a glance.
+Prefer a different look every time? Switch to the **Dice** theme for randomly generated colors and icons.
 
-### Terminal Keeper activity ✨
+### Activity Bar integration ✨
 
-![Terminal Keeper Activity](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/terminal-keeper-activity.gif)
+Manage all your terminal sessions from a dedicated Activity Bar view. Create, edit, activate, duplicate, import, or remove sessions without leaving the explorer.
 
-### Import session from different source ✨
+![Terminal Keeper Activity Bar](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/terminal-keeper-activity.gif)
+
+### Import sessions from project files ✨
+
+Skip the manual setup by importing commands directly from common project files such as `package.json`, `composer.json`, `Makefile`, `Pipfile`, Gradle, Ant, Grunt, and Gulp.
 
 ![Terminal Keeper Import](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/terminal-keeper-import.gif)
 
 ### Generate configuration
 
+Generate a ready-to-use configuration file for the current workspace. Start with sensible defaults and customize sessions as your project grows.
+
 ![Generate configuration templates](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/generate-configuration.gif)
 
-### Active on startup
+### Activate on startup
 
-![Active on startup](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/active-on-startup.gif)
+Automatically restore your preferred terminal session whenever you open the workspace, so your development environment is ready to go immediately.
+
+![Activate on startup](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/active-on-startup.gif)
 
 ### Distinct random colors and icons
 
-![Active on startup](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/auto-theme.gif)
+Keep terminals easy to distinguish with automatically generated colors and icons. Every terminal gets its own visual identity without any manual configuration.
 
-### Choose session to activate
+![Distinct random colors and icons](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/auto-theme.gif)
 
-![Choose which terminal session to activate](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/active-session.gif)
+### Choose a session to activate
 
-### Active session in workspace directory
+Quickly switch between multiple saved sessions using the Command Palette. Perfect for projects with different development, testing, or deployment workflows.
 
-![Active terminal session in your workspace directory](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/active-session-here.gif)
+![Choose a session to activate](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/active-session.gif)
+
+### Launch sessions in any workspace directory
+
+Start a session from the current workspace or any folder you choose, making it easy to reuse the same configuration across multiple projects.
+
+![Launch sessions in any workspace directory](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/active-session-here.gif)
 
 ### Remove unwanted sessions
 
-![Remove unwanted terminal sessions](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/remove-session.gif)
+Keep your configuration clean by deleting sessions you no longer use directly from the Command Palette or Activity Bar.
+
+![Remove unwanted sessions](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/remove-session.gif)
 
 ### Quick configuration access
+
+Open your Terminal Keeper configuration with a single command whenever you need to review or update your sessions.
 
 ![Quick open configuration](https://github.com/nguyenngoclongdev/cdn/raw/HEAD/images/terminal-keeper/open-configuration.gif)
 
